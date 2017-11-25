@@ -24,5 +24,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_action_New_triggered()
 {
 	QMdiSubWindow *w = ui->mdiArea->addSubWindow(new GLWidget(this), Qt::SubWindow);
-	w->setWindowTitle("画布1");
+	w->setWindowTitle(tr("画布%1").arg(ui->mdiArea->subWindowList().size()));
+	w->show();
 }

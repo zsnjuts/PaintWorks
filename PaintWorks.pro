@@ -12,38 +12,23 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = PaintWorks
 TEMPLATE = app
 
+CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
     glwidget.cpp \
-    Area.cpp \
-    Circle.cpp \
-    CircleControl.cpp \
-    CompFigure.cpp \
-    Ellipse.cpp \
-    EllipseControl.cpp \
     Figure.cpp \
     FigureControl.cpp \
     Line.cpp \
     LineControl.cpp \
-    Point.cpp \
-    Polygon.cpp \
-    PolygonControl.cpp
+    Point.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
-    Area.h \
-    Circle.h \
-    CircleControl.h \
-    CompFigure.h \
-    Ellipse.h \
-    EllipseControl.h \
     Figure.h \
     FigureControl.h \
     Line.h \
     LineControl.h \
-    Point.h \
-    Polygon.h \
-    PolygonControl.h
+    Point.h
 
 FORMS    += mainwindow.ui
