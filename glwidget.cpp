@@ -4,6 +4,7 @@ GLWidget::GLWidget(QWidget *parent):QGLWidget(parent)
 {
 	lineControl = new LineControl;
 	circleControl = new CircleControl;
+	ellipseControl = new EllipseControl;
 	setFocusPolicy(Qt::StrongFocus);
 }
 
@@ -34,6 +35,7 @@ void GLWidget::resizeGL(int w, int h)
 	//设置FigureControl
 	lineControl->resize(w, h);
 	circleControl->resize(w, h);
+	ellipseControl->resize(w, h);
 }
 
 void GLWidget::paintGL()
@@ -41,27 +43,30 @@ void GLWidget::paintGL()
 	glClear(GL_COLOR_BUFFER_BIT);//清屏
 	lineControl->onDraw();
 	circleControl->onDraw();
+	ellipseControl->onDraw();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
 	//lineControl->onMousePressEvent(event);
-	circleControl->onMousePressEvent(event);
+	//circleControl->onMousePressEvent(event);
+	ellipseControl->onMousePressEvent(event);
 	updateGL();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	//lineControl->onMouseMoveEvent(event);
-	circleControl->onMouseMoveEvent(event);
+	//circleControl->onMouseMoveEvent(event);
+	ellipseControl->onMouseMoveEvent(event);
 	updateGL();
 }
 
 void GLWidget::keyPressEvent(QKeyEvent *event)
 {
 	qDebug() << "key press:" << event->text();
-	if(event->key()==Qt::Key_F)
-		circleControl->onFill();
-	updateGL();
+//	if(event->key()==Qt::Key_F)
+//		circleControl->onFill();
+//	updateGL();
 }
 

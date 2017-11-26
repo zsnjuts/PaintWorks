@@ -13,8 +13,7 @@ public:
 	CircleControl(int width, int height);
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);
-//	void onMouse(int button, int state, int x, int y);
-//	void onMotion(int x, int y);
+
 	void onDraw();
 	void onFill();
 

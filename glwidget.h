@@ -3,6 +3,7 @@
 
 #include "LineControl.h"
 #include "CircleControl.h"
+#include "EllipseControl.h"
 #include <QtOpenGL/QtOpenGL>
 #include <GL/glu.h>
 #include <QMouseEvent>
@@ -25,6 +26,7 @@ protected:
 private:
 	LineControl *lineControl;
 	CircleControl *circleControl;
+	EllipseControl *ellipseControl;
 };
 
 #endif // GLWIDGET_H

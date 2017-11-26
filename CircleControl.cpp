@@ -31,7 +31,7 @@ void CircleControl::onMouseMoveEvent(QMouseEvent *event)
 	Point center = curCircle->getCenter();
 	curCircle->setRadius((int)sqrt(
 		(x - center.getX())*(x - center.getX())+ (glY - center.getY())*(glY - center.getY()) ));
-	curCircle->draw();
+	//curCircle->draw();
 }
 
 void CircleControl::onDraw()
@@ -39,30 +39,8 @@ void CircleControl::onDraw()
 	for(Circle *circle:circles)
 		circle->draw();
 }
-/*
-void CircleControl::onMouse(int button, int state, int x, int y)
-{
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
-	{
-		curCircle = new Circle(Point(GLUT_COORDINATE, 400, x, y), 1);
-		curCircle->draw();
-		circles.push_back(curCircle);
-	}
-}
-
-void CircleControl::onMotion(int x, int y)
-{
-	if (curCircle == NULL)
-		return;
-	Point center = curCircle->getCenter();
-	int glY = Point::getBoardHeight() - y;
-	curCircle->setRadius((int)sqrt(
-		(x - center.getX())*(x - center.getX())+ (glY - center.getGlY())*(glY - center.getGlY()) ));
-	curCircle->draw();
-}*/
 
 void CircleControl::onFill()
 {
-	cout << "fill" << endl;
 	curCircle->fillColor();
 }

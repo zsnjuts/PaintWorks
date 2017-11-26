@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     Point.cpp \
     Circle.cpp \
     CircleControl.cpp \
-    Area.cpp
+    Area.cpp \
+    Ellipse.cpp \
+    EllipseControl.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -35,6 +37,8 @@ HEADERS  += mainwindow.h \
     Point.h \
     CircleControl.h \
     Circle.h \
-    Area.h
+    Area.h \
+    Ellipse.h \
+    EllipseControl.h
 
 FORMS    += mainwindow.ui
