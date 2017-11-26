@@ -21,7 +21,10 @@ SOURCES += main.cpp\
     FigureControl.cpp \
     Line.cpp \
     LineControl.cpp \
-    Point.cpp
+    Point.cpp \
+    Circle.cpp \
+    CircleControl.cpp \
+    Area.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -29,6 +32,9 @@ HEADERS  += mainwindow.h \
     FigureControl.h \
     Line.h \
     LineControl.h \
-    Point.h
+    Point.h \
+    CircleControl.h \
+    Circle.h \
+    Area.h
 
 FORMS    += mainwindow.ui

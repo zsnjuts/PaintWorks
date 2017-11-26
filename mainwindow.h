@@ -19,6 +19,9 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+protected:
+	void keyPressEvent(QKeyEvent *event);
+
 private slots:
 	void on_action_New_triggered();
 

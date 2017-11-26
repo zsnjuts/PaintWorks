@@ -29,7 +29,7 @@ public:
 
 private:
 	int x; //gl与glut横坐标相同
-	int y; //以gl坐标系为准，y轴原点在左下角
+	int y; //glY,以gl坐标系为准，y轴原点在左下角
 };
 
 #endif // !POINT_H

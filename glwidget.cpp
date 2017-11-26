@@ -3,6 +3,8 @@
 GLWidget::GLWidget(QWidget *parent):QGLWidget(parent)
 {
 	lineControl = new LineControl;
+	circleControl = new CircleControl;
+	setFocusPolicy(Qt::StrongFocus);
 }
 
 GLWidget::~GLWidget()
@@ -31,23 +33,35 @@ void GLWidget::resizeGL(int w, int h)
 
 	//设置FigureControl
 	lineControl->resize(w, h);
+	circleControl->resize(w, h);
 }
 
 void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);//清屏
 	lineControl->onDraw();
+	circleControl->onDraw();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-	lineControl->onMousePressEvent(event);
+	//lineControl->onMousePressEvent(event);
+	circleControl->onMousePressEvent(event);
 	updateGL();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	lineControl->onMouseMoveEvent(event);
+	//lineControl->onMouseMoveEvent(event);
+	circleControl->onMouseMoveEvent(event);
+	updateGL();
+}
+
+void GLWidget::keyPressEvent(QKeyEvent *event)
+{
+	qDebug() << "key press:" << event->text();
+	if(event->key()==Qt::Key_F)
+		circleControl->onFill();
 	updateGL();
 }
 
