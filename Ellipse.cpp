@@ -46,14 +46,14 @@ void MyEllipse::calculatePoints()
 	long long x = 0, y = ry, p = 4 * ry*ry - 4 * rx*rx*ry + rx*rx;
 	while (ry*ry*x < rx*rx*y)
 	{
-		x++;
 		if (p < 0)
 			p += 4 * (2 * ry*ry*x + 3 * ry*ry);
 		else
 		{
-			y--;
 			p += 4 * (2 * ry*ry*x - 2 * rx*rx*y + 2 * rx*rx + 3 * ry*ry);
+			y--;
 		}
+		x++;
 		points.push_back(new Point(center.getX() + x, center.getY() + y)); //第一象限
 		points.push_back(new Point(center.getX() - x, center.getY() + y)); //第二象限
 		points.push_back(new Point(center.getX() - x, center.getY() - y)); //第三象限
@@ -64,14 +64,14 @@ void MyEllipse::calculatePoints()
 	p = ry*ry*(2 * x + 1)*(2 * x + 1) + 4 * rx*rx*(y - 1)*(y - 1) - 4 * rx*rx*ry*ry;
 	while (y >= 0)
 	{
-		y--;
 		if (p <= 0)
 		{
-			x++;
 			p += 4 * (2 * ry*ry*x - 2 * rx*rx*y + 2 * ry*ry + 3 * rx*rx);
+			x++;
 		}
 		else
 			p += 4 * (-2 * rx*rx*y + 3 * rx*rx);
+		y--;
 			
 		points.push_back(new Point(center.getX() + x, center.getY() + y)); //第一象限
 		points.push_back(new Point(center.getX() - x, center.getY() + y)); //第二象限
