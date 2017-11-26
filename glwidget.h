@@ -4,9 +4,11 @@
 #include "LineControl.h"
 #include "CircleControl.h"
 #include "EllipseControl.h"
+#include "PolygonControl.h"
 #include <QtOpenGL/QtOpenGL>
 #include <GL/glu.h>
 #include <QMouseEvent>
+#include <vector>
 
 class GLWidget : public QGLWidget
 {
@@ -24,9 +26,8 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 
 private:
-	LineControl *lineControl;
-	CircleControl *circleControl;
-	EllipseControl *ellipseControl;
+	FigureControl *curFigureControl;
+	vector<FigureControl*> figureControls;
 };
 
 #endif // GLWIDGET_H

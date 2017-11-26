@@ -26,7 +26,10 @@ SOURCES += main.cpp\
     CircleControl.cpp \
     Area.cpp \
     Ellipse.cpp \
-    EllipseControl.cpp
+    EllipseControl.cpp \
+    Polygon.cpp \
+    PolygonControl.cpp \
+    CompFigure.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -39,6 +42,9 @@ HEADERS  += mainwindow.h \
     Circle.h \
     Area.h \
     Ellipse.h \
-    EllipseControl.h
+    EllipseControl.h \
+    Polygon.h \
+    PolygonControl.h \
+    CompFigure.h
 
 FORMS    += mainwindow.ui

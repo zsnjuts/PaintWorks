@@ -5,6 +5,7 @@ using namespace std;
 
 CircleControl::CircleControl()
 {
+	curCircle = NULL;
 }
 
 CircleControl::CircleControl(int width, int height):FigureControl(width,height)

@@ -5,6 +5,11 @@ LineControl::LineControl()
 	curLine = NULL;
 }
 
+LineControl::LineControl(int width, int height):FigureControl(width, height)
+{
+	curLine = NULL;
+}
+
 void LineControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
@@ -19,7 +24,7 @@ void LineControl::onMouseMoveEvent(QMouseEvent *event)
 	if (curLine == NULL)
 		return;
 	curLine->setEndPoint(Point(event->x(), height-event->y()));
-	curLine->draw();
+	//curLine->draw();
 }
 
 void LineControl::onDraw()

@@ -11,7 +11,8 @@ public:
 	void resize(int width, int height);
 
 	virtual void onMousePressEvent(QMouseEvent *event);
-	virtual void onMouseMoveEvent(QMouseEvent *event);
+	virtual void onMouseMoveEvent(QMouseEvent *event); //鼠标按下时鼠标的移动
+	virtual void onMousePassiveMoveEvent(QMouseEvent *event); //鼠标未被按下时鼠标的移动
 	virtual void onDraw();
 	virtual void onFill();
 

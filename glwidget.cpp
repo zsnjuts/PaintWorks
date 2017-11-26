@@ -2,10 +2,14 @@
 
 GLWidget::GLWidget(QWidget *parent):QGLWidget(parent)
 {
-	lineControl = new LineControl;
-	circleControl = new CircleControl;
-	ellipseControl = new EllipseControl;
+	figureControls.push_back(new LineControl);
+	figureControls.push_back(new CircleControl);
+	figureControls.push_back(new EllipseControl);
+	figureControls.push_back(new PolygonControl);
+	curFigureControl = figureControls[0];
+
 	setFocusPolicy(Qt::StrongFocus);
+	setMouseTracking(true); //跟踪鼠标，接收非点击鼠标移动事件
 }
 
 GLWidget::~GLWidget()
@@ -33,40 +37,47 @@ void GLWidget::resizeGL(int w, int h)
 	glViewport(0,0,(GLsizei)w,(GLsizei)h);
 
 	//设置FigureControl
-	lineControl->resize(w, h);
-	circleControl->resize(w, h);
-	ellipseControl->resize(w, h);
+	for(FigureControl *figureControl : figureControls)
+		figureControl->resize(w, h);
 }
 
 void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);//清屏
-	lineControl->onDraw();
-	circleControl->onDraw();
-	ellipseControl->onDraw();
+	for(FigureControl *figureControl : figureControls)
+		figureControl->onDraw();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-	//lineControl->onMousePressEvent(event);
-	//circleControl->onMousePressEvent(event);
-	ellipseControl->onMousePressEvent(event);
+	curFigureControl->onMousePressEvent(event);
 	updateGL();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	//lineControl->onMouseMoveEvent(event);
-	//circleControl->onMouseMoveEvent(event);
-	ellipseControl->onMouseMoveEvent(event);
+	if(event->buttons() & Qt::LeftButton) //左键按下时鼠标移动事件
+		curFigureControl->onMouseMoveEvent(event);
+	else
+		curFigureControl->onMousePassiveMoveEvent(event);
 	updateGL();
 }
 
 void GLWidget::keyPressEvent(QKeyEvent *event)
 {
-	qDebug() << "key press:" << event->text();
-//	if(event->key()==Qt::Key_F)
-//		circleControl->onFill();
-//	updateGL();
+	if(event->key()==Qt::Key_F)
+		curFigureControl->onFill();
+	else
+	{
+		switch(event->key())
+		{
+		case Qt::Key_0: curFigureControl = figureControls[0]; break;
+		case Qt::Key_1: curFigureControl = figureControls[1]; break;
+		case Qt::Key_2: curFigureControl = figureControls[2]; break;
+		case Qt::Key_3: curFigureControl = figureControls[3]; break;
+		default: ;
+		}
+	}
+	updateGL();
 }
 
