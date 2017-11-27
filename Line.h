@@ -2,9 +2,9 @@
 #define LINE_H
 
 #include "Point.h"
-#include "Figure.h"
+#include "SimpleFigure.h"
 
-class Line: public Figure
+class Line: public SimpleFigure
 {
 public:
 	Line();

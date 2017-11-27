@@ -15,18 +15,21 @@ Circle::Circle(Point center, int radius)
 
 Circle::~Circle()
 {
-	clear();
+	for(Point *p : fillPoints)
+		delete p;
+	for(Point *p : points)
+		delete p;
 }
 
 void Circle::draw()
 {
-	Figure::draw();
+	SimpleFigure::draw();
 	Area::fillColor();
 }
 
 void Circle::clear()
 {
-	Figure::clear();
+	SimpleFigure::clear();
 	Area::clearColor();
 }
 

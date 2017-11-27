@@ -2,9 +2,9 @@
 #define ELLIPSE_H
 
 #include "Point.h"
-#include "Figure.h"
+#include "SimpleFigure.h"
 
-class MyEllipse:public Figure
+class MyEllipse:public SimpleFigure
 {
 public:
 	MyEllipse();

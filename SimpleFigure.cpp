@@ -1,13 +1,12 @@
-#include "Figure.h"
-#include <iostream>
-using namespace std;
+#include "SimpleFigure.h"
 
-Figure::~Figure()
+SimpleFigure::~SimpleFigure()
 {
-	clear();
+	for(Point *p : points)
+		delete p;
 }
 
-void Figure::draw()
+void SimpleFigure::draw()
 {
 	glPointSize(1.0);
 	glColor3f(1.0, 0.0, 0.0);
@@ -18,14 +17,15 @@ void Figure::draw()
 	glFlush();
 }
 
-void Figure::clear()
+void SimpleFigure::clear()
 {
 	for (auto it : points)
 		delete it;
 	points.erase(points.begin(), points.end());
 }
 
-const vector<Point*>& Figure::getPoints() const
+const vector<Point *> &SimpleFigure::getPoints() const
 {
 	return points;
 }
+

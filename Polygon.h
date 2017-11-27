@@ -3,15 +3,16 @@
 
 #include "Line.h"
 #include "Area.h"
-#include "CompFigure.h"
+#include "Figure.h"
 #include <vector>
 using namespace std;
 
-class MyPolygon:public CompFigure, public Area
+class MyPolygon:public Figure, public Area
 {
 public:
 	MyPolygon();
 	MyPolygon(const vector<Line*> &initLines);
+	~MyPolygon();
 
 	void draw(); //轮廓+填充
 	void clear(); //清空轮廓点+清空填充点

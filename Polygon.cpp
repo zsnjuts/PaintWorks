@@ -9,22 +9,30 @@ MyPolygon::MyPolygon()
 MyPolygon::MyPolygon(const vector<Line*> &initLines):lines(initLines)
 {
 	for (Line *line : initLines) //line的起始点与vertex一一对应
-	{
 		vertexes.push_back(new Point(line->getBeginPoint()));
-		figures.push_back(line);
-	}
+}
+
+MyPolygon::~MyPolygon()
+{
+	for(Point *p : fillPoints)
+		delete p;
+	for(Line *line : lines)
+		delete line;
 }
 
 void MyPolygon::draw()
 {
-	CompFigure::draw();
+	for(Line *line : lines)
+		line->draw();
 	Area::fillColor();
 }
 
 void MyPolygon::clear()
-{
-	CompFigure::clear();
+{	
 	Area::clearColor();
+	for(Line *line : lines)
+		delete line;
+	lines.erase(lines.begin(), lines.end());
 }
 
 struct Edge

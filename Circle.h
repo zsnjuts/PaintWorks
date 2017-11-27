@@ -3,11 +3,11 @@
 
 #include "Area.h"
 #include "Point.h"
-#include "Figure.h"
+#include "SimpleFigure.h"
 #include <vector>
 using namespace std;
 
-class Circle: public Figure, public Area
+class Circle: public SimpleFigure, public Area
 {
 public:
 	Circle();

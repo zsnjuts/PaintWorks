@@ -17,7 +17,6 @@ CONFIG += c++11
 SOURCES += main.cpp\
         mainwindow.cpp \
     glwidget.cpp \
-    Figure.cpp \
     FigureControl.cpp \
     Line.cpp \
     LineControl.cpp \
@@ -29,7 +28,8 @@ SOURCES += main.cpp\
     EllipseControl.cpp \
     Polygon.cpp \
     PolygonControl.cpp \
-    CompFigure.cpp
+    CompFigure.cpp \
+    SimpleFigure.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -45,6 +45,7 @@ HEADERS  += mainwindow.h \
     EllipseControl.h \
     Polygon.h \
     PolygonControl.h \
-    CompFigure.h
+    CompFigure.h \
+    SimpleFigure.h
 
 FORMS    += mainwindow.ui

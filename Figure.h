@@ -1,21 +1,13 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
-#include "Point.h"
-#include <vector>
-#include <GL/glu.h>
-using namespace std;
-
+//Figure为所有图形的基类，只提供接口，不提供实现
 class Figure
 {
 public:
-	~Figure();
-	virtual void draw();
-	virtual void clear();
-	const vector<Point*> &getPoints() const;
+	virtual void draw()=0;
+	virtual void clear()=0;
 
-protected:
-	vector<Point*> points;
 };
 
 #endif // !FIGURE_H
