@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="paintworks_resource.qrc">
+    <normaloff>:/images/images/paintworks.png</normaloff>:/images/images/paintworks.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QMdiArea" name="mdiArea">
     <property name="geometry">
@@ -46,13 +50,17 @@
    </widget>
    <addaction name="menu_File"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
+  <widget class="QToolBar" name="toolBar">
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>true</bool>
    </attribute>
+   <addaction name="actionLine"/>
+   <addaction name="actionCircle"/>
+   <addaction name="actionEllipse"/>
+   <addaction name="actionPolygon"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_New">
@@ -68,8 +76,72 @@
     <string>Quit</string>
    </property>
   </action>
+  <action name="actionLine">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="paintworks_resource.qrc">
+     <normaloff>:/images/images/line.png</normaloff>:/images/images/line.png</iconset>
+   </property>
+   <property name="text">
+    <string>Line</string>
+   </property>
+   <property name="toolTip">
+    <string>直线</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="paintworks_resource.qrc">
+     <normaloff>:/images/images/circle.png</normaloff>:/images/images/circle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Circle</string>
+   </property>
+   <property name="toolTip">
+    <string>圆</string>
+   </property>
+  </action>
+  <action name="actionEllipse">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>:/images/images/ellipse.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Ellipse</string>
+   </property>
+   <property name="toolTip">
+    <string>椭圆</string>
+   </property>
+  </action>
+  <action name="actionPolygon">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normalon>:/images/images/polygon.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Polygon</string>
+   </property>
+   <property name="toolTip">
+    <string>多边形</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="paintworks_resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

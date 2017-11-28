@@ -1,12 +1,12 @@
 #include "glwidget.h"
 
-GLWidget::GLWidget(QWidget *parent):QGLWidget(parent)
+GLWidget::GLWidget(QWidget *parent, Mode m):QGLWidget(parent)
 {
 	figureControls.push_back(new LineControl);
 	figureControls.push_back(new CircleControl);
 	figureControls.push_back(new EllipseControl);
 	figureControls.push_back(new PolygonControl);
-	curFigureControl = figureControls[0];
+	setMode(m);
 
 	setFocusPolicy(Qt::StrongFocus);
 	setMouseTracking(true); //跟踪鼠标，接收非点击鼠标移动事件
@@ -14,6 +14,18 @@ GLWidget::GLWidget(QWidget *parent):QGLWidget(parent)
 
 GLWidget::~GLWidget()
 {
+}
+
+void GLWidget::setMode(Mode m)
+{
+	switch(m)
+	{
+	case LINE: curFigureControl = figureControls[0]; break;
+	case CIRCLE: curFigureControl = figureControls[1]; break;
+	case ELLIPSE: curFigureControl = figureControls[2]; break;
+	case POLYGON: curFigureControl = figureControls[3]; break;
+	default: ;
+	}
 }
 
 void GLWidget::initializeGL()

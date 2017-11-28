@@ -1,4 +1,6 @@
 #include "SimpleFigure.h"
+#include <GL/glu.h>
+using namespace std;
 
 SimpleFigure::~SimpleFigure()
 {

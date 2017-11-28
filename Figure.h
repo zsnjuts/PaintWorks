@@ -6,6 +6,7 @@ class Figure
 {
 public:
 	virtual void draw()=0;
+//	virtual void markDraw()=0;
 	virtual void clear()=0;
 
 };

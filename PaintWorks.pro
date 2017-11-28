@@ -49,3 +49,8 @@ HEADERS  += mainwindow.h \
     SimpleFigure.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    paintworks_resource.qrc
+
+RC_FILE += paintworks.rc

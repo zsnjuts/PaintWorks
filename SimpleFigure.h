@@ -3,6 +3,7 @@
 
 #include "Point.h"
 #include "Figure.h"
+#include <vector>
 
 class SimpleFigure : public Figure
 {
@@ -10,10 +11,10 @@ public:
 	~SimpleFigure();
 	virtual void draw();
 	virtual void clear();
-	const vector<Point*> &getPoints() const;
+	const std::vector<Point*> &getPoints() const;
 
 protected:
-	vector<Point*> points;
+	std::vector<Point*> points;
 };
 
 #endif // SIMPLEFIGURE_H

@@ -37,6 +37,10 @@ void Point::draw()
 	glVertex2i(x, y);
 }
 
+//void Point::markDraw()
+//{
+//}
+
 //void Point::clear()
 //{
 //}

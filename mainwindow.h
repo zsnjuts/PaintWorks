@@ -25,8 +25,20 @@ protected:
 private slots:
 	void on_action_New_triggered();
 
+	void on_actionLine_triggered();
+
+	void on_actionCircle_triggered();
+
+	void on_actionEllipse_triggered();
+
+	void on_actionPolygon_triggered();
+
 private:
+	Mode m;
 	Ui::MainWindow *ui;
+	QVector<GLWidget*> canvases;
+
+	void setMode(Mode m);
 };
 
 #endif // MAINWINDOW_H

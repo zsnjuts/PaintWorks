@@ -4,7 +4,7 @@ CompFigure::CompFigure()
 {
 }
 
-CompFigure::CompFigure(const vector<Figure*>& initFigures):figures(initFigures)
+CompFigure::CompFigure(const std::vector<Figure*>& initFigures):figures(initFigures)
 {
 }
 

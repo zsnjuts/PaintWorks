@@ -10,12 +10,16 @@
 #include <QMouseEvent>
 #include <vector>
 
+enum Mode{LINE, CIRCLE, ELLIPSE, POLYGON};
+
 class GLWidget : public QGLWidget
 {
 	Q_OBJECT
 public:
-	explicit GLWidget(QWidget *parent=0);
+	explicit GLWidget(QWidget *parent, Mode m);
 	~GLWidget();
+
+	void setMode(Mode m);
 
 protected:
 	void initializeGL();

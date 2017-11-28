@@ -8,13 +8,13 @@ class CompFigure
 {
 public:
 	CompFigure();
-	CompFigure(const vector<Figure*> &initFigures);
+	CompFigure(const std::vector<Figure*> &initFigures);
 	~CompFigure();
 	virtual void draw();
 	virtual void clear();
 
 protected:
-	vector<Figure*> figures;
+	std::vector<Figure*> figures;
 };
 
 #endif // !COMPFIGURE_H

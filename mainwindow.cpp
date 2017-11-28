@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->mdiArea->setTabsClosable(true); //tab上方有一个关闭小按钮
 	ui->mdiArea->setTabsMovable(true); //可拖动tab在tabBar上移动
 	ui->mdiArea->setTabShape(QTabWidget::Triangular); //设置tab形状：梯形
+
+	setMode(LINE); //初始模式
 }
 
 MainWindow::~MainWindow()
@@ -23,14 +25,52 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
-	qDebug() << "keyPress Main" << event->text();
-	//ui->mdiArea->activeSubWindow()->keyPressEvent(event);
 }
 
 void MainWindow::on_action_New_triggered()
 {
-	QMdiSubWindow *w = ui->mdiArea->addSubWindow(new GLWidget(this));
+	canvases.push_back(new GLWidget(this, m));
+	QMdiSubWindow *w = ui->mdiArea->addSubWindow(canvases.back());
 	ui->mdiArea->setActiveSubWindow(w);
 	w->setWindowTitle(tr("画布%1").arg(ui->mdiArea->subWindowList().size()));
 	w->show();
+}
+
+void MainWindow::on_actionLine_triggered()
+{
+	setMode(LINE);
+}
+
+void MainWindow::on_actionCircle_triggered()
+{
+	setMode(CIRCLE);
+}
+
+void MainWindow::on_actionEllipse_triggered()
+{
+	setMode(ELLIPSE);
+}
+
+void MainWindow::on_actionPolygon_triggered()
+{
+	setMode(POLYGON);
+}
+
+void MainWindow::setMode(Mode m)
+{
+	this->m = m;
+	for(GLWidget *wgt : canvases)
+		wgt->setMode(m);
+	ui->actionLine->setChecked(false);
+	ui->actionCircle->setChecked(false);
+	ui->actionEllipse->setChecked(false);
+	ui->actionPolygon->setChecked(false);
+	switch(m)
+	{
+	case LINE: ui->actionLine->setChecked(true); break;
+	case CIRCLE: ui->actionCircle->setChecked(true); break;
+	case ELLIPSE: ui->actionEllipse->setChecked(true); break;
+	case POLYGON: ui->actionPolygon->setChecked(true); break;
+	default: ;
+	}
 }
