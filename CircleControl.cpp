@@ -8,6 +8,11 @@ CircleControl::CircleControl()
 	curCircle = NULL;
 }
 
+CircleControl::CircleControl(std::vector<Figure *> *figures):FigureControl(figures)
+{
+	curCircle = NULL;
+}
+
 CircleControl::CircleControl(int width, int height):FigureControl(width,height)
 {
 	curCircle = NULL;
@@ -18,8 +23,8 @@ void CircleControl::onMousePressEvent(QMouseEvent *event)
 	if(event->button()==Qt::LeftButton)
 	{
 		curCircle = new Circle(Point(event->x(), height-event->y()), 1);
-		curCircle->draw();
 		circles.push_back(curCircle);
+		allFigures->push_back(curCircle);
 	}
 }
 
@@ -32,7 +37,6 @@ void CircleControl::onMouseMoveEvent(QMouseEvent *event)
 	Point center = curCircle->getCenter();
 	curCircle->setRadius((int)sqrt(
 		(x - center.getX())*(x - center.getX())+ (glY - center.getY())*(glY - center.getY()) ));
-	//curCircle->draw();
 }
 
 void CircleControl::onDraw()

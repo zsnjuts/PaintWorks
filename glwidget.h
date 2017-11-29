@@ -32,6 +32,7 @@ protected:
 private:
 	FigureControl *curFigureControl;
 	vector<FigureControl*> figureControls;
+	vector<Figure*> allFigures; //本画布中的所有图形
 };
 
 #endif // GLWIDGET_H

@@ -10,6 +10,7 @@ class EllipseControl:public FigureControl
 {
 public:
 	EllipseControl();
+	EllipseControl(std::vector<Figure*> *figures);
 	EllipseControl(int width, int height);
 
 	void onMousePressEvent(QMouseEvent *event);

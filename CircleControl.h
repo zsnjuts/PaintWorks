@@ -10,6 +10,7 @@ class CircleControl:public FigureControl
 {
 public:
 	CircleControl();
+	CircleControl(std::vector<Figure*> *figures);
 	CircleControl(int width, int height);
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);

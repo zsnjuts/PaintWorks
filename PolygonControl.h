@@ -11,6 +11,7 @@ class PolygonControl:public FigureControl
 {
 public:
 	PolygonControl();
+	PolygonControl(std::vector<Figure*> *figures);
 	PolygonControl(int width, int height);
 
 	void onMousePressEvent(QMouseEvent *event);
@@ -20,7 +21,7 @@ public:
 	void onFill();
 
 private:
-	LineControl *curLineControl; //当前聚焦的折线
+	vector<Line*> curLines; //当前聚焦的折线
 	vector<MyPolygon*> polygons;
 };
 

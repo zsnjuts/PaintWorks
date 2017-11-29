@@ -55,7 +55,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="actionLine"/>
    <addaction name="actionCircle"/>
@@ -90,6 +90,9 @@
    <property name="toolTip">
     <string>直线</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+L</string>
+   </property>
   </action>
   <action name="actionCircle">
    <property name="checkable">
@@ -104,6 +107,9 @@
    </property>
    <property name="toolTip">
     <string>圆</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
    </property>
   </action>
   <action name="actionEllipse">
@@ -121,6 +127,9 @@
    <property name="toolTip">
     <string>椭圆</string>
    </property>
+   <property name="shortcut">
+    <string>Alt+E</string>
+   </property>
   </action>
   <action name="actionPolygon">
    <property name="checkable">
@@ -136,6 +145,9 @@
    </property>
    <property name="toolTip">
     <string>多边形</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+P</string>
    </property>
   </action>
  </widget>

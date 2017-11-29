@@ -11,12 +11,13 @@ class LineControl:public FigureControl
 {
 public:
 	LineControl();
+	LineControl(std::vector<Figure*> *figures);
 	LineControl(int width, int height);
+	LineControl(std::vector<Figure*> *figures, int width, int height);
 
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);
-//	void onMouse(int button, int state, int x, int y);
-//	void onMotion(int x, int y);
+
 	void onDraw();
 
 	const vector<Line*> &getLines();

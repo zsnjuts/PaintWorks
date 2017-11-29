@@ -6,6 +6,11 @@ EllipseControl::EllipseControl()
 	curEllipse = NULL;
 }
 
+EllipseControl::EllipseControl(std::vector<Figure *> *figures):FigureControl(figures)
+{
+	curEllipse = NULL;
+}
+
 EllipseControl::EllipseControl(int width, int height):FigureControl(width, height)
 {
 	curEllipse = NULL;
@@ -17,6 +22,7 @@ void EllipseControl::onMousePressEvent(QMouseEvent *event)
 	{
 		curEllipse = new MyEllipse(Point(event->x(), height-event->y()), Point(event->x(), height-event->y()));
 		ellipses.push_back(curEllipse);
+		allFigures->push_back(curEllipse);
 	}
 }
 

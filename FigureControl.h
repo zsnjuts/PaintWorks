@@ -1,13 +1,17 @@
 #ifndef FIGURECONTROL_H
 #define FIGURECONTROL_H
 
+#include "Figure.h"
 #include <QMouseEvent>
+#include <vector>
 
 class FigureControl
 {
 public:
 	FigureControl();
+	FigureControl(std::vector<Figure*> *figures);
 	FigureControl(int width, int height);
+	FigureControl(std::vector<Figure*> *figures, int width, int height);
 	void resize(int width, int height);
 
 	virtual void onMousePressEvent(QMouseEvent *event);
@@ -19,6 +23,7 @@ public:
 protected:
 	int width; //当前x轴像素点数
 	int height; //当前y轴像素点数
+	std::vector<Figure*> *allFigures; //指向全局的Figure数组
 };
 
 #endif // !FIGURECONTROL_H

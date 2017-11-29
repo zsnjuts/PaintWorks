@@ -2,10 +2,10 @@
 
 GLWidget::GLWidget(QWidget *parent, Mode m):QGLWidget(parent)
 {
-	figureControls.push_back(new LineControl);
-	figureControls.push_back(new CircleControl);
-	figureControls.push_back(new EllipseControl);
-	figureControls.push_back(new PolygonControl);
+	figureControls.push_back(new LineControl(&allFigures));
+	figureControls.push_back(new CircleControl(&allFigures));
+	figureControls.push_back(new EllipseControl(&allFigures));
+	figureControls.push_back(new PolygonControl(&allFigures));
 	setMode(m);
 
 	setFocusPolicy(Qt::StrongFocus);
@@ -56,8 +56,10 @@ void GLWidget::resizeGL(int w, int h)
 void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);//清屏
-	for(FigureControl *figureControl : figureControls)
-		figureControl->onDraw();
+//	for(FigureControl *figureControl : figureControls)
+//		figureControl->onDraw();
+	for(Figure *figure : allFigures)
+		figure->draw();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)

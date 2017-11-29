@@ -4,8 +4,20 @@ FigureControl::FigureControl()
 {
 }
 
+FigureControl::FigureControl(std::vector<Figure *> *figures)
+{
+	allFigures = figures;
+}
+
 FigureControl::FigureControl(int width, int height)
 {
+	this->width = width;
+	this->height = height;
+}
+
+FigureControl::FigureControl(std::vector<Figure *> *figures, int width, int height)
+{
+	allFigures = figures;
 	this->width = width;
 	this->height = height;
 }
