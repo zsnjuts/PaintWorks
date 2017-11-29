@@ -35,7 +35,7 @@ void Circle::clear()
 
 void Circle::markDraw()
 {
-	vector<Point> markPoints;
+	markPoints.erase(markPoints.begin(), markPoints.end());
 	markPoints.push_back(Point(center.getX()-radius, center.getY()-radius));
 	markPoints.push_back(Point(center.getX()-radius, center.getY()+radius));
 	markPoints.push_back(Point(center.getX()+radius, center.getY()+radius));
@@ -48,6 +48,11 @@ void Circle::markDraw()
 Point Circle::getCenter()
 {
 	return center;
+}
+
+vector<Point> Circle::getMarkPoints()
+{
+	return markPoints;
 }
 
 void Circle::setRadius(int r)

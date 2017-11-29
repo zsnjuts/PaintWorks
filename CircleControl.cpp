@@ -22,9 +22,20 @@ void CircleControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
 	{
+		if(curCircle!=NULL)
+		{
+			Point curPoint(event->x(), height-event->y());
+			for(Point p:curCircle->getMarkPoints())
+				if(p.distanceTo(curPoint)<5)
+				{
+					setCP = MARKPOINT;
+					return;
+				}
+		}
 		curCircle = new Circle(Point(event->x(), height-event->y()), 1);
 		circles.push_back(curCircle);
 		allFigures->push_back(curCircle);
+		setCP = CIRCLEPOINT;
 	}
 }
 
@@ -35,8 +46,13 @@ void CircleControl::onMouseMoveEvent(QMouseEvent *event)
 	int x = event->x();
 	int glY = height - event->y();
 	Point center = curCircle->getCenter();
-	curCircle->setRadius((int)sqrt(
-		(x - center.getX())*(x - center.getX())+ (glY - center.getY())*(glY - center.getY()) ));
+	switch(setCP)
+	{
+	case CIRCLEPOINT: curCircle->setRadius((int)sqrt(
+											   (x-center.getX())*(x-center.getX()) + (glY-center.getY())*(glY-center.getY()) )); break;
+	case MARKPOINT: curCircle->setRadius((int)max(abs(x-center.getX()), abs(glY-center.getY()))); break;
+	default: ;
+	}
 }
 
 void CircleControl::onDraw()

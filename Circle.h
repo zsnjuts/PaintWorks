@@ -19,12 +19,14 @@ public:
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 
 	Point getCenter();
+	vector<Point> getMarkPoints();
 	void setRadius(int r);
 	void fillColor();
 
 private:
 	Point center; //圆心
 	int radius; //半径
+	vector<Point> markPoints; //标记点
 
 	void calculatePoints(); //计算轮廓点位置
 	void calculateFillPoints(); //计算填充点位置
