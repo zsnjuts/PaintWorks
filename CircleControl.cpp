@@ -45,7 +45,14 @@ void CircleControl::onDraw()
 		circle->draw();
 }
 
+void CircleControl::onMarkDraw()
+{
+	if(curCircle!=NULL)
+		curCircle->markDraw();
+}
+
 void CircleControl::onFill()
 {
-	curCircle->fillColor();
+	if(curCircle!=NULL)
+		curCircle->fillColor();
 }

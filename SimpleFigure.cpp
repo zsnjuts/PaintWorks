@@ -10,8 +10,8 @@ SimpleFigure::~SimpleFigure()
 
 void SimpleFigure::draw()
 {
-	glPointSize(1.0);
-	glColor3f(1.0, 0.0, 0.0);
+	glPointSize(2.0);
+	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POINTS);
 	for (auto it : points)
 		it->draw();

@@ -38,3 +38,9 @@ void EllipseControl::onDraw()
 	for(MyEllipse *ellipse : ellipses)
 		ellipse->draw();
 }
+
+void EllipseControl::onMarkDraw()
+{
+	if(curEllipse!=NULL)
+		curEllipse->markDraw();
+}

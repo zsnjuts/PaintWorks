@@ -16,6 +16,7 @@ public:
 	void onMouseMoveEvent(QMouseEvent *event);
 
 	void onDraw();
+	void onMarkDraw();
 	void onFill();
 
 private:

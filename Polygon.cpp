@@ -35,6 +35,29 @@ void MyPolygon::clear()
 	lines.erase(lines.begin(), lines.end());
 }
 
+void MyPolygon::markDraw()
+{
+	int minX = vertexes[0]->getX();
+	int maxX = vertexes[0]->getX();
+	int minY = vertexes[0]->getY();
+	int maxY = vertexes[0]->getY();
+	for(Point *v:vertexes)
+	{
+		minX = min(minX, v->getX());
+		maxX = max(maxX, v->getX());
+		minY = min(minY, v->getY());
+		maxY = max(maxY, v->getY());
+	}
+	vector<Point> markPoints;
+	markPoints.push_back(Point(minX, minY));
+	markPoints.push_back(Point(minX, maxY));
+	markPoints.push_back(Point(maxX, maxY));
+	markPoints.push_back(Point(maxX, minY));
+	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
+	for(Point p:markPoints)
+		p.markDraw();
+}
+
 struct Edge
 {
 	Edge() {}

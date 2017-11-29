@@ -16,6 +16,7 @@ public:
 
 	void draw(); //轮廓+填充
 	void clear(); //清空轮廓点+清空填充点
+	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 
 	void fillColor();
 

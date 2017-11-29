@@ -45,6 +45,12 @@ void Line::setEndPoint(const Point &p)
 	calculatePoints();
 }
 
+void Line::markDraw()
+{
+	begin.markDraw();
+	end.markDraw();
+}
+
 void Line::updateParameters()
 {
 	this->left = begin.getX() <= end.getX() ? &this->begin : &this->end;

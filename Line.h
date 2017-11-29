@@ -16,6 +16,8 @@ public:
 	Point getUpPoint() const;
 	void setEndPoint(const Point &p);
 
+	void markDraw(); //只负责绘制draw以外的标记，不绘制直线本身
+
 private:
 	Point begin;
 	Point end;

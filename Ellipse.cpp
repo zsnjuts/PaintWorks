@@ -23,6 +23,18 @@ MyEllipse::MyEllipse(const Point & center, int rx, int ry)
 	calculatePoints();
 }
 
+void MyEllipse::markDraw()
+{
+	vector<Point> markPoints;
+	markPoints.push_back(Point(center.getX()-rx, center.getY()-ry));
+	markPoints.push_back(Point(center.getX()-rx, center.getY()+ry));
+	markPoints.push_back(Point(center.getX()+rx, center.getY()+ry));
+	markPoints.push_back(Point(center.getX()+rx, center.getY()-ry));
+	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
+	for(Point p:markPoints)
+		p.markDraw();
+}
+
 void MyEllipse::setEndPoint(const Point &end)
 {
 	clear();

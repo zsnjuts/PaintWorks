@@ -5,9 +5,9 @@
 class Figure
 {
 public:
-	virtual void draw()=0;
-//	virtual void markDraw()=0;
-	virtual void clear()=0;
+	virtual void draw()=0; //绘制图形本身
+	virtual void markDraw()=0; //绘制除draw以外的标记：标记点(+矩形框)
+	virtual void clear()=0; //清除图形中的点并释放空间
 
 };
 

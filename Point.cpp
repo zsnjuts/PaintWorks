@@ -1,4 +1,5 @@
 #include "Point.h"
+#include <cmath>
 #include <GL/glu.h>
 #include <iostream>
 using namespace std;
@@ -37,9 +38,18 @@ void Point::draw()
 	glVertex2i(x, y);
 }
 
-//void Point::markDraw()
-//{
-//}
+void Point::markDraw()
+{
+	glBegin(GL_POLYGON);
+	glColor3f(0.0, 0.0, 1.0);
+	int n = 100; //绘制100个点
+	GLfloat R = 5.0f; //圆的半径
+	GLfloat pi = 3.1415926536f;
+	for(int i=0;i<n;i++)
+		glVertex2f(x+R*cos(2*pi/n*i), y+R*sin(2*pi/n*i));
+	glEnd();
+	glFlush();
+}
 
 //void Point::clear()
 //{

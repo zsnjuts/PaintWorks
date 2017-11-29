@@ -1,15 +1,18 @@
 #ifndef ELLIPSE_H
 #define ELLIPSE_H
 
+#include "Area.h"
 #include "Point.h"
 #include "SimpleFigure.h"
 
-class MyEllipse:public SimpleFigure
+class MyEllipse:public SimpleFigure, public Area
 {
 public:
 	MyEllipse();
 	MyEllipse(const Point &begin, const Point &end);
 	MyEllipse(const Point &center, int rx, int ry);
+
+	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 
 	void setEndPoint(const Point &end);
 

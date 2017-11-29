@@ -10,7 +10,7 @@
 #include <QMouseEvent>
 #include <vector>
 
-enum Mode{LINE, CIRCLE, ELLIPSE, POLYGON};
+enum Mode{LINE=0, CIRCLE, ELLIPSE, POLYGON};
 
 class GLWidget : public QGLWidget
 {
@@ -30,7 +30,8 @@ protected:
 	void keyPressEvent(QKeyEvent *event);
 
 private:
-	FigureControl *curFigureControl;
+//	FigureControl *curFigureControl;
+	int curCtrl; //当前FigureControl的索引
 	vector<FigureControl*> figureControls;
 	vector<Figure*> allFigures; //本画布中的所有图形
 };

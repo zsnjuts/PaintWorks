@@ -42,6 +42,12 @@ void LineControl::onDraw()
 		line->draw();
 }
 
+void LineControl::onMarkDraw()
+{
+	if(curLine!=NULL)
+		curLine->markDraw();
+}
+
 const vector<Line*> &LineControl::getLines()
 {
 	return lines;

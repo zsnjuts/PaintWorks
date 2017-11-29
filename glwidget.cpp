@@ -18,14 +18,7 @@ GLWidget::~GLWidget()
 
 void GLWidget::setMode(Mode m)
 {
-	switch(m)
-	{
-	case LINE: curFigureControl = figureControls[0]; break;
-	case CIRCLE: curFigureControl = figureControls[1]; break;
-	case ELLIPSE: curFigureControl = figureControls[2]; break;
-	case POLYGON: curFigureControl = figureControls[3]; break;
-	default: ;
-	}
+	curCtrl = m;
 }
 
 void GLWidget::initializeGL()
@@ -56,39 +49,38 @@ void GLWidget::resizeGL(int w, int h)
 void GLWidget::paintGL()
 {
 	glClear(GL_COLOR_BUFFER_BIT);//清屏
-//	for(FigureControl *figureControl : figureControls)
-//		figureControl->onDraw();
 	for(Figure *figure : allFigures)
 		figure->draw();
+	figureControls[curCtrl]->onMarkDraw();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-	curFigureControl->onMousePressEvent(event);
+	figureControls[curCtrl]->onMousePressEvent(event);
 	updateGL();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
 	if(event->buttons() & Qt::LeftButton) //左键按下时鼠标移动事件
-		curFigureControl->onMouseMoveEvent(event);
+		figureControls[curCtrl]->onMouseMoveEvent(event);
 	else
-		curFigureControl->onMousePassiveMoveEvent(event);
+		figureControls[curCtrl]->onMousePassiveMoveEvent(event);
 	updateGL();
 }
 
 void GLWidget::keyPressEvent(QKeyEvent *event)
 {
 	if(event->key()==Qt::Key_F)
-		curFigureControl->onFill();
+		figureControls[curCtrl]->onFill();
 	else
 	{
 		switch(event->key())
 		{
-		case Qt::Key_0: curFigureControl = figureControls[0]; break;
-		case Qt::Key_1: curFigureControl = figureControls[1]; break;
-		case Qt::Key_2: curFigureControl = figureControls[2]; break;
-		case Qt::Key_3: curFigureControl = figureControls[3]; break;
+		case Qt::Key_0: curCtrl = LINE; break;
+		case Qt::Key_1: curCtrl = CIRCLE; break;
+		case Qt::Key_2: curCtrl = ELLIPSE; break;
+		case Qt::Key_3: curCtrl = POLYGON; break;
 		default: ;
 		}
 	}

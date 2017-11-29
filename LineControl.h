@@ -19,6 +19,7 @@ public:
 	void onMouseMoveEvent(QMouseEvent *event);
 
 	void onDraw();
+	void onMarkDraw(); //绘制当前聚焦的直线的额外标记
 
 	const vector<Line*> &getLines();
 

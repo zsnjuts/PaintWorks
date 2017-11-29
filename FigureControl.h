@@ -17,7 +17,9 @@ public:
 	virtual void onMousePressEvent(QMouseEvent *event);
 	virtual void onMouseMoveEvent(QMouseEvent *event); //鼠标按下时鼠标的移动
 	virtual void onMousePassiveMoveEvent(QMouseEvent *event); //鼠标未被按下时鼠标的移动
-	virtual void onDraw();
+
+	virtual void onDraw(); //绘制所有图形（不带标记）
+	virtual void onMarkDraw(); //为当前图形添加标记
 	virtual void onFill();
 
 protected:

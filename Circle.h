@@ -16,6 +16,7 @@ public:
 
 	void draw(); //画轮廓点，若被填充，则也画填充点
 	void clear(); //删除轮廓点，若被填充，也删除填充点
+	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 
 	Point getCenter();
 	void setRadius(int r);

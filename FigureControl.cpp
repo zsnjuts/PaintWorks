@@ -44,6 +44,10 @@ void FigureControl::onDraw()
 {
 }
 
+void FigureControl::onMarkDraw()
+{
+}
+
 void FigureControl::onFill()
 {
 }

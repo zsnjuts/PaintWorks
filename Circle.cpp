@@ -33,6 +33,18 @@ void Circle::clear()
 	Area::clearColor();
 }
 
+void Circle::markDraw()
+{
+	vector<Point> markPoints;
+	markPoints.push_back(Point(center.getX()-radius, center.getY()-radius));
+	markPoints.push_back(Point(center.getX()-radius, center.getY()+radius));
+	markPoints.push_back(Point(center.getX()+radius, center.getY()+radius));
+	markPoints.push_back(Point(center.getX()+radius, center.getY()-radius));
+	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
+	for(Point p:markPoints)
+		p.markDraw();
+}
+
 Point Circle::getCenter()
 {
 	return center;

@@ -67,6 +67,9 @@
    <property name="text">
     <string>新建画布(&amp;N)</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="action_Q">
    <property name="text">

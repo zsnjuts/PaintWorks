@@ -53,7 +53,14 @@ void PolygonControl::onDraw()
 		polygon->draw();
 }
 
+void PolygonControl::onMarkDraw()
+{
+	if(!polygons.empty())
+		polygons.back()->markDraw();
+}
+
 void PolygonControl::onFill()
 {
-	polygons.back()->fillColor();
+	if(!polygons.empty())
+		polygons.back()->fillColor();
 }

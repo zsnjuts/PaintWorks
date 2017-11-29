@@ -17,6 +17,7 @@ public:
 	void onMouseMoveEvent(QMouseEvent *event);
 
 	void onDraw();
+	void onMarkDraw();
 
 private:
 	MyEllipse *curEllipse; //当前正在绘制的椭圆
