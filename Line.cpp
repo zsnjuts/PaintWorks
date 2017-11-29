@@ -37,6 +37,14 @@ Point Line::getUpPoint() const
 	return *up;
 }
 
+void Line::setBeginPoint(const Point &p)
+{
+	clear();
+	begin = p;
+	updateParameters();
+	calculatePoints();
+}
+
 void Line::setEndPoint(const Point &p)
 {
 	clear();

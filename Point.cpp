@@ -30,7 +30,8 @@ int Point::getY() const
 
 int Point::distanceTo(const Point &p) const
 {
-	return abs(this->x - p.x) + abs(this->y - p.y);
+	//return abs(this->x - p.x) + abs(this->y - p.y);
+	return sqrt((this->x - p.x)*(this->x - p.x) + (this->y - p.y)*(this->y - p.y) + 0.5); //+0.5用于四舍五入
 }
 
 void Point::draw()

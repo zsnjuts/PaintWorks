@@ -24,6 +24,7 @@ public:
 	const vector<Line*> &getLines();
 
 private:
+	enum SetLP{SETBEGIN, SETEND} setLP; //目前更改的是起点/终点
 	Line *curLine; //当前聚焦的直线
 	vector<Line*> lines;
 };

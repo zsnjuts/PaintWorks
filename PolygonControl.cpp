@@ -56,7 +56,15 @@ void PolygonControl::onDraw()
 void PolygonControl::onMarkDraw()
 {
 	if(!polygons.empty())
-		polygons.back()->markDraw();
+	{
+		if(curLines.empty())
+			polygons.back()->markDraw();
+		else
+		{
+			for(Line *line:curLines)
+				line->markDraw();
+		}
+	}
 }
 
 void PolygonControl::onFill()
