@@ -19,6 +19,7 @@ GLWidget::~GLWidget()
 void GLWidget::setMode(Mode m)
 {
 	curCtrl = m;
+	updateGL();
 }
 
 void GLWidget::initializeGL()

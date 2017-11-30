@@ -2,21 +2,24 @@
 
 PolygonControl::PolygonControl()
 {
+	setPV = -1;
 }
 
 PolygonControl::PolygonControl(std::vector<Figure *> *figures):FigureControl(figures)
 {
+	setPV = -1;
 }
 
 PolygonControl::PolygonControl(int width, int height):FigureControl(width, height)
 {
+	setPV = -1;
 }
 
 void PolygonControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
 	{
-		if(!curLines.empty() && curLines.front()->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<5)
+		if(!curLines.empty() && curLines.front()->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<=10)
 		{
 			curLines.back()->setEndPoint(curLines.front()->getBeginPoint());
 			polygons.push_back(new MyPolygon(curLines));
@@ -29,13 +32,30 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
 						break;
 					}
 			curLines.erase(curLines.begin(), curLines.end());
+			setPV = -1;
+			return;
 		}
-		else
+		else if(curLines.empty() && !polygons.empty())
 		{
-			curLines.push_back(new Line(Point(event->x(), height-event->y()), Point(event->x(), height-event->y())));
-			allFigures->push_back(curLines.back());
+			Point curPoint(event->x(), height-event->y());
+			vector<Point> vtxs = polygons.back()->getVertexes();
+			for(int i=0;i<vtxs.size();i++)
+				if(curPoint.distanceTo(vtxs[i])<=5)
+				{
+					setPV = i;
+					return;
+				}
 		}
+		curLines.push_back(new Line(Point(event->x(), height-event->y()), Point(event->x(), height-event->y())));
+		allFigures->push_back(curLines.back());
+		setPV = -1;
 	}
+}
+
+void PolygonControl::onMouseMoveEvent(QMouseEvent *event)
+{
+	if(!polygons.empty() && setPV>=0)
+		polygons.back()->setVertex(setPV, Point(event->x(), height-event->y()));
 }
 
 void PolygonControl::onMousePassiveMoveEvent(QMouseEvent *event)
@@ -43,6 +63,10 @@ void PolygonControl::onMousePassiveMoveEvent(QMouseEvent *event)
 	if(curLines.empty())
 		return;
 	curLines.back()->setEndPoint(Point(event->x(), height-event->y()));
+//	if(setPV<0 && !curLines.empty())
+//		curLines.back()->setEndPoint(Point(event->x(), height-event->y()));
+//	else if(setPV>=0)
+//		polygons.back()->setVertex(setPV, Point(event->x(), height-event->y()));
 }
 
 void PolygonControl::onDraw()
@@ -55,15 +79,14 @@ void PolygonControl::onDraw()
 
 void PolygonControl::onMarkDraw()
 {
-	if(!polygons.empty())
+	if(!curLines.empty())
 	{
-		if(curLines.empty())
-			polygons.back()->markDraw();
-		else
-		{
-			for(Line *line:curLines)
-				line->markDraw();
-		}
+		for(Line *line:curLines)
+			line->markDraw();
+	}
+	else if(!polygons.empty())
+	{
+		polygons.back()->markDraw();
 	}
 }
 

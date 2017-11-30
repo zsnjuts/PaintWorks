@@ -15,6 +15,7 @@ public:
 	PolygonControl(int width, int height);
 
 	void onMousePressEvent(QMouseEvent *event);
+	void onMouseMoveEvent(QMouseEvent *event);
 	void onMousePassiveMoveEvent(QMouseEvent *event);
 
 	void onDraw();
@@ -22,6 +23,7 @@ public:
 	void onFill();
 
 private:
+	int setPV; //当前正在更改的顶点索引，默认为-1表示不在修改顶点的状态
 	vector<Line*> curLines; //当前聚焦的折线
 	vector<MyPolygon*> polygons;
 };
