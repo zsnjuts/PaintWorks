@@ -1,4 +1,5 @@
 #include "Ellipse.h"
+#include <cassert>
 
 MyEllipse::MyEllipse()
 {
@@ -65,33 +66,39 @@ void MyEllipse::setAxes(int rx, int ry)
 	calculatePoints();
 }
 
+double pow(float x)
+{
+	return x*x;
+}
+
 void MyEllipse::calculatePoints()
 {
 	if (rx <= 0 || ry <= 0) //防止计算未初始化的椭圆
 		return;
 	
-	/* 上下两个顶点 */
-	points.push_back(new Point(center.getX(), center.getY() + ry)); //上
-	points.push_back(new Point(center.getX(), center.getY() - ry)); //下
-	
 	/* 第一象限上面的区域(|切线斜率|<=1) */
-	long long x = 0, y = ry, p = 4 * ry*ry - 4 * rx*rx*ry + rx*rx;
+	long long rx = this->rx, ry = this->ry; //将rx，ry转为long long防止溢出
+	long long x = 0, y = ry, p = 4 * ry*ry - 4 * rx*rx*ry + rx*rx; //x，y均使用long long以防溢出
 	while (ry*ry*x < rx*rx*y)
 	{
 		if (p < 0)
+		{
 			p += 4 * (2 * ry*ry*x + 3 * ry*ry);
+			x++;
+		}
 		else
 		{
 			p += 4 * (2 * ry*ry*x - 2 * rx*rx*y + 2 * rx*rx + 3 * ry*ry);
 			y--;
+			x++;
 		}
-		x++;
+
 		points.push_back(new Point(center.getX() + x, center.getY() + y)); //第一象限
 		points.push_back(new Point(center.getX() - x, center.getY() + y)); //第二象限
 		points.push_back(new Point(center.getX() - x, center.getY() - y)); //第三象限
 		points.push_back(new Point(center.getX() + x, center.getY() - y)); //第四象限
 	}
-	
+
 	/* 第一象限下面的区域(|切线斜率|>1)，包括左右两端顶点 */
 	p = ry*ry*(2 * x + 1)*(2 * x + 1) + 4 * rx*rx*(y - 1)*(y - 1) - 4 * rx*rx*ry*ry;
 	while (y >= 0)
@@ -100,11 +107,14 @@ void MyEllipse::calculatePoints()
 		{
 			p += 4 * (2 * ry*ry*x - 2 * rx*rx*y + 2 * ry*ry + 3 * rx*rx);
 			x++;
+			y--;
 		}
 		else
+		{
 			p += 4 * (-2 * rx*rx*y + 3 * rx*rx);
-		y--;
-			
+			y--;
+		}
+
 		points.push_back(new Point(center.getX() + x, center.getY() + y)); //第一象限
 		points.push_back(new Point(center.getX() - x, center.getY() + y)); //第二象限
 		points.push_back(new Point(center.getX() - x, center.getY() - y)); //第三象限

@@ -23,12 +23,9 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *event)
-{
-}
-
 void MainWindow::on_action_New_triggered()
 {
+	//TODO:关闭标签页的时候应该删除对应的GLWidget
 	canvases.push_back(new GLWidget(this, m));
 	QMdiSubWindow *w = ui->mdiArea->addSubWindow(canvases.back());
 	ui->mdiArea->setActiveSubWindow(w);
