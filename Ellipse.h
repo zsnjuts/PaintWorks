@@ -14,13 +14,18 @@ public:
 
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 
+	Point getCenter();
+	vector<Point> getMarkPoints();
+
 	void setEndPoint(const Point &end);
+	void setAxes(int rx, int ry); //设置长轴短轴
 
 private:
 	Point begin;
 	Point end;
 	Point center;
 	int rx, ry;
+	vector<Point> markPoints; //标记点
 
 	void calculatePoints(); //计算各点位置
 };

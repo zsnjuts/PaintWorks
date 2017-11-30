@@ -26,7 +26,7 @@ void CircleControl::onMousePressEvent(QMouseEvent *event)
 		{
 			Point curPoint(event->x(), height-event->y());
 			for(Point p:curCircle->getMarkPoints())
-				if(p.distanceTo(curPoint)<5)
+				if(p.distanceTo(curPoint)<=5)
 				{
 					setCP = MARKPOINT;
 					return;

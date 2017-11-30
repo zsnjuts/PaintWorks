@@ -25,7 +25,7 @@ MyEllipse::MyEllipse(const Point & center, int rx, int ry)
 
 void MyEllipse::markDraw()
 {
-	vector<Point> markPoints;
+	markPoints.erase(markPoints.begin(), markPoints.end());
 	markPoints.push_back(Point(center.getX()-rx, center.getY()-ry));
 	markPoints.push_back(Point(center.getX()-rx, center.getY()+ry));
 	markPoints.push_back(Point(center.getX()+rx, center.getY()+ry));
@@ -35,6 +35,16 @@ void MyEllipse::markDraw()
 		p.markDraw();
 }
 
+Point MyEllipse::getCenter()
+{
+	return center;
+}
+
+vector<Point> MyEllipse::getMarkPoints()
+{
+	return markPoints;
+}
+
 void MyEllipse::setEndPoint(const Point &end)
 {
 	clear();
@@ -42,6 +52,16 @@ void MyEllipse::setEndPoint(const Point &end)
 	rx = abs(end.getX() - begin.getX())/2;
 	ry = abs(end.getY() - begin.getY())/2;
 	center.setPoint((begin.getX() + end.getX())/2, (begin.getY()+end.getY())/2);
+	calculatePoints();
+}
+
+void MyEllipse::setAxes(int rx, int ry)
+{
+	clear();
+	this->begin.setPoint(center.getX()-rx, center.getY()-ry); //begin为左下角
+	this->end.setPoint(center.getX()+rx, center.getY()+ry); //end为右上角
+	this->rx = rx;
+	this->ry = ry;
 	calculatePoints();
 }
 
