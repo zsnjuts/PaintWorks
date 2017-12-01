@@ -79,6 +79,8 @@ void PolygonControl::onKeyPressEvent(QKeyEvent *event)
 	case Qt::Key_Right: polygons.back()->translate(Point(2,0)); break;
 	case Qt::Key_Up: polygons.back()->translate(Point(0,2)); break;
 	case Qt::Key_Down: polygons.back()->translate(Point(0,-2)); break;
+	case Qt::Key_Q: polygons.back()->rotate(-2); break;
+	case Qt::Key_E: polygons.back()->rotate(2); break;
 	default: ;
 	}
 }

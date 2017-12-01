@@ -18,6 +18,7 @@ public:
 	void setVertex(int idx, const Point &p); //设置索引为idx的顶点位置
 
 	void translate(const Point &offset); //平移
+	void rotate(double angle); //旋转
 
 	void draw(); //轮廓+填充
 	void clear(); //清空轮廓点+清空填充点

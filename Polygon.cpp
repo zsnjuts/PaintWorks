@@ -52,6 +52,19 @@ void MyPolygon::translate(const Point &offset)
 		p->translate(offset);
 }
 
+void MyPolygon::rotate(double angle)
+{
+	for(Point *p:vertexes)
+		p->rotate(*vertexes[0], angle);
+	for(int i=0;i<lines.size();i++)
+		lines[i]->setLine(*(vertexes[i]), *(vertexes[(i+1)%lines.size()]));
+	if(!fillPoints.empty())
+	{
+		Area::clearColor();
+		MyPolygon::fillColor();
+	}
+}
+
 void MyPolygon::draw()
 {
 	for(Line *line : lines)

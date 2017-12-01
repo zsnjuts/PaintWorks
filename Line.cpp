@@ -53,6 +53,15 @@ void Line::setEndPoint(const Point &p)
 	calculatePoints();
 }
 
+void Line::setLine(const Point &begin, const Point &end)
+{
+	clear();
+	this->begin = begin;
+	this->end = end;
+	updateParameters();
+	calculatePoints();
+}
+
 void Line::markDraw()
 {
 	begin.markDraw();
