@@ -19,6 +19,7 @@ public:
 	void setAxes(int rx, int ry); //设置长轴短轴
 
 	void translate(const Point &offset);
+	void rotate(double angle);
 
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 

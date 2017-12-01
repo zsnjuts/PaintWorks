@@ -75,6 +75,15 @@ void MyEllipse::translate(const Point &offset)
 	calculatePoints();
 }
 
+void MyEllipse::rotate(double angle)
+{
+	int tmp = abs((int)angle)%180;
+	if(tmp>=0 && tmp<90) //abs(angle%180)在[0,90)区间，则不变
+		return;
+	else //abs(angle%180)在[90,180)区间，旋转90度
+		setAxes(ry, rx);
+}
+
 double pow(float x)
 {
 	return x*x;

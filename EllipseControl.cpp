@@ -58,6 +58,8 @@ void EllipseControl::onKeyPressEvent(QKeyEvent *event)
 	case Qt::Key_Right: curEllipse->translate(Point(2,0)); break;
 	case Qt::Key_Up: curEllipse->translate(Point(0,2)); break;
 	case Qt::Key_Down: curEllipse->translate(Point(0,-2)); break;
+	case Qt::Key_Q: curEllipse->rotate(-90); break;
+	case Qt::Key_E: curEllipse->rotate(90); break;
 	default: ;
 	}
 }
