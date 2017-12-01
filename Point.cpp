@@ -76,6 +76,12 @@ void Point::rotate(const Point &ctr, double angle)
 	x = nx, y = ny;
 }
 
+void Point::scale(const Point &base, double sx, double sy)
+{
+	x = x*sx + base.x*(1-sx);
+	y = y*sy + base.y*(1-sy);
+}
+
 // 从上到下，从左到右增大
 bool Point::operator<(const Point & p) const
 {

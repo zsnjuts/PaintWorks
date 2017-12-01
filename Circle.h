@@ -20,6 +20,7 @@ public:
 
 	void translate(const Point &offset);
 	void rotate(double angle);
+	void scale(double s);
 
 	void draw(); //画轮廓点，若被填充，则也画填充点
 	void clear(); //删除轮廓点，若被填充，也删除填充点

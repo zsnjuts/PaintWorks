@@ -87,6 +87,16 @@ void Line::rotate(double angle)
 	calculatePoints();
 }
 
+void Line::scale(double s)
+{
+	clear();
+	Point mid((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2);
+	begin.scale(mid, s, s);
+	end.scale(mid, s, s);
+	updateParameters();
+	calculatePoints();
+}
+
 void Line::updateParameters()
 {
 	this->left = begin.getX() <= end.getX() ? &this->begin : &this->end;

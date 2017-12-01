@@ -84,6 +84,11 @@ void MyEllipse::rotate(double angle)
 		setAxes(ry, rx);
 }
 
+void MyEllipse::scale(double s)
+{
+	setAxes(rx*s, ry*s);
+}
+
 double pow(float x)
 {
 	return x*x;

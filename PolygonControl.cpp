@@ -81,6 +81,8 @@ void PolygonControl::onKeyPressEvent(QKeyEvent *event)
 	case Qt::Key_Down: polygons.back()->translate(Point(0,-2)); break;
 	case Qt::Key_Q: polygons.back()->rotate(-2); break;
 	case Qt::Key_E: polygons.back()->rotate(2); break;
+	case Qt::Key_Plus: polygons.back()->scale(1.25); break; //放大为原先的5/4
+	case Qt::Key_Minus: polygons.back()->scale(0.8); break; //缩小为原先的4/5
 	default: ;
 	}
 }

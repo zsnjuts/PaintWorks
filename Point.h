@@ -22,7 +22,8 @@ public:
 
 	void setPoint(int x, int y);
 	void translate(const Point &offset);
-	void rotate(const Point &ctr, double angle); //angle为度，不是弧度
+	void rotate(const Point &ctr, double angle); //ctr为旋转中心，angle为度，不是弧度
+	void scale(const Point &base, double sx, double sy); //base为基准点，sx和sy分别为两个方向的缩放系数，0-1表示缩小，>1表示放大
 
 	bool operator<(const Point &p) const;
 	bool operator==(const Point &p) const;

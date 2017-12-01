@@ -20,6 +20,7 @@ public:
 
 	void translate(const Point &offset);
 	void rotate(double angle);
+	void scale(double s);
 
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 

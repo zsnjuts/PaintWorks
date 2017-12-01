@@ -65,6 +65,8 @@ void LineControl::onKeyPressEvent(QKeyEvent *event)
 	case Qt::Key_Down: curLine->translate(Point(0,-2)); break;
 	case Qt::Key_Q: curLine->rotate(-2); break;
 	case Qt::Key_E: curLine->rotate(2); break;
+	case Qt::Key_Plus: curLine->scale(1.25); break; //放大为原先的5/4
+	case Qt::Key_Minus: curLine->scale(0.8); break; //缩小为原先的4/5
 	default: ;
 	}
 }

@@ -60,6 +60,8 @@ void EllipseControl::onKeyPressEvent(QKeyEvent *event)
 	case Qt::Key_Down: curEllipse->translate(Point(0,-2)); break;
 	case Qt::Key_Q: curEllipse->rotate(-90); break;
 	case Qt::Key_E: curEllipse->rotate(90); break;
+	case Qt::Key_Plus: curEllipse->scale(1.25); break; //放大为原先的5/4
+	case Qt::Key_Minus: curEllipse->scale(0.8); break; //缩小为原先的4/5
 	default: ;
 	}
 }

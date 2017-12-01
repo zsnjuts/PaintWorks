@@ -19,6 +19,7 @@ public:
 
 	void translate(const Point &offset); //平移
 	void rotate(double angle); //旋转
+	void scale(double s); //缩放
 
 	void draw(); //轮廓+填充
 	void clear(); //清空轮廓点+清空填充点

@@ -54,6 +54,11 @@ void Circle::rotate(double angle)
 {
 }
 
+void Circle::scale(double s)
+{
+	setRadius(int(radius*s+0.5));
+}
+
 void Circle::draw()
 {
 	SimpleFigure::draw();

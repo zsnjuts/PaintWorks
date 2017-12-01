@@ -23,6 +23,7 @@ public:
 
 	void translate(const Point &offset); //平移
 	void rotate(double angle); //绕中点旋转
+	void scale(double s); //以中点为基准进行放缩
 
 private:
 	Point begin;

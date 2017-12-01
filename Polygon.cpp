@@ -65,6 +65,19 @@ void MyPolygon::rotate(double angle)
 	}
 }
 
+void MyPolygon::scale(double s)
+{
+	for(Point *p:vertexes)
+		p->scale(*vertexes[0], s, s);
+	for(int i=0;i<lines.size();i++)
+		lines[i]->setLine(*(vertexes[i]), *(vertexes[(i+1)%lines.size()]));
+	if(!fillPoints.empty())
+	{
+		Area::clearColor();
+		MyPolygon::fillColor();
+	}
+}
+
 void MyPolygon::draw()
 {
 	for(Line *line : lines)
