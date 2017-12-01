@@ -21,6 +21,37 @@ MyPolygon::~MyPolygon()
 		delete line;
 }
 
+vector<Point> MyPolygon::getVertexes()
+{
+	vector<Point> vtxs;
+	for(Point *v:vertexes)
+		vtxs.push_back(*v);
+	return vtxs;
+}
+
+void MyPolygon::setVertex(int idx, const Point &p)
+{
+	assert(idx>=0 && idx<vertexes.size());
+	vertexes[idx]->setPoint(p.getX(), p.getY());
+	lines[(idx-1+vertexes.size())%vertexes.size()]->setEndPoint(p);
+	lines[idx]->setBeginPoint(p);
+	if(!fillPoints.empty())
+	{
+		Area::clearColor();
+		MyPolygon::fillColor();
+	}
+}
+
+void MyPolygon::translate(const Point &offset)
+{
+	for(Point *p:vertexes)
+		p->translate(offset);
+	for(Line *line:lines)
+		line->translate(offset);
+	for(Point *p:fillPoints)
+		p->translate(offset);
+}
+
 void MyPolygon::draw()
 {
 	for(Line *line : lines)
@@ -57,27 +88,6 @@ void MyPolygon::markDraw()
 	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
 	for(Point *p:vertexes)
 		p->markDraw();
-}
-
-vector<Point> MyPolygon::getVertexes()
-{
-	vector<Point> vtxs;
-	for(Point *v:vertexes)
-		vtxs.push_back(*v);
-	return vtxs;
-}
-
-void MyPolygon::setVertex(int idx, const Point &p)
-{
-	assert(idx>=0 && idx<vertexes.size());
-	vertexes[idx]->setPoint(p.getX(), p.getY());
-	lines[(idx-1+vertexes.size())%vertexes.size()]->setEndPoint(p);
-	lines[idx]->setBeginPoint(p);
-	if(!fillPoints.empty())
-	{
-		Area::clearColor();
-		MyPolygon::fillColor();
-	}
 }
 
 struct Edge

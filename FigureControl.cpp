@@ -40,6 +40,10 @@ void FigureControl::onMousePassiveMoveEvent(QMouseEvent *event)
 {
 }
 
+void FigureControl::onKeyPressEvent(QKeyEvent *event)
+{
+}
+
 void FigureControl::onDraw()
 {
 }

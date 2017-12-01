@@ -19,7 +19,7 @@ GLWidget::~GLWidget()
 void GLWidget::setMode(Mode m)
 {
 	curCtrl = m;
-	updateGL();
+	//updateGL();
 }
 
 void GLWidget::initializeGL()
@@ -82,7 +82,7 @@ void GLWidget::keyPressEvent(QKeyEvent *event)
 		case Qt::Key_1: curCtrl = CIRCLE; break;
 		case Qt::Key_2: curCtrl = ELLIPSE; break;
 		case Qt::Key_3: curCtrl = POLYGON; break;
-		default: ;
+		default: figureControls[curCtrl]->onKeyPressEvent(event);
 		}
 	}
 	updateGL();

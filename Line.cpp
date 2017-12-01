@@ -59,6 +59,15 @@ void Line::markDraw()
 	end.markDraw();
 }
 
+void Line::translate(const Point &offset)
+{
+	clear();
+	begin.translate(offset);
+	end.translate(offset);
+	updateParameters();
+	calculatePoints();
+}
+
 void Line::updateParameters()
 {
 	this->left = begin.getX() <= end.getX() ? &this->begin : &this->end;

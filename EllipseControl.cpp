@@ -50,6 +50,18 @@ void EllipseControl::onMouseMoveEvent(QMouseEvent *event)
 	}
 }
 
+void EllipseControl::onKeyPressEvent(QKeyEvent *event)
+{
+	switch(event->key())
+	{
+	case Qt::Key_Left: curEllipse->translate(Point(-2,0)); break;
+	case Qt::Key_Right: curEllipse->translate(Point(2,0)); break;
+	case Qt::Key_Up: curEllipse->translate(Point(0,2)); break;
+	case Qt::Key_Down: curEllipse->translate(Point(0,-2)); break;
+	default: ;
+	}
+}
+
 void EllipseControl::onDraw()
 {
 	for(MyEllipse *ellipse : ellipses)

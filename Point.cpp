@@ -62,6 +62,12 @@ void Point::setPoint(int x, int y)
 	this->y = y;
 }
 
+void Point::translate(const Point &offset)
+{
+	this->x += offset.x;
+	this->y += offset.y;
+}
+
 // 从上到下，从左到右增大
 bool Point::operator<(const Point & p) const
 {

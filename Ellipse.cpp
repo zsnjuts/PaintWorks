@@ -66,6 +66,15 @@ void MyEllipse::setAxes(int rx, int ry)
 	calculatePoints();
 }
 
+void MyEllipse::translate(const Point &offset)
+{
+	clear();
+	center.translate(offset);
+	begin.translate(offset);
+	end.translate(offset);
+	calculatePoints();
+}
+
 double pow(float x)
 {
 	return x*x;

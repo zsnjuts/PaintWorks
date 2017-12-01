@@ -21,6 +21,35 @@ Circle::~Circle()
 		delete p;
 }
 
+Point Circle::getCenter()
+{
+	return center;
+}
+
+vector<Point> Circle::getMarkPoints()
+{
+	return markPoints;
+}
+
+void Circle::setRadius(int r)
+{
+	bool isFilled = !fillPoints.empty();
+	clear();
+	this->radius = r;
+	calculatePoints();
+	if(isFilled)
+		fillColor();
+}
+
+void Circle::translate(const Point &offset)
+{
+	center.translate(offset);
+	for(Point *p:points)
+		p->translate(offset);
+	for(Point *p:fillPoints)
+		p->translate(offset);
+}
+
 void Circle::draw()
 {
 	SimpleFigure::draw();
@@ -43,26 +72,6 @@ void Circle::markDraw()
 	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
 	for(Point p:markPoints)
 		p.markDraw();
-}
-
-Point Circle::getCenter()
-{
-	return center;
-}
-
-vector<Point> Circle::getMarkPoints()
-{
-	return markPoints;
-}
-
-void Circle::setRadius(int r)
-{
-	bool isFilled = !fillPoints.empty();
-	clear();
-	this->radius = r;
-	calculatePoints();
-	if(isFilled)
-		fillColor();
 }
 
 void Circle::fillColor()

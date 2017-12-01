@@ -20,6 +20,8 @@ public:
 
 	void markDraw(); //只负责绘制draw以外的标记，不绘制直线本身
 
+	void translate(const Point &offset); //平移
+
 private:
 	Point begin;
 	Point end;

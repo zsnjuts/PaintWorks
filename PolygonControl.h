@@ -17,6 +17,7 @@ public:
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);
 	void onMousePassiveMoveEvent(QMouseEvent *event);
+	void onKeyPressEvent(QKeyEvent *event);
 
 	void onDraw();
 	void onMarkDraw();

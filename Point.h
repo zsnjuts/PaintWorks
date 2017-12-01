@@ -21,6 +21,8 @@ public:
 //	void clear(); //暂无用处
 
 	void setPoint(int x, int y);
+	void translate(const Point &offset);
+
 	bool operator<(const Point &p) const;
 	bool operator==(const Point &p) const;
 	friend ostream& operator<<(ostream &out, const Point &p); //输出(x,y)坐标

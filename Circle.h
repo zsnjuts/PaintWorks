@@ -14,14 +14,16 @@ public:
 	Circle(Point center, int radius);
 	~Circle();
 
-	void draw(); //画轮廓点，若被填充，则也画填充点
-	void clear(); //删除轮廓点，若被填充，也删除填充点
-	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
-
 	Point getCenter();
 	vector<Point> getMarkPoints();
 	void setRadius(int r);
-	void fillColor();
+
+	void translate(const Point &offset);
+
+	void draw(); //画轮廓点，若被填充，则也画填充点
+	void clear(); //删除轮廓点，若被填充，也删除填充点
+	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
+	void fillColor(); //填充
 
 private:
 	Point center; //圆心

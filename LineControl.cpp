@@ -55,6 +55,18 @@ void LineControl::onMouseMoveEvent(QMouseEvent *event)
 	}
 }
 
+void LineControl::onKeyPressEvent(QKeyEvent *event)
+{
+	switch(event->key())
+	{
+	case Qt::Key_Left: curLine->translate(Point(-2,0)); break;
+	case Qt::Key_Right: curLine->translate(Point(2,0)); break;
+	case Qt::Key_Up: curLine->translate(Point(0,2)); break;
+	case Qt::Key_Down: curLine->translate(Point(0,-2)); break;
+	default: ;
+	}
+}
+
 void LineControl::onDraw()
 {
 	for(Line *line:lines)

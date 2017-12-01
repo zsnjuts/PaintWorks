@@ -12,13 +12,15 @@ public:
 	MyEllipse(const Point &begin, const Point &end);
 	MyEllipse(const Point &center, int rx, int ry);
 
-	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
-
 	Point getCenter();
 	vector<Point> getMarkPoints();
 
 	void setEndPoint(const Point &end);
 	void setAxes(int rx, int ry); //设置长轴短轴
+
+	void translate(const Point &offset);
+
+	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 
 private:
 	Point begin;

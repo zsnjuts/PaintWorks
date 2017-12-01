@@ -66,7 +66,21 @@ void PolygonControl::onMousePassiveMoveEvent(QMouseEvent *event)
 //	if(setPV<0 && !curLines.empty())
 //		curLines.back()->setEndPoint(Point(event->x(), height-event->y()));
 //	else if(setPV>=0)
-//		polygons.back()->setVertex(setPV, Point(event->x(), height-event->y()));
+	//		polygons.back()->setVertex(setPV, Point(event->x(), height-event->y()));
+}
+
+void PolygonControl::onKeyPressEvent(QKeyEvent *event)
+{
+	if(!curLines.empty())//TODO:改一下glwidget里面的，调试一下
+		return;
+	switch(event->key())
+	{
+	case Qt::Key_Left: polygons.back()->translate(Point(-2,0)); break;
+	case Qt::Key_Right: polygons.back()->translate(Point(2,0)); break;
+	case Qt::Key_Up: polygons.back()->translate(Point(0,2)); break;
+	case Qt::Key_Down: polygons.back()->translate(Point(0,-2)); break;
+	default: ;
+	}
 }
 
 void PolygonControl::onDraw()
