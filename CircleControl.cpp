@@ -63,6 +63,8 @@ void CircleControl::onKeyPressEvent(QKeyEvent *event)
 	case Qt::Key_Right: curCircle->translate(Point(2,0)); break;
 	case Qt::Key_Up: curCircle->translate(Point(0,2)); break;
 	case Qt::Key_Down: curCircle->translate(Point(0,-2)); break;
+	case Qt::Key_Q: curCircle->rotate(-2); break;
+	case Qt::Key_E: curCircle->rotate(2); break;
 	default: ;
 	}
 }

@@ -50,6 +50,10 @@ void Circle::translate(const Point &offset)
 		p->translate(offset);
 }
 
+void Circle::rotate(double angle)
+{
+}
+
 void Circle::draw()
 {
 	SimpleFigure::draw();
