@@ -68,6 +68,14 @@ void Point::translate(const Point &offset)
 	this->y += offset.y;
 }
 
+void Point::rotate(const Point &ctr, double angle)
+{
+	angle = angle * 3.14159265 / 180;
+	int nx = int(ctr.x + (x-ctr.x)*cos(angle) - (y-ctr.y)*sin(angle) + 0.5);
+	int ny = int(ctr.y + (x-ctr.x)*sin(angle) + (y-ctr.y)*cos(angle) + 0.5);
+	x = nx, y = ny;
+}
+
 // 从上到下，从左到右增大
 bool Point::operator<(const Point & p) const
 {

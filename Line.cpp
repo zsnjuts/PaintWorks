@@ -68,6 +68,16 @@ void Line::translate(const Point &offset)
 	calculatePoints();
 }
 
+void Line::rotate(double angle)
+{
+	clear();
+	Point ctr((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2);
+	begin.rotate(ctr, angle);
+	end.rotate(ctr, angle);
+	updateParameters();
+	calculatePoints();
+}
+
 void Line::updateParameters()
 {
 	this->left = begin.getX() <= end.getX() ? &this->begin : &this->end;

@@ -63,6 +63,8 @@ void LineControl::onKeyPressEvent(QKeyEvent *event)
 	case Qt::Key_Right: curLine->translate(Point(2,0)); break;
 	case Qt::Key_Up: curLine->translate(Point(0,2)); break;
 	case Qt::Key_Down: curLine->translate(Point(0,-2)); break;
+	case Qt::Key_Q: curLine->rotate(-2); break;
+	case Qt::Key_E: curLine->rotate(2); break;
 	default: ;
 	}
 }

@@ -22,6 +22,7 @@ public:
 
 	void setPoint(int x, int y);
 	void translate(const Point &offset);
+	void rotate(const Point &ctr, double angle); //angle为度，不是弧度
 
 	bool operator<(const Point &p) const;
 	bool operator==(const Point &p) const;

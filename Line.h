@@ -21,6 +21,7 @@ public:
 	void markDraw(); //只负责绘制draw以外的标记，不绘制直线本身
 
 	void translate(const Point &offset); //平移
+	void rotate(double angle); //绕中点旋转
 
 private:
 	Point begin;
