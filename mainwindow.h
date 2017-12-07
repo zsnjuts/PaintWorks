@@ -32,10 +32,15 @@ private slots:
 
 	void on_actionCut_triggered();
 
+	void on_actionFill_triggered();
+
+	void on_actionScalePlus_triggered();
+
+	void on_actionScaleMinus_triggered();
+
 private:
 	Mode m;
 	Ui::MainWindow *ui;
-	QVector<GLWidget*> canvases;
 
 	void setMode(Mode m);
 };

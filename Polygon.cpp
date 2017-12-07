@@ -130,8 +130,6 @@ struct Edge
 	int ymax;
 };
 
-#include <ctime>
-#include <iostream>
 void MyPolygon::fillColor()
 {
 	int minGlY = vertexes[0]->getY();
@@ -192,15 +190,9 @@ void MyPolygon::fillColor()
 			outline[i].push_back(
 				make_pair(new Point((int)(e->xi + 0.5), i + minGlY),
 					new Point(int((e + 1)->xi + 0.5), i + minGlY)));
-	int cnt = 0;
-	clock_t begin = clock();
+
 	for (vector<pair<Point*, Point*> > line : outline)
 		for (pair<Point*, Point*> pr : line)
 			for (int i = pr.first->getX() + 1; i < pr.second->getX(); i++)
-			{
 				fillPoints.push_back(new Point(i, pr.first->getY()));
-				cnt++;
-			}
-	std::cout << cnt << endl;
-	std::cout << clock()-begin << "ms" << endl;
 }

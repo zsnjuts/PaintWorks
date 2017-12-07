@@ -93,7 +93,7 @@ void LineControl::onCut(const Point &leftDown, int width, int height)
 		if((*iter)->cut(leftDown, width, height)==false)
 		{
 			for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
-				if((*it)==curLine)
+				if((*it)==(*iter))
 				{
 					allFigures->erase(it);
 					break;

@@ -6,5 +6,8 @@
         <file>images/polygon.png</file>
         <file>images/paintworks.png</file>
         <file>images/cut.png</file>
+        <file>images/fill.png</file>
+        <file>images/scaleplus.png</file>
+        <file>images/scaleminus.png</file>
     </qresource>
 </RCC>

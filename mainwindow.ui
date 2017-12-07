@@ -62,6 +62,10 @@
    <addaction name="actionEllipse"/>
    <addaction name="actionPolygon"/>
    <addaction name="separator"/>
+   <addaction name="actionScalePlus"/>
+   <addaction name="actionScaleMinus"/>
+   <addaction name="separator"/>
+   <addaction name="actionFill"/>
    <addaction name="actionCut"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -170,10 +174,55 @@
     <string>Cut</string>
    </property>
    <property name="toolTip">
-    <string>剪切</string>
+    <string>裁剪</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionFill">
+   <property name="icon">
+    <iconset resource="paintworks_resource.qrc">
+     <normaloff>:/images/images/fill.png</normaloff>:/images/images/fill.png</iconset>
+   </property>
+   <property name="text">
+    <string>Fill</string>
+   </property>
+   <property name="toolTip">
+    <string>填充</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionScalePlus">
+   <property name="icon">
+    <iconset resource="paintworks_resource.qrc">
+     <normaloff>:/images/images/scaleplus.png</normaloff>:/images/images/scaleplus.png</iconset>
+   </property>
+   <property name="text">
+    <string>ScalePlus</string>
+   </property>
+   <property name="toolTip">
+    <string>放大</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionScaleMinus">
+   <property name="icon">
+    <iconset resource="paintworks_resource.qrc">
+     <normaloff>:/images/images/scaleminus.png</normaloff>:/images/images/scaleminus.png</iconset>
+   </property>
+   <property name="text">
+    <string>ScaleMinus</string>
+   </property>
+   <property name="toolTip">
+    <string>缩小</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
    </property>
   </action>
  </widget>

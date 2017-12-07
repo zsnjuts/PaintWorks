@@ -12,6 +12,8 @@ public:
 	virtual void clear()=0; //清除图形中的点并释放空间
 
 	virtual void translate(const Point &offset)=0; //平移
+	virtual void rotate(double angle)=0; //旋转
+	virtual void scale(double s)=0; //缩放
 
 };
 

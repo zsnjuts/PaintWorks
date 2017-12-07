@@ -25,8 +25,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_New_triggered()
 {
-	canvases.push_back(new GLWidget(this, m));
-	QMdiSubWindow *w = ui->mdiArea->addSubWindow(canvases.back());
+	QMdiSubWindow *w = ui->mdiArea->addSubWindow(new GLWidget(this, m));
 	ui->mdiArea->setActiveSubWindow(w);
 	w->setWindowTitle(tr("画布%1").arg(ui->mdiArea->subWindowList().size()));
 	w->show();
@@ -56,23 +55,38 @@ void MainWindow::on_actionCut_triggered()
 {
 	if(ui->actionCut->isChecked()) //已按下，则将所有画布设置为CUT状态
 	{
-		for(GLWidget *wgt:canvases)
-			wgt->setEditMode(CUT);
+		for(QMdiSubWindow *w:ui->mdiArea->subWindowList())
+			dynamic_cast<GLWidget*>(w->widget())->setEditMode(CUT);
 	}
 	else //已按下，剪切当前画布并恢复DRAW状态，恢复未按下状态
 	{
-		dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onCutFigure();
-		for(GLWidget *wgt:canvases)
-			wgt->setEditMode(DRAW);
+		dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onCutFigures();
+		for(QMdiSubWindow *w:ui->mdiArea->subWindowList())
+			dynamic_cast<GLWidget*>(w->widget())->setEditMode(DRAW);
 		ui->actionCut->setChecked(false);
 	}
+}
+
+void MainWindow::on_actionFill_triggered()
+{
+	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onFillFigures();
+}
+
+void MainWindow::on_actionScalePlus_triggered()
+{
+	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScalePlusFigures();
+}
+
+void MainWindow::on_actionScaleMinus_triggered()
+{
+	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScaleMinusFigures();
 }
 
 void MainWindow::setMode(Mode m)
 {
 	this->m = m;
-	for(GLWidget *wgt : canvases)
-		wgt->setMode(m);
+	for(QMdiSubWindow *w:ui->mdiArea->subWindowList())
+		dynamic_cast<GLWidget*>(w->widget())->setMode(m);
 	ui->actionLine->setChecked(false);
 	ui->actionCircle->setChecked(false);
 	ui->actionEllipse->setChecked(false);

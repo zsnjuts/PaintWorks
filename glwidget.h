@@ -23,7 +23,11 @@ public:
 
 	void setMode(Mode m);
 	void setEditMode(Edit e);
-	void onCutFigure();
+
+	void onScalePlusFigures(); //放大所有图形
+	void onScaleMinusFigures(); //缩小所有图形
+	void onCutFigures(); //裁剪cw可以裁剪的所有图形
+	void onFillFigures(); //填充当前图形
 
 protected:
 	void initializeGL();

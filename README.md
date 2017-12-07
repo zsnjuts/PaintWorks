@@ -26,11 +26,21 @@
 
 * 解决了MainWindow直接控制当前GLWidget的问题
 
-  使用`dynamic_cast<GLWidget*>`即可
+  使用`dynamic_cast<GLWidget*>()`即可，可以不必再使用GLWidget的数组canvases(已去掉)
 
 * 实现了直线裁剪
 
   裁剪时对所有直线均进行裁剪
+
+* 添加了UI
+
+  * 放大缩小
+
+    对所有图形同时放大缩小，缩放基准点为各图形自己的基准点，而非鼠标
+
+  * 填充
+
+  * 裁剪
 
 
 
@@ -41,6 +51,6 @@
 
 ## bug
 
-* 标签页关闭之后切换图形绘制模式会导致程序崩溃
+* ~~标签页关闭之后切换图形绘制模式会导致程序崩溃~~ 已使用dynamic_cast解决
 
   应该让QMdiSubWindow在关闭时delete掉GLWidget，可能需要重写QMdiSubWindow的` virtual void	closeEvent(QCloseEvent * closeEvent)` 函数，最好是将相关信号关联到Mainwindow的一个槽函数，省得再写QMdiSubWindow了。

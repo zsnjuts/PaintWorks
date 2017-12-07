@@ -28,7 +28,7 @@ public:
 private:
 	enum SetLP{SETBEGIN, SETEND} setLP; //目前更改的是起点/终点
 	Line *curLine; //当前聚焦的直线
-	vector<Line*> lines;
+	vector<Line*> lines; //注意：删除直线时需要同时删除lines和allFigures中的直线
 };
 
 #endif // !LINECONTROL_H

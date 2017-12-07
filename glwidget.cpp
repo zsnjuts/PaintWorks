@@ -22,7 +22,7 @@ GLWidget::~GLWidget()
 void GLWidget::setMode(Mode m)
 {
 	curCtrl = m;
-	//updateGL();
+	updateGL();
 }
 
 void GLWidget::setEditMode(Edit e)
@@ -30,11 +30,32 @@ void GLWidget::setEditMode(Edit e)
 	curEdit = e;
 }
 
-void GLWidget::onCutFigure()
+void GLWidget::onScalePlusFigures()
+{
+	for(Figure *fg:allFigures)
+		fg->scale(1.25);
+	updateGL();
+}
+
+void GLWidget::onScaleMinusFigures()
+{
+	for(Figure *fg:allFigures)
+		fg->scale(0.8);
+	updateGL();
+}
+
+void GLWidget::onCutFigures()
 {
 	if(cw->isEmpty())
 		return;
-	figureControls[curCtrl]->onCut(cw->getleftDown(), cw->getWidth(), cw->getHeight());
+	for(FigureControl *fgCtrl:figureControls)
+		fgCtrl->onCut(cw->getleftDown(), cw->getWidth(), cw->getHeight());
+	updateGL();
+}
+
+void GLWidget::onFillFigures()
+{
+	figureControls[curCtrl]->onFill();
 	updateGL();
 }
 
@@ -99,18 +120,13 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GLWidget::keyPressEvent(QKeyEvent *event)
 {
-	if(event->key()==Qt::Key_F)
-		figureControls[curCtrl]->onFill();
-	else
+	switch(event->key())
 	{
-		switch(event->key())
-		{
-		case Qt::Key_0: curCtrl = LINE; break;
-		case Qt::Key_1: curCtrl = CIRCLE; break;
-		case Qt::Key_2: curCtrl = ELLIPSE; break;
-		case Qt::Key_3: curCtrl = POLYGON; break;
-		default: figureControls[curCtrl]->onKeyPressEvent(event);
-		}
+	case Qt::Key_0: curCtrl = LINE; break;
+	case Qt::Key_1: curCtrl = CIRCLE; break;
+	case Qt::Key_2: curCtrl = ELLIPSE; break;
+	case Qt::Key_3: curCtrl = POLYGON; break;
+	default: figureControls[curCtrl]->onKeyPressEvent(event);
 	}
 	updateGL();
 }
