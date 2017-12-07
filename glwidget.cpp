@@ -6,7 +6,10 @@ GLWidget::GLWidget(QWidget *parent, Mode m):QGLWidget(parent)
 	figureControls.push_back(new CircleControl(&allFigures));
 	figureControls.push_back(new EllipseControl(&allFigures));
 	figureControls.push_back(new PolygonControl(&allFigures));
+	cw = new CutWindow;
+
 	setMode(m);
+	setEditMode(DRAW);
 
 	setFocusPolicy(Qt::StrongFocus);
 	setMouseTracking(true); //跟踪鼠标，接收非点击鼠标移动事件
@@ -20,6 +23,19 @@ void GLWidget::setMode(Mode m)
 {
 	curCtrl = m;
 	//updateGL();
+}
+
+void GLWidget::setEditMode(Edit e)
+{
+	curEdit = e;
+}
+
+void GLWidget::onCutFigure()
+{
+	if(cw->isEmpty())
+		return;
+	figureControls[curCtrl]->onCut(cw->getleftDown(), cw->getWidth(), cw->getHeight());
+	updateGL();
 }
 
 void GLWidget::initializeGL()
@@ -45,6 +61,7 @@ void GLWidget::resizeGL(int w, int h)
 	//设置FigureControl
 	for(FigureControl *figureControl : figureControls)
 		figureControl->resize(w, h);
+	cw->resize(w, h);
 }
 
 void GLWidget::paintGL()
@@ -53,20 +70,30 @@ void GLWidget::paintGL()
 	for(Figure *figure : allFigures)
 		figure->draw();
 	figureControls[curCtrl]->onMarkDraw();
+	if(curEdit==CUT)
+		cw->draw();
 }
 
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
-	figureControls[curCtrl]->onMousePressEvent(event);
+	if(curEdit==CUT)
+		cw->onMousePressEvent(event);
+	else
+		figureControls[curCtrl]->onMousePressEvent(event);
 	updateGL();
 }
 
 void GLWidget::mouseMoveEvent(QMouseEvent *event)
 {
-	if(event->buttons() & Qt::LeftButton) //左键按下时鼠标移动事件
-		figureControls[curCtrl]->onMouseMoveEvent(event);
+	if(curEdit==CUT)
+		cw->onMouseMoveEvent(event);
 	else
-		figureControls[curCtrl]->onMousePassiveMoveEvent(event);
+	{
+		if(event->buttons() & Qt::LeftButton) //左键按下时鼠标移动事件
+			figureControls[curCtrl]->onMouseMoveEvent(event);
+		else
+			figureControls[curCtrl]->onMousePassiveMoveEvent(event);
+	}
 	updateGL();
 }
 

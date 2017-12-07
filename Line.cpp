@@ -62,12 +62,6 @@ void Line::setLine(const Point &begin, const Point &end)
 	calculatePoints();
 }
 
-void Line::markDraw()
-{
-	begin.markDraw();
-	end.markDraw();
-}
-
 void Line::translate(const Point &offset)
 {
 	clear();
@@ -95,6 +89,49 @@ void Line::scale(double s)
 	end.scale(mid, s, s);
 	updateParameters();
 	calculatePoints();
+}
+
+bool Line::cut(const Point &leftDown, int width, int height)
+{
+	const int xwmin = leftDown.getX(), xwmax = leftDown.getX()+width;
+	const int ywmin = leftDown.getY(), ywmax = leftDown.getY()+height;
+	const int x1 = begin.getX(), y1 = begin.getY();
+	const int x2 = end.getX(), y2 = end.getY();
+	const int dx = x2-x1, dy = y2-y1;
+	int p[] = {-dx, dx, -dy, dy}; //指示方向：内->外or外->内
+	int q[] = {x1-xwmin, xwmax-x1, y1-ywmin, ywmax-y1}; //指示位置：在内侧or在外侧
+	double u1 = 0, u2 = 1; //记录两侧裁剪边界的u值
+	for(int i=0;i<4;i++)
+	{
+		if(p[i]==0) //平行于此边界
+		{
+			if(q[i]<0) //在此边界的外部，直接丢弃；在内部，则本边界对此直线没有裁剪点，不做更改
+				return false;
+		}
+		else //与此边界的直线有交点，裁剪
+		{
+			double r = (double)q[i]/(double)p[i];
+			if(p[i]<0) //外->内
+				u1 = max(u1, r);
+			else //内->外
+				u2 = min(u2, r);
+		}
+	}
+
+	if(u1>u2) //裁剪的左侧在右侧的右边，舍弃
+		return false;
+	else
+	{
+		setLine(Point(x1+int(u1*dx+0.5), y1+int(u1*dy+0.5)),
+				Point(x1+int(u2*dx+0.5), y1+int(u2*dy+0.5)));
+		return true;
+	}
+}
+
+void Line::markDraw()
+{
+	begin.markDraw();
+	end.markDraw();
 }
 
 void Line::updateParameters()

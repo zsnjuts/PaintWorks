@@ -63,10 +63,6 @@ void PolygonControl::onMousePassiveMoveEvent(QMouseEvent *event)
 	if(curLines.empty())
 		return;
 	curLines.back()->setEndPoint(Point(event->x(), height-event->y()));
-//	if(setPV<0 && !curLines.empty())
-//		curLines.back()->setEndPoint(Point(event->x(), height-event->y()));
-//	else if(setPV>=0)
-	//		polygons.back()->setVertex(setPV, Point(event->x(), height-event->y()));
 }
 
 void PolygonControl::onKeyPressEvent(QKeyEvent *event)

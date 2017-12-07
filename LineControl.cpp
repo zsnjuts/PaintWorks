@@ -17,6 +17,7 @@ LineControl::LineControl(int width, int height):FigureControl(width, height)
 
 LineControl::LineControl(std::vector<Figure *> *figures, int width, int height):FigureControl(figures, width, height)
 {
+	curLine = NULL;
 }
 
 void LineControl::onMousePressEvent(QMouseEvent *event)
@@ -81,6 +82,30 @@ void LineControl::onMarkDraw()
 {
 	if(curLine!=NULL)
 		curLine->markDraw();
+}
+
+void LineControl::onCut(const Point &leftDown, int width, int height)
+{
+	if(lines.empty())
+		return;
+	for(vector<Line*>::iterator iter=lines.begin();iter!=lines.end();)
+	{
+		if((*iter)->cut(leftDown, width, height)==false)
+		{
+			for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+				if((*it)==curLine)
+				{
+					allFigures->erase(it);
+					break;
+				}
+			iter = lines.erase(iter);
+			if(*iter==curLine)
+				curLine = NULL;
+			delete *iter;
+		}
+		else
+			iter++;
+	}
 }
 
 const vector<Line*> &LineControl::getLines()

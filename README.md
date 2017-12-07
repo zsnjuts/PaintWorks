@@ -24,6 +24,14 @@
 
 ## 目前进展
 
+* 解决了MainWindow直接控制当前GLWidget的问题
+
+  使用`dynamic_cast<GLWidget*>`即可
+
+* 实现了直线裁剪
+
+  裁剪时对所有直线均进行裁剪
+
 
 
 ## 可以改进的地方

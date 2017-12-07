@@ -55,3 +55,7 @@ void FigureControl::onMarkDraw()
 void FigureControl::onFill()
 {
 }
+
+void FigureControl::onCut(const Point &leftDown, int width, int height)
+{
+}

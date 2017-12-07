@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     Polygon.cpp \
     PolygonControl.cpp \
     CompFigure.cpp \
-    SimpleFigure.cpp
+    SimpleFigure.cpp \
+    CutWindow.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -46,7 +47,8 @@ HEADERS  += mainwindow.h \
     Polygon.h \
     PolygonControl.h \
     CompFigure.h \
-    SimpleFigure.h
+    SimpleFigure.h \
+    CutWindow.h
 
 FORMS    += mainwindow.ui
 

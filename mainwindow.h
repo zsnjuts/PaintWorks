@@ -30,6 +30,8 @@ private slots:
 
 	void on_actionPolygon_triggered();
 
+	void on_actionCut_triggered();
+
 private:
 	Mode m;
 	Ui::MainWindow *ui;

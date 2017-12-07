@@ -52,6 +52,22 @@ void MainWindow::on_actionPolygon_triggered()
 	setMode(POLYGON);
 }
 
+void MainWindow::on_actionCut_triggered()
+{
+	if(ui->actionCut->isChecked()) //已按下，则将所有画布设置为CUT状态
+	{
+		for(GLWidget *wgt:canvases)
+			wgt->setEditMode(CUT);
+	}
+	else //已按下，剪切当前画布并恢复DRAW状态，恢复未按下状态
+	{
+		dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onCutFigure();
+		for(GLWidget *wgt:canvases)
+			wgt->setEditMode(DRAW);
+		ui->actionCut->setChecked(false);
+	}
+}
+
 void MainWindow::setMode(Mode m)
 {
 	this->m = m;
