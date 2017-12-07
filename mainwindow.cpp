@@ -53,6 +53,8 @@ void MainWindow::on_actionPolygon_triggered()
 
 void MainWindow::on_actionCut_triggered()
 {
+	if(ui->mdiArea->subWindowList().empty())
+		return;
 	if(ui->actionCut->isChecked()) //已按下，则将所有画布设置为CUT状态
 	{
 		for(QMdiSubWindow *w:ui->mdiArea->subWindowList())
@@ -69,16 +71,22 @@ void MainWindow::on_actionCut_triggered()
 
 void MainWindow::on_actionFill_triggered()
 {
+	if(ui->mdiArea->subWindowList().empty())
+		return;
 	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onFillFigures();
 }
 
 void MainWindow::on_actionScalePlus_triggered()
 {
+	if(ui->mdiArea->subWindowList().empty())
+		return;
 	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScalePlusFigures();
 }
 
 void MainWindow::on_actionScaleMinus_triggered()
 {
+	if(ui->mdiArea->subWindowList().empty())
+		return;
 	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScaleMinusFigures();
 }
 
