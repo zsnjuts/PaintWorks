@@ -27,11 +27,13 @@ void EllipseControl::onMousePressEvent(QMouseEvent *event)
 				if(p.distanceTo(curPoint)<=5)
 				{
 					setEP = MARKPOINT;
+					pushForward(curEllipse);
 					return;
 				}
 			if(curPoint.distanceTo(curEllipse->getCenter())<=5)
 			{
 				setEP = CENTERPOINT;
+				pushForward(curEllipse);
 				return;
 			}
 		}
