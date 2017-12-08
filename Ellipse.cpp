@@ -34,6 +34,7 @@ void MyEllipse::markDraw()
 	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
 	for(Point p:markPoints)
 		p.markDraw();
+	center.centerMarkDraw();
 }
 
 Point MyEllipse::getCenter()

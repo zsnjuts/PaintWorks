@@ -29,6 +29,11 @@ void EllipseControl::onMousePressEvent(QMouseEvent *event)
 					setEP = MARKPOINT;
 					return;
 				}
+			if(curPoint.distanceTo(curEllipse->getCenter())<=5)
+			{
+				setEP = CENTERPOINT;
+				return;
+			}
 		}
 		curEllipse = new MyEllipse(Point(event->x(), height-event->y()), Point(event->x(), height-event->y()));
 		ellipses.push_back(curEllipse);
@@ -46,6 +51,7 @@ void EllipseControl::onMouseMoveEvent(QMouseEvent *event)
 	{
 	case ENDPOINT: curEllipse->setEndPoint(Point(event->x(), height-event->y())); break;
 	case MARKPOINT: curEllipse->setAxes(abs(event->x()-center.getX()), abs((height-event->y())-center.getY())); break;
+	case CENTERPOINT: curEllipse->translate(Point(event->x(), height-event->y()) - center); break;
 	default: ;
 	}
 }
