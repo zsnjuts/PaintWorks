@@ -31,6 +31,11 @@ void CircleControl::onMousePressEvent(QMouseEvent *event)
 					setCP = MARKPOINT;
 					return;
 				}
+			if(curPoint.distanceTo(curCircle->getCenter())<=5)
+			{
+				setCP = CENTERPOINT;
+				return;
+			}
 		}
 		curCircle = new Circle(Point(event->x(), height-event->y()), 1);
 		circles.push_back(curCircle);
@@ -51,6 +56,7 @@ void CircleControl::onMouseMoveEvent(QMouseEvent *event)
 	case CIRCLEPOINT: curCircle->setRadius((int)sqrt(
 											   (x-center.getX())*(x-center.getX()) + (glY-center.getY())*(glY-center.getY()) )); break;
 	case MARKPOINT: curCircle->setRadius((int)max(abs(x-center.getX()), abs(glY-center.getY()))); break;
+	case CENTERPOINT: curCircle->translate(Point(x,glY) - center); break;
 	default: ;
 	}
 }

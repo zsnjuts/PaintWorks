@@ -22,7 +22,7 @@ public:
 	void onFill();
 
 private:
-	enum SetCP{CIRCLEPOINT, MARKPOINT}setCP; //当前点击的点为圆上的点/标记点
+	enum SetCP{CIRCLEPOINT, MARKPOINT, CENTERPOINT}setCP; //当前点击的点为圆上的点/标记点/圆心
 	Circle *curCircle; //当前聚焦的圆
 	vector<Circle*> circles;
 };
