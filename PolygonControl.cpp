@@ -43,11 +43,13 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
 				if(curPoint.distanceTo(vtxs[i])<=5)
 				{
 					setPV = i;
+					pushForward(polygons.back());
 					return;
 				}
 			if(polygons.back()->getCenter().distanceTo(curPoint)<=5)
 			{
 				setPV = -2;
+				pushForward(polygons.back());
 				return;
 			}
 		}
