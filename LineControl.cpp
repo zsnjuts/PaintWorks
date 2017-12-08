@@ -29,16 +29,19 @@ void LineControl::onMousePressEvent(QMouseEvent *event)
 			if(curLine->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<5)
 			{
 				setLP = SETBEGIN;
+				pushForward(curLine);
 				return;
 			}
 			else if(curLine->getEndPoint().distanceTo(Point(event->x(), height-event->y()))<5)
 			{
 				setLP = SETEND;
+				pushForward(curLine);
 				return;
 			}
 			else if(curLine->getCenterPoint().distanceTo(Point(event->x(), height-event->y()))<5)
 			{
 				setLP = SETCENTER;
+				pushForward(curLine);
 				return;
 			}
 		}

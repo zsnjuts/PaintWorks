@@ -59,3 +59,14 @@ void FigureControl::onFill()
 void FigureControl::onCut(const Point &leftDown, int width, int height)
 {
 }
+
+void FigureControl::pushForward(Figure *figure)
+{
+	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+		if(*it==figure)
+		{
+			allFigures->erase(it);
+			break;
+		}
+	allFigures->push_back(figure);
+}
