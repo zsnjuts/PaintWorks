@@ -18,6 +18,7 @@ public:
 
 	void draw(); //需要结合glBegin()和glEnd()使用
 	void markDraw(); //被选中的状态
+	void centerMarkDraw(); //中心点标记
 //	void clear(); //暂无用处
 
 	void setPoint(int x, int y);
@@ -27,6 +28,7 @@ public:
 
 	bool operator<(const Point &p) const;
 	bool operator==(const Point &p) const;
+	Point operator-(const Point &p) const;
 	friend ostream& operator<<(ostream &out, const Point &p); //输出(x,y)坐标
 	//Point operator+(const Point &p) const;
 

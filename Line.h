@@ -14,6 +14,7 @@ public:
 	Point getEndPoint() const;
 	Point getDownPoint() const;
 	Point getUpPoint() const;
+	Point getCenterPoint() const;
 
 	void setBeginPoint(const Point &p);
 	void setEndPoint(const Point &p);

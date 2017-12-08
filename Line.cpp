@@ -37,6 +37,11 @@ Point Line::getUpPoint() const
 	return *up;
 }
 
+Point Line::getCenterPoint() const
+{
+	return Point((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2);
+}
+
 void Line::setBeginPoint(const Point &p)
 {
 	clear();
@@ -132,6 +137,7 @@ void Line::markDraw()
 {
 	begin.markDraw();
 	end.markDraw();
+	Point((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2).centerMarkDraw();
 }
 
 void Line::updateParameters()
