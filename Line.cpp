@@ -80,25 +80,22 @@ const int Line::h = 30; //初始化handle长度
 void Line::setHandlePointByRef(const Point &ref)
 {
 	clear();
-	//计算相关参数
-	double c = ref.getX() - center.getX(), d = ref.getY() - center.getY(); //现向量center->ref
-	double rRef = center.distanceTo(ref);//center->ref向量的长度
-	double rLine = length/2;//直线长度的一半，不使用begin.distanceTo(end)是为了防止精度损失累积
+
 	//计算handle(center不变)
-	if(rRef==0) //防止除零异常
+	if(center==ref) //参考点与中点重合，不旋转
 		return;
-	handle.setPoint(int(center.getX()+h*c/rRef+0.5), int(center.getY()+h*d/rRef+0.5));
-	//计算begin，end
-	double tmp = rLine*d/rRef;
-	if(d==0)
+	handle.rotateToParallel(center, ref, h);
+
+	//计算begin，end并更新直线
+	if(center.getY()==ref.getY()) //参考点与中点y值相同
 	{
-		begin.setPoint(center.getX(), center.getY()+int(rLine+0.5));
-		end.setPoint(center.getX(), center.getY()+int(-rLine+0.5));
+		begin.setPoint(center.getX(), center.getY()+int(length/2+0.5));
+		end.setPoint(center.getX(), center.getY()+int(length/2+0.5));
 	}
 	else
 	{
-		begin.setPoint(center.getX()+int(tmp+0.5), center.getY()+int(-c/d*tmp+0.5));
-		end.setPoint(center.getX()+int(-tmp+0.5), center.getY()+int(c/d*tmp+0.5));
+		begin.rotateToPerpendicularLeft(center, ref, length/2);
+		end.rotateToPerpendicularRight(center, ref, length/2);
 	}
 	updateParameters();
 	calculatePoints();

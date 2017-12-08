@@ -122,6 +122,41 @@ void Point::scale(const Point &base, double sx, double sy)
 	y = y*sy + base.y*(1-sy);
 }
 
+bool Point::rotateToParallel(const Point &base, const Point &ref, double dist)
+{
+	double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量base->ref
+	double rRef = base.distanceTo(ref); //center->ref向量的长度
+	if(rRef==0)
+		return false;
+	x = int(base.x+dist*c/rRef+0.5);
+	y = int(base.y+dist*d/rRef+0.5);
+	return true;
+}
+
+bool Point::rotateToPerpendicularLeft(const Point &base, const Point &ref, double dist)
+{
+	if(ref.getY()==base.getY())
+		return false;
+	double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量center->ref
+	double rRef = base.distanceTo(ref);//center->ref向量的长度
+	double tmp = -abs(dist*d/rRef); //此处rRef!=0
+	x = base.x + int(tmp+0.5);
+	y = base.y + int(-c/d*tmp+0.5); //此处d!=0
+	return true;
+}
+
+bool Point::rotateToPerpendicularRight(const Point &base, const Point &ref, double dist)
+{
+	if(ref.getY()==base.getY())
+		return false;
+	double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量center->ref
+	double rRef = base.distanceTo(ref);//center->ref向量的长度
+	double tmp = abs(dist*d/rRef); //此处rRef!=0
+	x = base.x + int(tmp+0.5);
+	y = base.y + int(-c/d*tmp+0.5); //此处d!=0
+	return true;
+}
+
 // 从上到下，从左到右增大
 bool Point::operator<(const Point & p) const
 {
