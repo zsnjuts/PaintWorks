@@ -29,11 +29,13 @@ void CircleControl::onMousePressEvent(QMouseEvent *event)
 				if(p.distanceTo(curPoint)<=5)
 				{
 					setCP = MARKPOINT;
+					pushForward(curCircle);
 					return;
 				}
 			if(curPoint.distanceTo(curCircle->getCenter())<=5)
 			{
 				setCP = CENTERPOINT;
+				pushForward(curCircle);
 				return;
 			}
 		}
