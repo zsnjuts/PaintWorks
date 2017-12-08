@@ -108,7 +108,7 @@ void PolygonControl::onMarkDraw()
 	if(!curLines.empty())
 	{
 		for(Line *line:curLines)
-			line->markDraw();
+			line->plainMarkDraw();
 	}
 	else if(!polygons.empty())
 	{

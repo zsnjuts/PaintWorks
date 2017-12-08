@@ -29,6 +29,7 @@ public:
 	bool cut(const Point &leftDown, int width, int height); //根据矩形窗口裁剪，若不在窗口中则返回false
 
 	void markDraw(); //只负责绘制draw以外的标记，不绘制直线本身
+	void plainMarkDraw(); //不带center标记和handle标记
 
 private:
 	Point begin;

@@ -15,6 +15,7 @@ Line::Line(const Point &begin, const Point &end)
 	this->end = end;
 	updateParameters();
 	calculatePoints();
+	calculateRelatedPoints();
 }
 
 Point Line::getBeginPoint() const
@@ -110,6 +111,7 @@ void Line::translate(const Point &offset)
 	end.translate(offset);
 	updateParameters();
 	calculatePoints();
+	calculateRelatedPoints();
 }
 
 void Line::rotate(double angle)
@@ -120,6 +122,7 @@ void Line::rotate(double angle)
 	end.rotate(ctr, angle);
 	updateParameters();
 	calculatePoints();
+	calculateRelatedPoints();
 }
 
 void Line::scale(double s)
@@ -130,6 +133,7 @@ void Line::scale(double s)
 	end.scale(mid, s, s);
 	updateParameters();
 	calculatePoints();
+	calculateRelatedPoints();
 }
 
 bool Line::cut(const Point &leftDown, int width, int height)
@@ -175,6 +179,12 @@ void Line::markDraw()
 	end.markDraw();
 	center.centerMarkDraw(); //中点
 	handle.handleDraw(center);
+}
+
+void Line::plainMarkDraw()
+{
+	begin.markDraw();
+	end.markDraw();
 }
 
 void Line::updateParameters()
