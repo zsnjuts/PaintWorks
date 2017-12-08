@@ -26,21 +26,27 @@ void LineControl::onMousePressEvent(QMouseEvent *event)
 	{
 		if(curLine!=NULL)
 		{
-			if(curLine->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<5)
+			if(curLine->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<=5)
 			{
 				setLP = SETBEGIN;
 				pushForward(curLine);
 				return;
 			}
-			else if(curLine->getEndPoint().distanceTo(Point(event->x(), height-event->y()))<5)
+			else if(curLine->getEndPoint().distanceTo(Point(event->x(), height-event->y()))<=5)
 			{
 				setLP = SETEND;
 				pushForward(curLine);
 				return;
 			}
-			else if(curLine->getCenterPoint().distanceTo(Point(event->x(), height-event->y()))<5)
+			else if(curLine->getCenterPoint().distanceTo(Point(event->x(), height-event->y()))<=5)
 			{
 				setLP = SETCENTER;
+				pushForward(curLine);
+				return;
+			}
+			else if(curLine->getHandlePoint().distanceTo(Point(event->x(), height-event->y()))<=5)
+			{
+				setLP = SETHANDLE;
 				pushForward(curLine);
 				return;
 			}
@@ -56,11 +62,13 @@ void LineControl::onMouseMoveEvent(QMouseEvent *event)
 {
 	if (curLine == NULL)
 		return;
+	Point curPoint(event->x(), height-event->y());
 	switch(setLP)
 	{
-	case SETBEGIN: curLine->setBeginPoint(Point(event->x(), height-event->y())); break;
-	case SETEND: curLine->setEndPoint(Point(event->x(), height-event->y())); break;
-	case SETCENTER: curLine->translate(Point(event->x(), height-event->y())-curLine->getCenterPoint()); break;
+	case SETBEGIN: curLine->setBeginPoint(curPoint); break;
+	case SETEND: curLine->setEndPoint(curPoint); break;
+	case SETCENTER: curLine->translate(curPoint-curLine->getCenterPoint()); break;
+	case SETHANDLE: curLine->setHandlePointByRef(curPoint); break;
 	default: ;
 	}
 }

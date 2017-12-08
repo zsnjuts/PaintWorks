@@ -39,7 +39,12 @@ Point Line::getUpPoint() const
 
 Point Line::getCenterPoint() const
 {
-	return Point((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2);
+	return center;
+}
+
+Point Line::getHandlePoint() const
+{
+	return handle;
 }
 
 void Line::setBeginPoint(const Point &p)
@@ -48,6 +53,7 @@ void Line::setBeginPoint(const Point &p)
 	begin = p;
 	updateParameters();
 	calculatePoints();
+	calculateRelatedPoints();
 }
 
 void Line::setEndPoint(const Point &p)
@@ -56,6 +62,7 @@ void Line::setEndPoint(const Point &p)
 	end = p;
 	updateParameters();
 	calculatePoints();
+	calculateRelatedPoints();
 }
 
 void Line::setLine(const Point &begin, const Point &end)
@@ -63,6 +70,35 @@ void Line::setLine(const Point &begin, const Point &end)
 	clear();
 	this->begin = begin;
 	this->end = end;
+	updateParameters();
+	calculatePoints();
+	calculateRelatedPoints();
+}
+
+const int Line::h = 30; //初始化handle长度
+void Line::setHandlePointByRef(const Point &ref)
+{
+	clear();
+	//计算相关参数
+	double c = ref.getX() - center.getX(), d = ref.getY() - center.getY(); //现向量center->ref
+	double rRef = center.distanceTo(ref);//center->ref向量的长度
+	double rLine = length/2;//直线长度的一半，不使用begin.distanceTo(end)是为了防止精度损失累积
+	//计算handle(center不变)
+	if(rRef==0) //防止除零异常
+		return;
+	handle.setPoint(int(center.getX()+h*c/rRef+0.5), int(center.getY()+h*d/rRef+0.5));
+	//计算begin，end
+	double tmp = rLine*d/rRef;
+	if(d==0)
+	{
+		begin.setPoint(center.getX(), center.getY()+int(rLine+0.5));
+		end.setPoint(center.getX(), center.getY()+int(-rLine+0.5));
+	}
+	else
+	{
+		begin.setPoint(center.getX()+int(tmp+0.5), center.getY()+int(-c/d*tmp+0.5));
+		end.setPoint(center.getX()+int(-tmp+0.5), center.getY()+int(c/d*tmp+0.5));
+	}
 	updateParameters();
 	calculatePoints();
 }
@@ -137,7 +173,8 @@ void Line::markDraw()
 {
 	begin.markDraw();
 	end.markDraw();
-	Point((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2).centerMarkDraw();
+	center.centerMarkDraw(); //中点
+	handle.handleDraw(center);
 }
 
 void Line::updateParameters()
@@ -146,6 +183,22 @@ void Line::updateParameters()
 	this->right = begin.getX() <= end.getX() ? &this->end : &this->begin;
 	this->down = begin.getY() <= end.getY() ? &this->begin : &this->end;
 	this->up = begin.getY() <= end.getY() ? &this->end : &this->begin;
+}
+
+void Line::calculateRelatedPoints()
+{
+	//计算长度
+	length = begin.distanceTo(end);
+	//计算center
+	center.setPoint((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2);
+	//计算handle
+	if(begin.getX()==end.getX())
+		handle.setPoint(center.getX(), center.getY()+h);
+	else
+	{
+		double k = (double)(end.getY()-begin.getY())/(double)(end.getX()-begin.getX());
+		handle.setPoint(int(center.getX()-h*k/sqrt(k*k+1)+0.5), int(center.getY()+h/sqrt(k*k+1)+0.5));
+	}
 }
 
 void Line::calculatePoints()

@@ -15,10 +15,12 @@ public:
 	Point getDownPoint() const;
 	Point getUpPoint() const;
 	Point getCenterPoint() const;
+	Point getHandlePoint() const;
 
 	void setBeginPoint(const Point &p);
 	void setEndPoint(const Point &p);
 	void setLine(const Point &begin, const Point &end);
+	void setHandlePointByRef(const Point &ref); //ref(参考点)为当前鼠标位置，只需设置handle点，center点与ref点共线即可,center和length不变
 
 	void translate(const Point &offset); //平移
 	void rotate(double angle); //绕中点旋转
@@ -35,9 +37,15 @@ private:
 	Point *right;
 	Point *up;
 	Point *down;
+	//下面两点只是在交互中会用到，不作为直线的关键信息，在calculatePoints()函数中更新
+	Point center; //中点
+	Point handle; //handle点
+	double length; //直线长度，在旋转中用到
+	const static int h; //handle长度
 
 	void updateParameters();
-	void calculatePoints();
+	void calculateRelatedPoints(); //每次非旋转操作之后更新center和handle，以及length
+	void calculatePoints(); //根据begin和end计算直线所有点
 	void bresenham01(int dx, int dy);
 	void bresenham_10(int dx, int dy);
 	void bresenham1inf(int dx, int dy);

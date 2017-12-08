@@ -28,10 +28,10 @@ int Point::getY() const
 	return y;
 }
 
-int Point::distanceTo(const Point &p) const
+double Point::distanceTo(const Point &p) const
 {
 	//return abs(this->x - p.x) + abs(this->y - p.y);
-	return sqrt((this->x - p.x)*(this->x - p.x) + (this->y - p.y)*(this->y - p.y) + 0.5); //+0.5用于四舍五入
+	return sqrt((this->x - p.x)*(this->x - p.x) + (this->y - p.y)*(this->y - p.y));
 }
 
 void Point::draw()
@@ -61,6 +61,25 @@ void Point::centerMarkDraw()
 	glVertex2i(x+10, y);
 	glVertex2i(x, y-10);
 	glVertex2i(x, y+10);
+	glEnd();
+	//绘制圆点
+	glBegin(GL_POLYGON);
+	int n = 100; //绘制100个点
+	GLfloat R = 5.0f; //圆的半径
+	GLfloat pi = 3.1415926536f;
+	for(int i=0;i<n;i++)
+		glVertex2f(x+R*cos(2*pi/n*i), y+R*sin(2*pi/n*i));
+	glEnd();
+	glFlush();
+}
+
+void Point::handleDraw(const Point &p)
+{
+	glColor3f(0.0, 0.0, 1.0); //蓝色
+	//绘制连线
+	glBegin(GL_LINES);
+	glVertex2i(x, y);
+	glVertex2i(p.x, p.y);
 	glEnd();
 	//绘制圆点
 	glBegin(GL_POLYGON);

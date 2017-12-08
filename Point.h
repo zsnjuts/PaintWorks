@@ -14,11 +14,12 @@ public:
 
 	int getX() const;
 	int getY() const;
-	int distanceTo(const Point &p) const;
+	double distanceTo(const Point &p) const;
 
 	void draw(); //需要结合glBegin()和glEnd()使用
 	void markDraw(); //被选中的状态
 	void centerMarkDraw(); //中心点标记
+	void handleDraw(const Point &p); //标记+与另一个点的连线
 //	void clear(); //暂无用处
 
 	void setPoint(int x, int y);
