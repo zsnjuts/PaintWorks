@@ -24,7 +24,7 @@ public:
 	void onFill();
 
 private:
-	int setPV; //当前正在更改的顶点索引，默认为-1表示不在修改顶点的状态
+	int setPV; //当前正在更改的顶点索引，默认为-1表示正在绘制直线，-2表示正在选中中心点进行平移
 	vector<Line*> curLines; //当前聚焦的折线
 	vector<MyPolygon*> polygons;
 };

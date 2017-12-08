@@ -45,6 +45,11 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
 					setPV = i;
 					return;
 				}
+			if(polygons.back()->getCenter().distanceTo(curPoint)<=5)
+			{
+				setPV = -2;
+				return;
+			}
 		}
 		curLines.push_back(new Line(Point(event->x(), height-event->y()), Point(event->x(), height-event->y())));
 		allFigures->push_back(curLines.back());
@@ -54,8 +59,13 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
 
 void PolygonControl::onMouseMoveEvent(QMouseEvent *event)
 {
-	if(!polygons.empty() && setPV>=0)
-		polygons.back()->setVertex(setPV, Point(event->x(), height-event->y()));
+	if(!polygons.empty())
+	{
+		if(setPV>=0)
+			polygons.back()->setVertex(setPV, Point(event->x(), height-event->y()));
+		else if(setPV==-2)
+			polygons.back()->translate(Point(event->x(), height-event->y()) - polygons.back()->getCenter());
+	}
 }
 
 void PolygonControl::onMousePassiveMoveEvent(QMouseEvent *event)

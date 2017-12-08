@@ -14,7 +14,8 @@ public:
 	MyPolygon(const vector<Line*> &initLines);
 	~MyPolygon();
 
-	vector<Point> getVertexes();
+	vector<Point> getVertexes() const;
+	Point getCenter() const;
 	void setVertex(int idx, const Point &p); //设置索引为idx的顶点位置
 
 	void translate(const Point &offset); //平移
@@ -26,7 +27,6 @@ public:
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 	void fillColor();
 
-	//MyPolygon与其他Figure类不同，MyPolygon在绘制完成时才最终确定，所以无法将计算各点与绘制分离开
 private:
 	vector<Point*> vertexes;
 	vector<Line*> lines;

@@ -21,12 +21,28 @@ MyPolygon::~MyPolygon()
 		delete line;
 }
 
-vector<Point> MyPolygon::getVertexes()
+vector<Point> MyPolygon::getVertexes() const
 {
 	vector<Point> vtxs;
 	for(Point *v:vertexes)
 		vtxs.push_back(*v);
 	return vtxs;
+}
+
+Point MyPolygon::getCenter() const
+{
+	int minX = vertexes[0]->getX();
+	int maxX = vertexes[0]->getX();
+	int minY = vertexes[0]->getY();
+	int maxY = vertexes[0]->getY();
+	for(Point *v:vertexes)
+	{
+		minX = min(minX, v->getX());
+		maxX = max(maxX, v->getX());
+		minY = min(minY, v->getY());
+		maxY = max(maxY, v->getY());
+	}
+	return Point((minX+maxX)/2, (minY+maxY)/2);
 }
 
 void MyPolygon::setVertex(int idx, const Point &p)
@@ -114,6 +130,8 @@ void MyPolygon::markDraw()
 	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
 	for(Point *p:vertexes)
 		p->markDraw();
+	markPoints.push_back(Point((minX+maxX)/2, (minY+maxY)/2)); //矩形中心点
+	markPoints.back().centerMarkDraw();
 }
 
 struct Edge
