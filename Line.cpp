@@ -79,24 +79,15 @@ void Line::setLine(const Point &begin, const Point &end)
 const int Line::h = 30; //初始化handle长度
 void Line::setHandlePointByRef(const Point &ref)
 {
-	clear();
-
 	//计算handle(center不变)
 	if(center==ref) //参考点与中点重合，不旋转
 		return;
 	handle.rotateToParallel(center, ref, h);
 
 	//计算begin，end并更新直线
-	if(center.getY()==ref.getY()) //参考点与中点y值相同
-	{
-		begin.setPoint(center.getX(), center.getY()+int(length/2+0.5));
-		end.setPoint(center.getX(), center.getY()+int(length/2+0.5));
-	}
-	else
-	{
-		begin.rotateToPerpendicularLeft(center, ref, length/2);
-		end.rotateToPerpendicularRight(center, ref, length/2);
-	}
+	clear();
+	begin.rotateToPerpendicularUp(center, ref, length/2);
+	end.rotateToPerpendicularDown(center, ref, length/2);
 	updateParameters();
 	calculatePoints();
 }
@@ -199,13 +190,7 @@ void Line::calculateRelatedPoints()
 	//计算center
 	center.setPoint((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2);
 	//计算handle
-	if(begin.getX()==end.getX())
-		handle.setPoint(center.getX(), center.getY()+h);
-	else
-	{
-		double k = (double)(end.getY()-begin.getY())/(double)(end.getX()-begin.getX());
-		handle.setPoint(int(center.getX()-h*k/sqrt(k*k+1)+0.5), int(center.getY()+h/sqrt(k*k+1)+0.5));
-	}
+	handle.setHandlePoint(begin, end, h);
 }
 
 void Line::calculatePoints()

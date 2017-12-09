@@ -14,9 +14,11 @@ public:
 	Circle(Point center, int radius);
 	~Circle();
 
-	Point getCenter();
-	vector<Point> getMarkPoints();
+	Point getCenter() const;
+	vector<Point> getMarkPoints() const;
+	Point getHandlePoint() const;
 	void setRadius(int r);
+	void setHandlePointByRef(const Point &ref); //ref(参考点)为当前鼠标位置，只需设置handle点，center点与ref点共线即可，在圆中该函数不改变圆的关键属性
 
 	void translate(const Point &offset);
 	void rotate(double angle);
@@ -31,9 +33,13 @@ private:
 	Point center; //圆心
 	int radius; //半径
 	vector<Point> markPoints; //标记点
+	//下面参数为handle相关
+	Point handle; //handle点
+	const static int h; //handle长度，初始化为30
 
 	void calculatePoints(); //计算轮廓点位置
 	void calculateFillPoints(); //计算填充点位置
+	void calculateHandle(); //更新handle
 };
 
 #endif // !CIRCLE_H

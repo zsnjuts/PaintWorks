@@ -38,11 +38,11 @@ private:
 	Point *right;
 	Point *up;
 	Point *down;
-	//下面两点只是在交互中会用到，不作为直线的关键信息，在calculateRelatedPoints()函数中更新
+	//下面参数只是在交互中会用到，不作为直线的关键信息，在calculateRelatedPoints()函数中更新
 	Point center; //中点
 	Point handle; //handle点
 	double length; //直线长度，在旋转中用到
-	const static int h; //handle长度
+	const static int h; //handle长度，初始化为30
 
 	void updateParameters();
 	void calculateRelatedPoints(); //每次非旋转操作之后更新center和handle，以及length

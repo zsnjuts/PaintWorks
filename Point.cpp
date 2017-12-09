@@ -102,6 +102,18 @@ void Point::setPoint(int x, int y)
 	this->y = y;
 }
 
+void Point::setHandlePoint(const Point &begin, const Point &end, int h)
+{
+	Point center((begin.getX()+end.getX())/2, (begin.getY()+end.getY())/2);
+	if(begin.getX()==end.getX())
+		setPoint(center.getX(), center.getY()+h);
+	else
+	{
+		double k = (double)(end.getY()-begin.getY())/(double)(end.getX()-begin.getX());
+		setPoint(int(center.getX()-h*k/sqrt(k*k+1)+0.5), int(center.getY()+h/sqrt(k*k+1)+0.5));
+	}
+}
+
 void Point::translate(const Point &offset)
 {
 	this->x += offset.x;
@@ -122,39 +134,46 @@ void Point::scale(const Point &base, double sx, double sy)
 	y = y*sy + base.y*(1-sy);
 }
 
-bool Point::rotateToParallel(const Point &base, const Point &ref, double dist)
+void Point::rotateToParallel(const Point &base, const Point &ref, double dist)
 {
+	if(base==ref)
+		return;
 	double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量base->ref
 	double rRef = base.distanceTo(ref); //center->ref向量的长度
-	if(rRef==0)
-		return false;
 	x = int(base.x+dist*c/rRef+0.5);
 	y = int(base.y+dist*d/rRef+0.5);
-	return true;
 }
 
-bool Point::rotateToPerpendicularLeft(const Point &base, const Point &ref, double dist)
+void Point::rotateToPerpendicularUp(const Point &base, const Point &ref, double dist)
 {
+	if(base==ref) //base=ref则不变
+		return;
 	if(ref.getY()==base.getY())
-		return false;
-	double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量center->ref
-	double rRef = base.distanceTo(ref);//center->ref向量的长度
-	double tmp = -abs(dist*d/rRef); //此处rRef!=0
-	x = base.x + int(tmp+0.5);
-	y = base.y + int(-c/d*tmp+0.5); //此处d!=0
-	return true;
+		this->setPoint(base.getX(), base.getY()+dist);
+	else
+	{
+		double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量center->ref
+		double rRef = base.distanceTo(ref);//center->ref向量的长度
+		double tmp = -abs(dist*d/rRef); //此处rRef!=0
+		x = base.x + int(tmp+0.5);
+		y = base.y + int(-c/d*tmp+0.5); //此处d!=0
+	}
 }
 
-bool Point::rotateToPerpendicularRight(const Point &base, const Point &ref, double dist)
+void Point::rotateToPerpendicularDown(const Point &base, const Point &ref, double dist)
 {
+	if(base==ref)
+		return;
 	if(ref.getY()==base.getY())
-		return false;
-	double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量center->ref
-	double rRef = base.distanceTo(ref);//center->ref向量的长度
-	double tmp = abs(dist*d/rRef); //此处rRef!=0
-	x = base.x + int(tmp+0.5);
-	y = base.y + int(-c/d*tmp+0.5); //此处d!=0
-	return true;
+		this->setPoint(base.getX(), base.getY()-dist);
+	else
+	{
+		double c = ref.getX() - base.getX(), d = ref.getY() - base.getY(); //现向量center->ref
+		double rRef = base.distanceTo(ref);//center->ref向量的长度
+		double tmp = abs(dist*d/rRef); //此处rRef!=0
+		x = base.x + int(tmp+0.5);
+		y = base.y + int(-c/d*tmp+0.5); //此处d!=0
+	}
 }
 
 // 从上到下，从左到右增大
@@ -173,21 +192,13 @@ Point Point::operator-(const Point &p) const
 	return Point(x-p.x, y-p.y);
 }
 
+Point Point::operator+(const Point &p) const
+{
+	return Point(x+p.x, y+p.y);
+}
+
 ostream & operator<<(ostream & out, const Point & p)
 {
 	out << '(' << p.getX() << ',' << p.getY() << ')';
 	return out;
 }
-
-/*
-Point Point::operator+(const Point & p) const
-{
-if(this->getGlY()+this->getGlutY()==p.getGlY()+p.getGlutY())
-return Point(GL_COORDINATE,
-this->getGlY()+this->getGlutY(), this->getX()+p.getX(), this->getGlY()+p.getGlY());
-else
-{
-cerr << "两点不在同一坐标系下，不能相加！" << endl;
-exit(-1);
-}
-}*/

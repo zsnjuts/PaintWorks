@@ -21,14 +21,19 @@ Circle::~Circle()
 		delete p;
 }
 
-Point Circle::getCenter()
+Point Circle::getCenter() const
 {
 	return center;
 }
 
-vector<Point> Circle::getMarkPoints()
+vector<Point> Circle::getMarkPoints() const
 {
 	return markPoints;
+}
+
+Point Circle::getHandlePoint() const
+{
+	return handle;
 }
 
 void Circle::setRadius(int r)
@@ -37,8 +42,17 @@ void Circle::setRadius(int r)
 	clear();
 	this->radius = r;
 	calculatePoints();
+	calculateHandle();
 	if(isFilled)
 		fillColor();
+}
+
+const int Circle::h = 30; //初始化handle长度
+void Circle::setHandlePointByRef(const Point &ref)
+{
+	if(center==ref)
+		return;
+	handle.rotateToParallel(center, ref, h);
 }
 
 void Circle::translate(const Point &offset)
@@ -48,6 +62,7 @@ void Circle::translate(const Point &offset)
 		p->translate(offset);
 	for(Point *p:fillPoints)
 		p->translate(offset);
+	calculateHandle();
 }
 
 void Circle::rotate(double angle)
@@ -57,6 +72,7 @@ void Circle::rotate(double angle)
 void Circle::scale(double s)
 {
 	setRadius(int(radius*s+0.5));
+	calculateHandle();
 }
 
 void Circle::draw()
@@ -82,6 +98,7 @@ void Circle::markDraw()
 	for(Point p:markPoints)
 		p.markDraw();
 	center.centerMarkDraw();
+	handle.handleDraw(center);
 }
 
 void Circle::fillColor()
@@ -143,4 +160,9 @@ void Circle::calculatePoints()
 			points.push_back(new Point(center.getX() - x, center.getY() + y)); //第二象限y=-x上方(关于y=x对称后顺时针270°)
 		}
 	}
+}
+
+void Circle::calculateHandle()
+{
+	handle.setHandlePoint(center-Point(radius,0), center+Point(radius,0), h);
 }
