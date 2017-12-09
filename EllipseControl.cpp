@@ -43,7 +43,7 @@ void EllipseControl::onMousePressEvent(QMouseEvent *event)
 				return;
 			}
 		}
-		curEllipse = new MyEllipse(Point(event->x(), height-event->y()), Point(event->x()+1, height-event->y()+1));
+		curEllipse = new MyEllipse(Point(event->x(), height-event->y()), Point(event->x(), height-event->y()));
 		ellipses.push_back(curEllipse);
 		allFigures->push_back(curEllipse);
 		setEP = ENDPOINT;

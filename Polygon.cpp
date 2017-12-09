@@ -11,6 +11,8 @@ MyPolygon::MyPolygon(const vector<Line*> &initLines):lines(initLines)
 {
 	for (Line *line : initLines) //line的起始点与vertex一一对应
 		vertexes.push_back(new Point(line->getBeginPoint()));
+	calculateCenter();
+	calculateHandle();
 }
 
 MyPolygon::~MyPolygon()
@@ -31,18 +33,12 @@ vector<Point> MyPolygon::getVertexes() const
 
 Point MyPolygon::getCenter() const
 {
-	int minX = vertexes[0]->getX();
-	int maxX = vertexes[0]->getX();
-	int minY = vertexes[0]->getY();
-	int maxY = vertexes[0]->getY();
-	for(Point *v:vertexes)
-	{
-		minX = min(minX, v->getX());
-		maxX = max(maxX, v->getX());
-		minY = min(minY, v->getY());
-		maxY = max(maxY, v->getY());
-	}
-	return Point((minX+maxX)/2, (minY+maxY)/2);
+	return center;
+}
+
+Point MyPolygon::getHandlePoint() const
+{
+	return handle;
 }
 
 void MyPolygon::setVertex(int idx, const Point &p)
@@ -56,6 +52,27 @@ void MyPolygon::setVertex(int idx, const Point &p)
 		Area::clearColor();
 		MyPolygon::fillColor();
 	}
+	calculateCenter();
+	calculateHandle();
+}
+
+void MyPolygon::setHandlePointByRef(const Point &ref)
+{
+	double a = handle.getX()-center.getX(), b = handle.getY()-center.getY();
+	double c = ref.getX()-center.getX(), d = ref.getY()-center.getY();
+	double angle = 180/3.14159265*acos((a*c+b*d)/sqrt((a*a+b*b)*(c*c+d*d)));
+	if(b*c>a*d) //逆时针旋转，角度取负
+		angle = -angle;
+	for(Point *p:vertexes)
+		p->rotate(center, angle);
+	for(int i=0;i<lines.size();i++)
+		lines[i]->setLine(*(vertexes[i]), *(vertexes[(i+1)%lines.size()]));
+	if(!fillPoints.empty())
+	{
+		Area::clearColor();
+		MyPolygon::fillColor();
+	}
+	handle.rotateToParallel(center, ref, h);
 }
 
 void MyPolygon::translate(const Point &offset)
@@ -66,12 +83,14 @@ void MyPolygon::translate(const Point &offset)
 		line->translate(offset);
 	for(Point *p:fillPoints)
 		p->translate(offset);
+	calculateCenter();
+	calculateHandle();
 }
 
 void MyPolygon::rotate(double angle)
 {
 	for(Point *p:vertexes)
-		p->rotate(*vertexes[0], angle);
+		p->rotate(center, angle);
 	for(int i=0;i<lines.size();i++)
 		lines[i]->setLine(*(vertexes[i]), *(vertexes[(i+1)%lines.size()]));
 	if(!fillPoints.empty())
@@ -92,6 +111,7 @@ void MyPolygon::scale(double s)
 		Area::clearColor();
 		MyPolygon::fillColor();
 	}
+	calculateHandle();
 }
 
 void MyPolygon::draw()
@@ -130,8 +150,10 @@ void MyPolygon::markDraw()
 	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
 	for(Point *p:vertexes)
 		p->markDraw();
-	markPoints.push_back(Point((minX+maxX)/2, (minY+maxY)/2)); //矩形中心点
-	markPoints.back().centerMarkDraw();
+//	markPoints.push_back(Point((minX+maxX)/2, (minY+maxY)/2)); //矩形中心点
+//	markPoints.back().centerMarkDraw();
+	center.centerMarkDraw();
+	handle.handleDraw(center);
 }
 
 struct Edge
@@ -213,4 +235,40 @@ void MyPolygon::fillColor()
 		for (pair<Point*, Point*> pr : line)
 			for (int i = pr.first->getX() + 1; i < pr.second->getX(); i++)
 				fillPoints.push_back(new Point(i, pr.first->getY()));
+}
+
+const int MyPolygon::h = 30; //handle长度
+void MyPolygon::calculateHandle()
+{
+	int minX = vertexes[0]->getX();
+	int maxX = vertexes[0]->getX();
+	int minY = vertexes[0]->getY();
+	int maxY = vertexes[0]->getY();
+	for(Point *v:vertexes)
+	{
+		minX = min(minX, v->getX());
+		maxX = max(maxX, v->getX());
+		minY = min(minY, v->getY());
+		maxY = max(maxY, v->getY());
+	}
+	int rx = (maxX-minX)/2, ry = (maxY-minY)/2;
+	double tmp = sqrt(rx*rx+ry*ry);
+	handle.setPoint(minX+rx+int(h*rx/tmp+0.5), minY+ry+int(h*ry/tmp+0.5));
+}
+
+void MyPolygon::calculateCenter()
+{
+	int minX = vertexes[0]->getX();
+	int maxX = vertexes[0]->getX();
+	int minY = vertexes[0]->getY();
+	int maxY = vertexes[0]->getY();
+	for(Point *v:vertexes)
+	{
+		minX = min(minX, v->getX());
+		maxX = max(maxX, v->getX());
+		minY = min(minY, v->getY());
+		maxY = max(maxY, v->getY());
+	}
+	int rx = (maxX-minX)/2, ry = (maxY-minY)/2;
+	center.setPoint(minX+rx, minY+ry);
 }
