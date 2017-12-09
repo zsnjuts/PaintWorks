@@ -11,6 +11,7 @@ Circle::Circle(Point center, int radius)
 	this->center = center;
 	this->radius = radius;
 	calculatePoints();
+	calculateHandle();
 }
 
 Circle::~Circle()

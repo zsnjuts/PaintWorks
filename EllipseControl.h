@@ -21,7 +21,7 @@ public:
 	void onMarkDraw();
 
 private:
-	enum SetEP{ENDPOINT, MARKPOINT, CENTERPOINT}setEP; //当前点击的点为终点/标记点
+	enum SetEP{ENDPOINT, MARKPOINT, CENTERPOINT, HANDLEPOINT}setEP; //当前点击的点为终点/标记点
 	MyEllipse *curEllipse; //当前正在绘制的椭圆
 	vector<MyEllipse*> ellipses; //绘制好的椭圆
 };

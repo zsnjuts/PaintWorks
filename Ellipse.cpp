@@ -1,5 +1,6 @@
 #include "Ellipse.h"
 #include <cassert>
+#include <cmath>
 
 MyEllipse::MyEllipse()
 {
@@ -14,6 +15,7 @@ MyEllipse::MyEllipse(const Point & begin, const Point & end)
 	ry = abs(end.getY() - end.getY()) / 2;
 	center.setPoint((begin.getX() + end.getX()) / 2, (begin.getY() + end.getY()) / 2);
 	calculatePoints();
+	calculateHandle();
 }
 
 MyEllipse::MyEllipse(const Point & center, int rx, int ry)
@@ -22,6 +24,7 @@ MyEllipse::MyEllipse(const Point & center, int rx, int ry)
 	this->rx = rx;
 	this->ry = ry;
 	calculatePoints();
+	calculateHandle();
 }
 
 void MyEllipse::markDraw()
@@ -35,16 +38,22 @@ void MyEllipse::markDraw()
 	for(Point p:markPoints)
 		p.markDraw();
 	center.centerMarkDraw();
+	handle.handleDraw(center);
 }
 
-Point MyEllipse::getCenter()
+Point MyEllipse::getCenter() const
 {
 	return center;
 }
 
-vector<Point> MyEllipse::getMarkPoints()
+vector<Point> MyEllipse::getMarkPoints() const
 {
 	return markPoints;
+}
+
+Point MyEllipse::getHandlePoint() const
+{
+	return handle;
 }
 
 void MyEllipse::setEndPoint(const Point &end)
@@ -55,6 +64,7 @@ void MyEllipse::setEndPoint(const Point &end)
 	ry = abs(end.getY() - begin.getY())/2;
 	center.setPoint((begin.getX() + end.getX())/2, (begin.getY()+end.getY())/2);
 	calculatePoints();
+	calculateHandle();
 }
 
 void MyEllipse::setAxes(int rx, int ry)
@@ -65,6 +75,14 @@ void MyEllipse::setAxes(int rx, int ry)
 	this->rx = rx;
 	this->ry = ry;
 	calculatePoints();
+	calculateHandle();
+}
+
+void MyEllipse::setHandlePointByRef(const Point &ref)
+{
+	if(ref.getX()==center.getX() || ref.getY()==center.getY()) //若(center,ref)水平或垂直，则旋转90度
+		setAxes(ry, rx);
+	handle.rotateToParallel(center, ref, h);
 }
 
 void MyEllipse::translate(const Point &offset)
@@ -74,6 +92,7 @@ void MyEllipse::translate(const Point &offset)
 	begin.translate(offset);
 	end.translate(offset);
 	calculatePoints();
+	calculateHandle();
 }
 
 void MyEllipse::rotate(double angle)
@@ -88,11 +107,6 @@ void MyEllipse::rotate(double angle)
 void MyEllipse::scale(double s)
 {
 	setAxes(rx*s, ry*s);
-}
-
-double pow(float x)
-{
-	return x*x;
 }
 
 void MyEllipse::calculatePoints()
@@ -144,4 +158,11 @@ void MyEllipse::calculatePoints()
 		points.push_back(new Point(center.getX() - x, center.getY() - y)); //第三象限
 		points.push_back(new Point(center.getX() + x, center.getY() - y)); //第四象限
 	}
+}
+
+const int MyEllipse::h = 30; //初始化handle长度
+void MyEllipse::calculateHandle()
+{
+	double tmp = sqrt(rx*rx+ry*ry);
+	handle.setPoint(center.getX()+int(h*rx/tmp+0.5), center.getY()+int(h*ry/tmp+0.5));
 }

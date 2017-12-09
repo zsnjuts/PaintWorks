@@ -39,7 +39,7 @@ private:
 
 	void calculatePoints(); //计算轮廓点位置
 	void calculateFillPoints(); //计算填充点位置
-	void calculateHandle(); //更新handle
+	void calculateHandle(); //非旋转操作后更新handle
 };
 
 #endif // !CIRCLE_H

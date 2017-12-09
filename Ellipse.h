@@ -12,11 +12,13 @@ public:
 	MyEllipse(const Point &begin, const Point &end);
 	MyEllipse(const Point &center, int rx, int ry);
 
-	Point getCenter();
-	vector<Point> getMarkPoints();
+	Point getCenter() const;
+	vector<Point> getMarkPoints() const;
+	Point getHandlePoint() const;
 
 	void setEndPoint(const Point &end);
 	void setAxes(int rx, int ry); //设置长轴短轴
+	void setHandlePointByRef(const Point &ref);
 
 	void translate(const Point &offset);
 	void rotate(double angle);
@@ -30,8 +32,12 @@ private:
 	Point center;
 	int rx, ry;
 	vector<Point> markPoints; //标记点
+	//下面参数为handle相关
+	Point handle; //handle点
+	const static int h; //handle长度，初始化为30
 
 	void calculatePoints(); //计算各点位置
+	void calculateHandle(); //非旋转操作后更新handle
 };
 
 #endif // !ELLIPSE_H
