@@ -2,6 +2,7 @@
 #include <list>
 #include <cassert>
 #include <algorithm>
+#include <functional>
 
 MyPolygon::MyPolygon()
 {
@@ -10,7 +11,7 @@ MyPolygon::MyPolygon()
 MyPolygon::MyPolygon(const vector<Line*> &initLines):lines(initLines)
 {
 	for (Line *line : initLines) //line的起始点与vertex一一对应
-		vertexes.push_back(new Point(line->getBeginPoint()));
+		vertexes.push_back(line->getBeginPoint());
 	calculateCenter();
 	calculateHandle();
 }
@@ -25,10 +26,7 @@ MyPolygon::~MyPolygon()
 
 vector<Point> MyPolygon::getVertexes() const
 {
-	vector<Point> vtxs;
-	for(Point *v:vertexes)
-		vtxs.push_back(*v);
-	return vtxs;
+	return vertexes;
 }
 
 Point MyPolygon::getCenter() const
@@ -44,7 +42,7 @@ Point MyPolygon::getHandlePoint() const
 void MyPolygon::setVertex(int idx, const Point &p)
 {
 	assert(idx>=0 && idx<vertexes.size());
-	vertexes[idx]->setPoint(p.getX(), p.getY());
+	vertexes[idx].setPoint(p.getX(), p.getY());
 	lines[(idx-1+vertexes.size())%vertexes.size()]->setEndPoint(p);
 	lines[idx]->setBeginPoint(p);
 	if(!fillPoints.empty())
@@ -63,10 +61,10 @@ void MyPolygon::setHandlePointByRef(const Point &ref)
 	double angle = 180/3.14159265*acos((a*c+b*d)/sqrt((a*a+b*b)*(c*c+d*d)));
 	if(b*c>a*d) //逆时针旋转，角度取负
 		angle = -angle;
-	for(Point *p:vertexes)
-		p->rotate(center, angle);
+	for(Point &p:vertexes)
+		p.rotate(center, angle);
 	for(int i=0;i<lines.size();i++)
-		lines[i]->setLine(*(vertexes[i]), *(vertexes[(i+1)%lines.size()]));
+		lines[i]->setLine(vertexes[i], vertexes[(i+1)%lines.size()]);
 	if(!fillPoints.empty())
 	{
 		Area::clearColor();
@@ -77,8 +75,8 @@ void MyPolygon::setHandlePointByRef(const Point &ref)
 
 void MyPolygon::translate(const Point &offset)
 {
-	for(Point *p:vertexes)
-		p->translate(offset);
+	for(Point &p:vertexes)
+		p.translate(offset);
 	for(Line *line:lines)
 		line->translate(offset);
 	for(Point *p:fillPoints)
@@ -89,10 +87,10 @@ void MyPolygon::translate(const Point &offset)
 
 void MyPolygon::rotate(double angle)
 {
-	for(Point *p:vertexes)
-		p->rotate(center, angle);
+	for(Point &p:vertexes)
+		p.rotate(center, angle);
 	for(int i=0;i<lines.size();i++)
-		lines[i]->setLine(*(vertexes[i]), *(vertexes[(i+1)%lines.size()]));
+		lines[i]->setLine(vertexes[i], vertexes[(i+1)%lines.size()]);
 	if(!fillPoints.empty())
 	{
 		Area::clearColor();
@@ -102,15 +100,64 @@ void MyPolygon::rotate(double angle)
 
 void MyPolygon::scale(double s)
 {
-	for(Point *p:vertexes)
-		p->scale(*vertexes[0], s, s);
+	for(Point &p:vertexes)
+		p.scale(center, s, s);
 	for(int i=0;i<lines.size();i++)
-		lines[i]->setLine(*(vertexes[i]), *(vertexes[(i+1)%lines.size()]));
+		lines[i]->setLine(vertexes[i], vertexes[(i+1)%lines.size()]);
 	if(!fillPoints.empty())
 	{
 		Area::clearColor();
 		MyPolygon::fillColor();
 	}
+	calculateHandle();
+}
+
+bool MyPolygon::cut(const Point &leftDown, int width, int height)
+{
+	vector<function<bool(const Point &)>> isOutside; //四条边的判断函数，返回是否在外侧
+	isOutside.push_back([leftDown](const Point &p)->bool{ return p.getX()<leftDown.getX(); }); //裁剪窗口左侧
+	isOutside.push_back([leftDown, width](const Point &p)->bool{ return p.getX()>leftDown.getX()+width; }); //裁剪窗口右侧
+	isOutside.push_back([leftDown](const Point &p)->bool{ return p.getY()<leftDown.getY(); }); //裁剪窗口下侧
+	isOutside.push_back([leftDown, height](const Point &p)->bool{ return p.getY()>leftDown.getY()+height; }); //裁剪窗口上侧
+
+	vector<function<Point(const Line *)>> intersect; //返回裁剪窗口四条边与多边形直线的交点
+	intersect.push_back([leftDown](const Line *line)->Point{ return line->intersectWithX(leftDown.getX()); }); //与裁剪左边界交点
+	intersect.push_back([leftDown, width](const Line *line)->Point{ return line->intersectWithX(leftDown.getX()+width); }); //与裁剪右边界交点
+	intersect.push_back([leftDown](const Line *line)->Point{ return line->intersectWithY(leftDown.getY()); }); //与裁剪下边界交点
+	intersect.push_back([leftDown, height](const Line *line)->Point{ return line->intersectWithY(leftDown.getY()+height); }); //与裁剪上边界交点
+
+	//用四条边界线分别裁剪
+	for(int f=0;f<4;f++)
+	{
+		vector<Point> vtxs; //本次裁剪得到的新顶点表
+		for(int i=0;i<vertexes.size();i++)
+		{
+			if(isOutside[f](vertexes[i])) //i在外侧
+			{
+				if(isOutside[f](vertexes[(i+1)%vertexes.size()])) //i+1在外侧
+					continue;
+				else //i在外侧，i+1在内侧
+				{
+					vtxs.push_back(intersect[f](lines[i]));
+					vtxs.push_back(vertexes[(i+1)%vertexes.size()]);
+				}
+			}
+			else //i在内侧
+			{
+				if(isOutside[f](vertexes[(i+1)%vertexes.size()])) //i+1在外侧
+					vtxs.push_back(intersect[f](lines[i]));
+				else //i+1在内侧
+					vtxs.push_back(vertexes[(i+1)%vertexes.size()]);
+			}
+		}
+		vertexes = vtxs;
+		for(Line *line:lines)
+			delete line;
+		lines.clear();
+		for(int i=0;i<vtxs.size();i++)
+			lines.push_back(new Line(vertexes[i], vertexes[(i+1)%vertexes.size()]));
+	}
+	calculateCenter();
 	calculateHandle();
 }
 
@@ -124,6 +171,7 @@ void MyPolygon::draw()
 void MyPolygon::clear()
 {	
 	Area::clearColor();
+	vertexes.erase(vertexes.begin(), vertexes.end());
 	for(Line *line : lines)
 		delete line;
 	lines.erase(lines.begin(), lines.end());
@@ -131,16 +179,16 @@ void MyPolygon::clear()
 
 void MyPolygon::markDraw()
 {
-	int minX = vertexes[0]->getX();
-	int maxX = vertexes[0]->getX();
-	int minY = vertexes[0]->getY();
-	int maxY = vertexes[0]->getY();
-	for(Point *v:vertexes)
+	int minX = vertexes[0].getX();
+	int maxX = vertexes[0].getX();
+	int minY = vertexes[0].getY();
+	int maxY = vertexes[0].getY();
+	for(Point v:vertexes)
 	{
-		minX = min(minX, v->getX());
-		maxX = max(maxX, v->getX());
-		minY = min(minY, v->getY());
-		maxY = max(maxY, v->getY());
+		minX = min(minX, v.getX());
+		maxX = max(maxX, v.getX());
+		minY = min(minY, v.getY());
+		maxY = max(maxY, v.getY());
 	}
 	vector<Point> markPoints;
 	markPoints.push_back(Point(minX, minY));
@@ -148,8 +196,8 @@ void MyPolygon::markDraw()
 	markPoints.push_back(Point(maxX, maxY));
 	markPoints.push_back(Point(maxX, minY));
 	Area::drawRect(markPoints[0], markPoints[1], markPoints[2], markPoints[3]);
-	for(Point *p:vertexes)
-		p->markDraw();
+	for(Point p:vertexes)
+		p.markDraw();
 //	markPoints.push_back(Point((minX+maxX)/2, (minY+maxY)/2)); //矩形中心点
 //	markPoints.back().centerMarkDraw();
 	center.centerMarkDraw();
@@ -172,12 +220,12 @@ struct Edge
 
 void MyPolygon::fillColor()
 {
-	int minGlY = vertexes[0]->getY();
-	int maxGlY = vertexes[0]->getY();
-	for (Point *v : vertexes)
+	int minGlY = vertexes[0].getY();
+	int maxGlY = vertexes[0].getY();
+	for (Point v : vertexes)
 	{
-		minGlY = min(minGlY, v->getY());
-		maxGlY = max(maxGlY, v->getY());
+		minGlY = min(minGlY, v.getY());
+		maxGlY = max(maxGlY, v.getY());
 	}
 
 	//此算法依赖于：各直线根据绘制顺序排列，且首尾相接（即lines[i]的尾点=lines[i+1]的起点）
@@ -240,16 +288,16 @@ void MyPolygon::fillColor()
 const int MyPolygon::h = 30; //handle长度
 void MyPolygon::calculateHandle()
 {
-	int minX = vertexes[0]->getX();
-	int maxX = vertexes[0]->getX();
-	int minY = vertexes[0]->getY();
-	int maxY = vertexes[0]->getY();
-	for(Point *v:vertexes)
+	int minX = vertexes[0].getX();
+	int maxX = vertexes[0].getX();
+	int minY = vertexes[0].getY();
+	int maxY = vertexes[0].getY();
+	for(Point v:vertexes)
 	{
-		minX = min(minX, v->getX());
-		maxX = max(maxX, v->getX());
-		minY = min(minY, v->getY());
-		maxY = max(maxY, v->getY());
+		minX = min(minX, v.getX());
+		maxX = max(maxX, v.getX());
+		minY = min(minY, v.getY());
+		maxY = max(maxY, v.getY());
 	}
 	int rx = (maxX-minX)/2, ry = (maxY-minY)/2;
 	double tmp = sqrt(rx*rx+ry*ry);
@@ -258,16 +306,16 @@ void MyPolygon::calculateHandle()
 
 void MyPolygon::calculateCenter()
 {
-	int minX = vertexes[0]->getX();
-	int maxX = vertexes[0]->getX();
-	int minY = vertexes[0]->getY();
-	int maxY = vertexes[0]->getY();
-	for(Point *v:vertexes)
+	int minX = vertexes[0].getX();
+	int maxX = vertexes[0].getX();
+	int minY = vertexes[0].getY();
+	int maxY = vertexes[0].getY();
+	for(Point v:vertexes)
 	{
-		minX = min(minX, v->getX());
-		maxX = max(maxX, v->getX());
-		minY = min(minY, v->getY());
-		maxY = max(maxY, v->getY());
+		minX = min(minX, v.getX());
+		maxX = max(maxX, v.getX());
+		minY = min(minY, v.getY());
+		maxY = max(maxY, v.getY());
 	}
 	int rx = (maxX-minX)/2, ry = (maxY-minY)/2;
 	center.setPoint(minX+rx, minY+ry);

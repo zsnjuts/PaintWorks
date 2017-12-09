@@ -24,13 +24,15 @@ public:
 	void rotate(double angle); //绕center旋转
 	void scale(double s); //缩放
 
+	bool cut(const Point &leftDown, int width, int height); //根据矩形窗口裁剪，若不在窗口中则返回false
+
 	void draw(); //轮廓+填充
 	void clear(); //清空轮廓点+清空填充点
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 	void fillColor();
 
 private:
-	vector<Point*> vertexes;
+	vector<Point> vertexes;
 	vector<Line*> lines;
 
 	//下面参数为handle相关，在calculateHandle()函数中更新，其中center也会在其他地方用到

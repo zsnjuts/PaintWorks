@@ -16,6 +16,8 @@ public:
 	Point getUpPoint() const;
 	Point getCenterPoint() const;
 	Point getHandlePoint() const;
+	Point intersectWithX(int x) const; //需要保证本直线不平行于x轴，否则出错
+	Point intersectWithY(int y) const; //需要保证本直线不平行于y轴，否则出错
 
 	void setBeginPoint(const Point &p);
 	void setEndPoint(const Point &p);

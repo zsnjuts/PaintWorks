@@ -22,6 +22,7 @@ public:
 	void onDraw();
 	void onMarkDraw();
 	void onFill();
+	void onCut(const Point &leftDown, int width, int height); //对所有多边形进行裁剪
 
 private:
 	int setPV; //当前正在更改的顶点索引，默认为-1表示正在绘制直线，-2表示正在选中中心点进行平移，-3表示正在拖动handle旋转

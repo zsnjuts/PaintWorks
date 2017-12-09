@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <GL/glu.h>
+#include <cassert>
 using namespace std;
 
 Line::Line()
@@ -46,6 +47,20 @@ Point Line::getCenterPoint() const
 Point Line::getHandlePoint() const
 {
 	return handle;
+}
+
+Point Line::intersectWithX(int x) const
+{
+	assert(begin.getX()!=end.getX());
+	double k = (double)(end.getY()-begin.getY()) / (double)(end.getX()-begin.getX());
+	return Point(x, int(k*(x-begin.getX()) + begin.getY() + 0.5));
+}
+
+Point Line::intersectWithY(int y) const
+{
+	assert(begin.getY()!=end.getY());
+	double m = (double)(end.getX()-begin.getX()) / (double)(end.getY()-begin.getY());
+	return Point(int(m*(y-begin.getY()) + begin.getX() + 0.5), y);
 }
 
 void Line::setBeginPoint(const Point &p)

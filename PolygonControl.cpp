@@ -130,3 +130,11 @@ void PolygonControl::onFill()
 	if(!polygons.empty())
 		polygons.back()->fillColor();
 }
+
+void PolygonControl::onCut(const Point &leftDown, int width, int height)
+{
+	if(polygons.empty())
+		return;
+	for(MyPolygon *polygon:polygons)
+		polygon->cut(leftDown, width, height);
+}
