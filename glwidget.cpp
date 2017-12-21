@@ -106,6 +106,12 @@ void GLWidget::onSave(string fileName)
 	fclose(file);
 }
 
+void GLWidget::onDelete()
+{
+	figureControls[curCtrl]->onDelete();
+	updateGL();
+}
+
 void GLWidget::initializeGL()
 {
 	//设置widget的坐标和尺寸

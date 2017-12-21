@@ -9,5 +9,7 @@
         <file>images/fill.png</file>
         <file>images/scaleplus.png</file>
         <file>images/scaleminus.png</file>
+        <file>images/delete.png</file>
+        <file>images/clear.png</file>
     </qresource>
 </RCC>

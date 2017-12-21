@@ -29,6 +29,7 @@ public:
 	virtual void onCutFigures(); //裁剪cw可以裁剪的所有图形
 	virtual void onFillFigures(); //填充当前图形
 	virtual void onSave(string fileName); //保存到文件
+	virtual void onDelete(); //删除当前被选中的图形
 
 protected:
 	virtual void initializeGL();

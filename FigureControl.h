@@ -23,6 +23,7 @@ public:
 	virtual void onMarkDraw(); //为当前图形添加标记
 	virtual void onFill();
 	virtual void onCut(const Point &leftDown, int width, int height);
+	virtual void onDelete();
 
 protected:
 	int width; //当前x轴像素点数

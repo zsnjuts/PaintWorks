@@ -125,6 +125,27 @@ void LineControl::onCut(const Point &leftDown, int width, int height)
 	}
 }
 
+void LineControl::onDelete()
+{
+	if(curLine==NULL)
+		return;
+
+	for(vector<Line*>::iterator it=lines.begin();it!=lines.end();it++)
+		if(curLine==*it)
+		{
+			lines.erase(it);
+			break;
+		}
+	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+		if(curLine==*it)
+		{
+			allFigures->erase(it);
+			break;
+		}
+	delete curLine;
+	curLine = NULL;
+}
+
 const vector<Line*> &LineControl::getLines()
 {
 	return lines;

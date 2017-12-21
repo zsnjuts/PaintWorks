@@ -157,8 +157,19 @@ bool MyPolygon::cut(const Point &leftDown, int width, int height)
 		for(int i=0;i<vtxs.size();i++)
 			lines.push_back(new Line(vertexes[i], vertexes[(i+1)%vertexes.size()]));
 	}
-	calculateCenter();
-	calculateHandle();
+	if(lines.empty())
+		return false;
+	else
+	{
+		calculateCenter();
+		calculateHandle();
+		if(!fillPoints.empty())
+		{
+			Area::clearColor();
+			MyPolygon::fillColor();
+		}
+		return true;
+	}
 }
 
 void MyPolygon::draw()

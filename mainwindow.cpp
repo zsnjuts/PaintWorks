@@ -58,13 +58,13 @@ void MainWindow::on_actionCut_triggered()
 	if(ui->actionCut->isChecked()) //已按下，则将所有画布设置为CUT状态
 	{
 		for(QMdiSubWindow *w:ui->mdiArea->subWindowList())
-			dynamic_cast<GLWidget*>(w->widget())->setEditMode(CUT);
+			static_cast<GLWidget*>(w->widget())->setEditMode(CUT);
 	}
 	else //已按下，剪切当前画布并恢复DRAW状态，恢复未按下状态
 	{
-		dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onCutFigures();
+		static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onCutFigures();
 		for(QMdiSubWindow *w:ui->mdiArea->subWindowList())
-			dynamic_cast<GLWidget*>(w->widget())->setEditMode(DRAW);
+			static_cast<GLWidget*>(w->widget())->setEditMode(DRAW);
 		ui->actionCut->setChecked(false);
 	}
 }
@@ -73,28 +73,28 @@ void MainWindow::on_actionFill_triggered()
 {
 	if(ui->mdiArea->subWindowList().empty())
 		return;
-	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onFillFigures();
+	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onFillFigures();
 }
 
 void MainWindow::on_actionScalePlus_triggered()
 {
 	if(ui->mdiArea->subWindowList().empty())
 		return;
-	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScalePlusFigures();
+	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScalePlusFigures();
 }
 
 void MainWindow::on_actionScaleMinus_triggered()
 {
 	if(ui->mdiArea->subWindowList().empty())
 		return;
-	dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScaleMinusFigures();
+	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onScaleMinusFigures();
 }
 
 void MainWindow::setMode(Mode m)
 {
 	this->m = m;
 	for(QMdiSubWindow *w:ui->mdiArea->subWindowList())
-		dynamic_cast<GLWidget*>(w->widget())->setMode(m);
+		static_cast<GLWidget*>(w->widget())->setMode(m);
 	ui->actionLine->setChecked(false);
 	ui->actionCircle->setChecked(false);
 	ui->actionEllipse->setChecked(false);
@@ -117,7 +117,7 @@ void MainWindow::on_actionSave_triggered()
 	QString path = QFileDialog::getSaveFileName(this, tr("保存文件"), ".", tr("BMP Files(*.bmp)"));
 	ui->mdiArea->setActiveSubWindow(w); //调用FileDialog之后会导致activeSubWindow为空，需要重新设置
 	if(!path.isNull())
-		dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onSave(path.toStdString());
+		static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onSave(path.toStdString());
 
 }
 
@@ -127,4 +127,9 @@ void MainWindow::on_action_3D_triggered()
 	ui->mdiArea->setActiveSubWindow(w);
 	w->setWindowTitle(tr("画布%1").arg(ui->mdiArea->subWindowList().size()));
 	w->show();
+}
+
+void MainWindow::on_actionDelete_triggered()
+{
+	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onDelete();
 }

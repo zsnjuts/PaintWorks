@@ -44,6 +44,8 @@ private slots:
 
 	void on_action_3D_triggered();
 
+	void on_actionDelete_triggered();
+
 private:
 	Mode m;
 	Ui::MainWindow *ui;

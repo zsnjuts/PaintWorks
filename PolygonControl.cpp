@@ -2,27 +2,29 @@
 
 PolygonControl::PolygonControl()
 {
-	setPV = -1;
+	setPV = -1; curIdx = -1;
 }
 
 PolygonControl::PolygonControl(std::vector<Figure *> *figures):FigureControl(figures)
 {
-	setPV = -1;
+	setPV = -1; curIdx = -1;
 }
 
 PolygonControl::PolygonControl(int width, int height):FigureControl(width, height)
 {
-	setPV = -1;
+	setPV = -1; curIdx = -1;
 }
 
 void PolygonControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
 	{
+		//选中折线起始点，成为多边形
 		if(!curLines.empty() && curLines.front()->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<=10)
 		{
 			curLines.back()->setEndPoint(curLines.front()->getBeginPoint());
 			polygons.push_back(new MyPolygon(curLines));
+			curIdx = polygons.size()-1;
 			allFigures->push_back(polygons.back());
 			for(Line *line:curLines)
 				for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++) //只有一个相同的，故只删除一次
@@ -35,30 +37,31 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
 			setPV = -1;
 			return;
 		}
-		else if(curLines.empty() && !polygons.empty())
+		else if(curLines.empty() && !polygons.empty()) //选中当前多边形的标记点
 		{
 			Point curPoint(event->x(), height-event->y());
-			vector<Point> vtxs = polygons.back()->getVertexes();
+			vector<Point> vtxs = polygons[curIdx]->getVertexes();
 			for(int i=0;i<vtxs.size();i++)
 				if(curPoint.distanceTo(vtxs[i])<=5)
 				{
 					setPV = i;
-					pushForward(polygons.back());
+					pushForward(polygons[curIdx]);
 					return;
 				}
-			if(polygons.back()->getCenter().distanceTo(curPoint)<=5)
+			if(polygons[curIdx]->getCenter().distanceTo(curPoint)<=5)
 			{
 				setPV = -2;
-				pushForward(polygons.back());
+				pushForward(polygons[curIdx]);
 				return;
 			}
-			else if(polygons.back()->getHandlePoint().distanceTo(curPoint)<=5)
+			else if(polygons[curIdx]->getHandlePoint().distanceTo(curPoint)<=5)
 			{
 				setPV = -3;
-				pushForward(polygons.back());
+				pushForward(polygons[curIdx]);
 				return;
 			}
 		}
+		//未选中任何点，新建折线
 		curLines.push_back(new Line(Point(event->x(), height-event->y()), Point(event->x(), height-event->y())));
 		allFigures->push_back(curLines.back());
 		setPV = -1;
@@ -71,11 +74,11 @@ void PolygonControl::onMouseMoveEvent(QMouseEvent *event)
 	{
 		Point curPoint(event->x(), height-event->y());
 		if(setPV>=0)
-			polygons.back()->setVertex(setPV, curPoint);
+			polygons[curIdx]->setVertex(setPV, curPoint);
 		else if(setPV==-2)
-			polygons.back()->translate(curPoint - polygons.back()->getCenter());
+			polygons[curIdx]->translate(curPoint - polygons[curIdx]->getCenter());
 		else if(setPV==-3)
-			polygons.back()->setHandlePointByRef(curPoint);
+			polygons[curIdx]->setHandlePointByRef(curPoint);
 	}
 }
 
@@ -92,14 +95,14 @@ void PolygonControl::onKeyPressEvent(QKeyEvent *event)
 		return;
 	switch(event->key())
 	{
-	case Qt::Key_Left: polygons.back()->translate(Point(-2,0)); break;
-	case Qt::Key_Right: polygons.back()->translate(Point(2,0)); break;
-	case Qt::Key_Up: polygons.back()->translate(Point(0,2)); break;
-	case Qt::Key_Down: polygons.back()->translate(Point(0,-2)); break;
-	case Qt::Key_Q: polygons.back()->rotate(-2); break;
-	case Qt::Key_E: polygons.back()->rotate(2); break;
-	case Qt::Key_Plus: polygons.back()->scale(1.25); break; //放大为原先的5/4
-	case Qt::Key_Minus: polygons.back()->scale(0.8); break; //缩小为原先的4/5
+	case Qt::Key_Left: polygons[curIdx]->translate(Point(-2,0)); break;
+	case Qt::Key_Right: polygons[curIdx]->translate(Point(2,0)); break;
+	case Qt::Key_Up: polygons[curIdx]->translate(Point(0,2)); break;
+	case Qt::Key_Down: polygons[curIdx]->translate(Point(0,-2)); break;
+	case Qt::Key_Q: polygons[curIdx]->rotate(-2); break;
+	case Qt::Key_E: polygons[curIdx]->rotate(2); break;
+	case Qt::Key_Plus: polygons[curIdx]->scale(1.25); break; //放大为原先的5/4
+	case Qt::Key_Minus: polygons[curIdx]->scale(0.8); break; //缩小为原先的4/5
 	default: ;
 	}
 }
@@ -119,22 +122,56 @@ void PolygonControl::onMarkDraw()
 		for(Line *line:curLines)
 			line->plainMarkDraw();
 	}
-	else if(!polygons.empty())
+	else if(curIdx>=0)
 	{
-		polygons.back()->markDraw();
+		polygons[curIdx]->markDraw();
 	}
 }
 
 void PolygonControl::onFill()
 {
-	if(!polygons.empty())
-		polygons.back()->fillColor();
+	if(curIdx>=0)
+		polygons[curIdx]->fillColor();
 }
 
 void PolygonControl::onCut(const Point &leftDown, int width, int height)
 {
-	if(polygons.empty())
+	if(polygons.empty() || curIdx<0)
 		return;
-	for(MyPolygon *polygon:polygons)
-		polygon->cut(leftDown, width, height);
+	if(polygons[curIdx]->cut(leftDown, width, height)==false)
+	{
+		deletePolygon(curIdx);
+		curIdx = -1;
+	}
+}
+
+void PolygonControl::onDelete()
+{
+	if(curIdx<0)
+		return;
+	deletePolygon(curIdx);
+	curIdx = -1;
+//	polygons.erase(polygons.begin()+curIdx);
+//	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+//		if(*it==polygons[curIdx])
+//		{
+//			allFigures->erase(it);
+//			break;
+//		}
+//	delete polygons[curIdx];
+//	curIdx = -1;
+}
+
+void PolygonControl::deletePolygon(int idx)
+{
+	if(idx<0)
+		return;
+	polygons.erase(polygons.begin()+idx);
+	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+		if(*it==polygons[idx])
+		{
+			allFigures->erase(it);
+			break;
+		}
+	delete polygons[idx];
 }

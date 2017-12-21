@@ -176,6 +176,11 @@ bool Line::cut(const Point &leftDown, int width, int height)
 	}
 }
 
+bool Line::isOn(const Point &p)
+{
+	return (end.getX()-begin.getX())*(p.getY()-begin.getY()) == (p.getX()-begin.getX())*(end.getY()-begin.getY());
+}
+
 void Line::markDraw()
 {
 	begin.markDraw();
