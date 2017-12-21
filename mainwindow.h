@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "glwidget.h"
+#include "gl3dwidget.h"
 #include <QMainWindow>
 #include <QMenu>
 #include <QTextEdit>
@@ -40,6 +41,8 @@ private slots:
 	void on_actionScaleMinus_triggered();
 
 	void on_actionSave_triggered();
+
+	void on_action_3D_triggered();
 
 private:
 	Mode m;

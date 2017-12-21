@@ -61,7 +61,6 @@ void GLWidget::onFillFigures()
 
 void GLWidget::onSave(string fileName)
 {
-	cout << fileName << endl;
 	FILE *file;
 	unsigned long imageSize;
 	GLbyte *data=NULL;

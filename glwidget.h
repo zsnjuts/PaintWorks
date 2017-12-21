@@ -21,22 +21,22 @@ public:
 	explicit GLWidget(QWidget *parent, Mode m);
 	~GLWidget();
 
-	void setMode(Mode m);
-	void setEditMode(Edit e);
+	virtual void setMode(Mode m);
+	virtual void setEditMode(Edit e);
 
-	void onScalePlusFigures(); //放大所有图形
-	void onScaleMinusFigures(); //缩小所有图形
-	void onCutFigures(); //裁剪cw可以裁剪的所有图形
-	void onFillFigures(); //填充当前图形
-	void onSave(string fileName); //保存到文件
+	virtual void onScalePlusFigures(); //放大所有图形
+	virtual void onScaleMinusFigures(); //缩小所有图形
+	virtual void onCutFigures(); //裁剪cw可以裁剪的所有图形
+	virtual void onFillFigures(); //填充当前图形
+	virtual void onSave(string fileName); //保存到文件
 
 protected:
-	void initializeGL();
-	void resizeGL(int w, int h);
-	void paintGL();
-	void mousePressEvent(QMouseEvent *event);
-	void mouseMoveEvent(QMouseEvent *event);
-	void keyPressEvent(QKeyEvent *event);
+	virtual void initializeGL();
+	virtual void resizeGL(int w, int h);
+	virtual void paintGL();
+	virtual void mousePressEvent(QMouseEvent *event);
+	virtual void mouseMoveEvent(QMouseEvent *event);
+	virtual void keyPressEvent(QKeyEvent *event);
 
 private:
 	int curCtrl; //当前FigureControl的索引

@@ -120,3 +120,11 @@ void MainWindow::on_actionSave_triggered()
 		dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onSave(path.toStdString());
 
 }
+
+void MainWindow::on_action_3D_triggered()
+{
+	QMdiSubWindow *w = ui->mdiArea->addSubWindow(new GL3DWidget(this, m));
+	ui->mdiArea->setActiveSubWindow(w);
+	w->setWindowTitle(tr("画布%1").arg(ui->mdiArea->subWindowList().size()));
+	w->show();
+}

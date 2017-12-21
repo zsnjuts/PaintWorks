@@ -46,6 +46,7 @@
      <string>文件(&amp;F)</string>
     </property>
     <addaction name="action_New"/>
+    <addaction name="action_3D"/>
     <addaction name="actionSave"/>
     <addaction name="action_Q"/>
    </widget>
@@ -73,6 +74,9 @@
   <action name="action_New">
    <property name="text">
     <string>新建画布(&amp;N)</string>
+   </property>
+   <property name="toolTip">
+    <string>新建画布</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -235,6 +239,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_3D">
+   <property name="text">
+    <string>新建3D画布</string>
+   </property>
+   <property name="toolTip">
+    <string>新建3D画布</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>
