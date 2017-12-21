@@ -28,6 +28,7 @@ public:
 	void onScaleMinusFigures(); //缩小所有图形
 	void onCutFigures(); //裁剪cw可以裁剪的所有图形
 	void onFillFigures(); //填充当前图形
+	void onSave(string fileName); //保存到文件
 
 protected:
 	void initializeGL();

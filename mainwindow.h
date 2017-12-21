@@ -6,6 +6,7 @@
 #include <QMenu>
 #include <QTextEdit>
 #include <QVector>
+#include <QFileDialog>
 
 namespace Ui {
 class MainWindow;
@@ -37,6 +38,8 @@ private slots:
 	void on_actionScalePlus_triggered();
 
 	void on_actionScaleMinus_triggered();
+
+	void on_actionSave_triggered();
 
 private:
 	Mode m;

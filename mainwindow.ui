@@ -46,6 +46,7 @@
      <string>文件(&amp;F)</string>
     </property>
     <addaction name="action_New"/>
+    <addaction name="actionSave"/>
     <addaction name="action_Q"/>
    </widget>
    <addaction name="menu_File"/>
@@ -223,6 +224,17 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>另存为...</string>
+   </property>
+   <property name="toolTip">
+    <string>保存文件</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>

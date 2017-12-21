@@ -108,3 +108,15 @@ void MainWindow::setMode(Mode m)
 	default: ;
 	}
 }
+
+void MainWindow::on_actionSave_triggered()
+{
+	if(ui->mdiArea->subWindowList().empty())
+		return;
+	QMdiSubWindow *w = ui->mdiArea->activeSubWindow();
+	QString path = QFileDialog::getSaveFileName(this, tr("保存文件"), ".", tr("BMP Files(*.bmp)"));
+	ui->mdiArea->setActiveSubWindow(w); //调用FileDialog之后会导致activeSubWindow为空，需要重新设置
+	if(!path.isNull())
+		dynamic_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onSave(path.toStdString());
+
+}
