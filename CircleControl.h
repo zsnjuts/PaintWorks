@@ -21,6 +21,7 @@ public:
 	void onMarkDraw();
 	void onFill();
 	void onDelete();
+	void onClear();
 
 private:
 	enum SetCP{CIRCLEPOINT, MARKPOINT, CENTERPOINT, HANDLEPOINT}setCP; //当前点击的点为圆上的点/标记点/圆心

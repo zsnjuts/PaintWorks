@@ -133,3 +133,8 @@ void MainWindow::on_actionDelete_triggered()
 {
 	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onDelete();
 }
+
+void MainWindow::on_actionClear_triggered()
+{
+	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onClear();
+}

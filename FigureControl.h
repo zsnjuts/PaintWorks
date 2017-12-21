@@ -24,6 +24,7 @@ public:
 	virtual void onFill();
 	virtual void onCut(const Point &leftDown, int width, int height);
 	virtual void onDelete();
+	virtual void onClear();
 
 protected:
 	int width; //当前x轴像素点数

@@ -124,3 +124,20 @@ void CircleControl::onDelete()
 	delete curCircle;
 	curCircle = NULL;
 }
+
+void CircleControl::onClear()
+{
+	for(Circle *circle:circles)
+	{
+		for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();)
+		{
+			if(circle==*it)
+				it = allFigures->erase(it);
+			else
+				it++;
+		}
+		delete circle;
+	}
+	circles.clear();
+	curCircle = NULL;
+}

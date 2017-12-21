@@ -46,6 +46,8 @@ private slots:
 
 	void on_actionDelete_triggered();
 
+	void on_actionClear_triggered();
+
 private:
 	Mode m;
 	Ui::MainWindow *ui;

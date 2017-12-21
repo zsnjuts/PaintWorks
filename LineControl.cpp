@@ -146,6 +146,23 @@ void LineControl::onDelete()
 	curLine = NULL;
 }
 
+void LineControl::onClear()
+{
+	for(Line *line:lines)
+	{
+		for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();)
+		{
+			if(line==*it)
+				it = allFigures->erase(it);
+			else
+				it++;
+		}
+		delete line;
+	}
+	lines.clear();
+	curLine = NULL;
+}
+
 const vector<Line*> &LineControl::getLines()
 {
 	return lines;

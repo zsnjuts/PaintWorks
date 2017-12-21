@@ -23,6 +23,7 @@ public:
 	void onMarkDraw(); //绘制当前聚焦的直线的额外标记
 	void onCut(const Point &leftDown, int width, int height); //对所有直线进行裁剪
 	void onDelete();
+	void onClear();
 
 	const vector<Line*> &getLines();
 

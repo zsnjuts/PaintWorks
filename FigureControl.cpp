@@ -64,6 +64,10 @@ void FigureControl::onDelete()
 {
 }
 
+void FigureControl::onClear()
+{
+}
+
 void FigureControl::pushForward(Figure *figure)
 {
 	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)

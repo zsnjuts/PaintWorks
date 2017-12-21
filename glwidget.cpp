@@ -112,6 +112,13 @@ void GLWidget::onDelete()
 	updateGL();
 }
 
+void GLWidget::onClear()
+{
+	figureControls[LINE]->onClear();
+	figureControls[CIRCLE]->onClear();
+	updateGL();
+}
+
 void GLWidget::initializeGL()
 {
 	//设置widget的坐标和尺寸
