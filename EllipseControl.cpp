@@ -92,3 +92,24 @@ void EllipseControl::onMarkDraw()
 	if(curEllipse!=NULL)
 		curEllipse->markDraw();
 }
+
+void EllipseControl::onDelete()
+{
+	if(curEllipse==NULL)
+		return;
+
+	for(vector<MyEllipse*>::iterator it=ellipses.begin();it!=ellipses.end();it++)
+		if(curEllipse==*it)
+		{
+			ellipses.erase(it);
+			break;
+		}
+	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+		if(curEllipse==*it)
+		{
+			allFigures->erase(it);
+			break;
+		}
+	delete curEllipse;
+	curEllipse = NULL;
+}

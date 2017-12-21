@@ -151,15 +151,6 @@ void PolygonControl::onDelete()
 		return;
 	deletePolygon(curIdx);
 	curIdx = -1;
-//	polygons.erase(polygons.begin()+curIdx);
-//	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
-//		if(*it==polygons[curIdx])
-//		{
-//			allFigures->erase(it);
-//			break;
-//		}
-//	delete polygons[curIdx];
-//	curIdx = -1;
 }
 
 void PolygonControl::deletePolygon(int idx)

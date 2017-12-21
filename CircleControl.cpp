@@ -103,3 +103,24 @@ void CircleControl::onFill()
 	if(curCircle!=NULL)
 		curCircle->fillColor();
 }
+
+void CircleControl::onDelete()
+{
+	if(curCircle==NULL)
+		return;
+
+	for(vector<Circle*>::iterator it=circles.begin();it!=circles.end();it++)
+		if(curCircle==*it)
+		{
+			circles.erase(it);
+			break;
+		}
+	for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+		if(curCircle==*it)
+		{
+			allFigures->erase(it);
+			break;
+		}
+	delete curCircle;
+	curCircle = NULL;
+}

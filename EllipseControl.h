@@ -19,6 +19,7 @@ public:
 
 	void onDraw();
 	void onMarkDraw();
+	void onDelete();
 
 private:
 	enum SetEP{ENDPOINT, MARKPOINT, CENTERPOINT, HANDLEPOINT}setEP; //当前点击的点为终点/标记点
