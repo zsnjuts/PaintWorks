@@ -153,6 +153,23 @@ void PolygonControl::onDelete()
 	curIdx = -1;
 }
 
+void PolygonControl::onClear()
+{
+	for(MyPolygon *polygon:polygons)
+	{
+		for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();)
+		{
+			if(polygon==*it)
+				it = allFigures->erase(it);
+			else
+				it++;
+		}
+		delete polygon;
+	}
+	polygons.clear();
+	curIdx = -1;
+}
+
 void PolygonControl::deletePolygon(int idx)
 {
 	if(idx<0)

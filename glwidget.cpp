@@ -116,6 +116,8 @@ void GLWidget::onClear()
 {
 	figureControls[LINE]->onClear();
 	figureControls[CIRCLE]->onClear();
+	figureControls[ELLIPSE]->onClear();
+	figureControls[POLYGON]->onClear();
 	updateGL();
 }
 

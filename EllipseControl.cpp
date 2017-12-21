@@ -113,3 +113,20 @@ void EllipseControl::onDelete()
 	delete curEllipse;
 	curEllipse = NULL;
 }
+
+void EllipseControl::onClear()
+{
+	for(MyEllipse *ellipse:ellipses)
+	{
+		for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();)
+		{
+			if(ellipse==*it)
+				it = allFigures->erase(it);
+			else
+				it++;
+		}
+		delete ellipse;
+	}
+	ellipses.clear();
+	curEllipse = NULL;
+}
