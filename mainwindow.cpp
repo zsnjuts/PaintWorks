@@ -138,11 +138,15 @@ void MainWindow::on_action_3D_triggered()
 
 void MainWindow::on_actionDelete_triggered()
 {
+	if(ui->mdiArea->subWindowList().empty())
+		return;
 	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onDelete();
 }
 
 void MainWindow::on_actionClear_triggered()
 {
+	if(ui->mdiArea->subWindowList().empty())
+		return;
 	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onClear();
 }
 
