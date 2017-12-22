@@ -65,7 +65,19 @@ void CurveControl::onMousePressEvent(QMouseEvent *event)
 					pushForward(curves[curIdx]);
 					return;
 				}
-			if(curves[curIdx]->isOn(curPoint))
+			if(curPoint.distanceTo(curves[curIdx]->getCenter())<=5)
+			{
+				setCV = -2;
+				pushForward(curves[curIdx]);
+				return;
+			}
+			else if(curPoint.distanceTo(curves[curIdx]->getHandle())<=5)
+			{
+				setCV = -3;
+				pushForward(curves[curIdx]);
+				return;
+			}
+			else if(curves[curIdx]->isOn(curPoint))
 			{
 				pushForward(curves[curIdx]);
 				return;
@@ -84,6 +96,10 @@ void CurveControl::onMouseMoveEvent(QMouseEvent *event)
 		Point curPoint(event->x(), height-event->y());
 		if(setCV>=0)
 			curves[curIdx]->setVertex(setCV, curPoint);
+		else if(setCV==-2)
+			curves[curIdx]->translate(curPoint - curves[curIdx]->getCenter());
+		else if(setCV==-3)
+			curves[curIdx]->setHandlePointByRef(curPoint);
 	}
 }
 
