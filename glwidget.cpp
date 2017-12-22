@@ -6,6 +6,7 @@ GLWidget::GLWidget(QWidget *parent, Mode m):QGLWidget(parent)
 	figureControls.push_back(new CircleControl(&allFigures));
 	figureControls.push_back(new EllipseControl(&allFigures));
 	figureControls.push_back(new PolygonControl(&allFigures));
+	figureControls.push_back(new CurveControl(&allFigures));
 	cw = new CutWindow;
 
 	setMode(m);
@@ -116,6 +117,7 @@ void GLWidget::onClear()
 	figureControls[CIRCLE]->onClear();
 	figureControls[ELLIPSE]->onClear();
 	figureControls[POLYGON]->onClear();
+	figureControls[CURVE]->onClear();
 	updateGL();
 }
 

@@ -58,6 +58,11 @@ void MainWindow::on_actionPolygon_triggered()
 	setMode(POLYGON);
 }
 
+void MainWindow::on_actionCurve_triggered()
+{
+	setMode(CURVE);
+}
+
 void MainWindow::on_actionCut_triggered()
 {
 	if(ui->mdiArea->subWindowList().empty())
@@ -106,12 +111,14 @@ void MainWindow::setMode(Mode m)
 	ui->actionCircle->setChecked(false);
 	ui->actionEllipse->setChecked(false);
 	ui->actionPolygon->setChecked(false);
+	ui->actionCurve->setChecked(false);
 	switch(m)
 	{
 	case LINE: ui->actionLine->setChecked(true); break;
 	case CIRCLE: ui->actionCircle->setChecked(true); break;
 	case ELLIPSE: ui->actionEllipse->setChecked(true); break;
 	case POLYGON: ui->actionPolygon->setChecked(true); break;
+	case CURVE: ui->actionCurve->setChecked(true); break;
 	default: ;
 	}
 }

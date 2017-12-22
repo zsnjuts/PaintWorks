@@ -12,5 +12,6 @@
         <file>images/delete.png</file>
         <file>images/clear.png</file>
         <file>images/colorpicker.png</file>
+        <file>images/curve.png</file>
     </qresource>
 </RCC>

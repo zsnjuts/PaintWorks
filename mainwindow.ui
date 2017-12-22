@@ -63,6 +63,7 @@
    <addaction name="actionCircle"/>
    <addaction name="actionEllipse"/>
    <addaction name="actionPolygon"/>
+   <addaction name="actionCurve"/>
    <addaction name="separator"/>
    <addaction name="actionScalePlus"/>
    <addaction name="actionScaleMinus"/>
@@ -299,6 +300,24 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionCurve">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="paintworks_resource.qrc">
+     <normaloff>:/images/images/curve.png</normaloff>:/images/images/curve.png</iconset>
+   </property>
+   <property name="text">
+    <string>Curve</string>
+   </property>
+   <property name="toolTip">
+    <string>曲线</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+V</string>
    </property>
   </action>
  </widget>

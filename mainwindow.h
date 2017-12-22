@@ -54,6 +54,8 @@ private slots:
 
 	void on_actionPickColor_triggered();
 
+	void on_actionCurve_triggered();
+
 private:
 	Mode m;
 	Ui::MainWindow *ui;

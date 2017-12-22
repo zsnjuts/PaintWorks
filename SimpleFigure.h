@@ -11,7 +11,7 @@ class SimpleFigure : public Figure
 
 public:
 	SimpleFigure();
-	~SimpleFigure();
+	virtual ~SimpleFigure();
 	static void setColor(tuple<float,float,float> newColor);
 	virtual void draw();
 	virtual void clear();

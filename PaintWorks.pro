@@ -31,7 +31,9 @@ SOURCES += main.cpp\
     CompFigure.cpp \
     SimpleFigure.cpp \
     CutWindow.cpp \
-    gl3dwidget.cpp
+    gl3dwidget.cpp \
+    Curve.cpp \
+    CurveControl.cpp
 
 HEADERS  += mainwindow.h \
     glwidget.h \
@@ -50,7 +52,9 @@ HEADERS  += mainwindow.h \
     CompFigure.h \
     SimpleFigure.h \
     CutWindow.h \
-    gl3dwidget.h
+    gl3dwidget.h \
+    Curve.h \
+    CurveControl.h
 
 FORMS    += mainwindow.ui
 

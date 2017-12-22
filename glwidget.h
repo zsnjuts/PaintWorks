@@ -5,13 +5,14 @@
 #include "CircleControl.h"
 #include "EllipseControl.h"
 #include "PolygonControl.h"
+#include "CurveControl.h"
 #include "CutWindow.h"
 #include <QtOpenGL/QtOpenGL>
 #include <GL/glu.h>
 #include <QMouseEvent>
 #include <vector>
 
-enum Mode{LINE=0, CIRCLE, ELLIPSE, POLYGON};
+enum Mode{LINE=0, CIRCLE, ELLIPSE, POLYGON, CURVE};
 enum Edit{DRAW=0, FILL, CUT};
 
 class GLWidget : public QGLWidget
