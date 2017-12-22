@@ -145,3 +145,10 @@ void MainWindow::on_actionClear_triggered()
 {
 	static_cast<GLWidget*>(ui->mdiArea->activeSubWindow()->widget())->onClear();
 }
+
+void MainWindow::on_actionPickColor_triggered()
+{
+	QColor color = QColorDialog::getColor(Qt::black, this);
+	Area::setColor(make_tuple(color.redF(), color.greenF(), color.blueF()));
+	SimpleFigure::setColor(make_tuple(color.redF(), color.greenF(), color.blueF()));
+}

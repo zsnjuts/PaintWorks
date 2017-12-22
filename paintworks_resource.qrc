@@ -11,5 +11,6 @@
         <file>images/scaleminus.png</file>
         <file>images/delete.png</file>
         <file>images/clear.png</file>
+        <file>images/colorpicker.png</file>
     </qresource>
 </RCC>

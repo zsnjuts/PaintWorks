@@ -67,6 +67,7 @@
    <addaction name="actionScalePlus"/>
    <addaction name="actionScaleMinus"/>
    <addaction name="separator"/>
+   <addaction name="actionPickColor"/>
    <addaction name="actionFill"/>
    <addaction name="actionCut"/>
    <addaction name="separator"/>
@@ -283,6 +284,21 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Del</string>
+   </property>
+  </action>
+  <action name="actionPickColor">
+   <property name="icon">
+    <iconset resource="paintworks_resource.qrc">
+     <normaloff>:/images/images/colorpicker.png</normaloff>:/images/images/colorpicker.png</iconset>
+   </property>
+   <property name="text">
+    <string>pickColor</string>
+   </property>
+   <property name="toolTip">
+    <string>选取颜色</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>

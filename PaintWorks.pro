@@ -59,4 +59,4 @@ RESOURCES += \
 
 RC_FILE += paintworks.rc
 
-QMAKE_CXXFLAGS += -Wno-sign-compare
+QMAKE_CXXFLAGS += -Wno-sign-compare -Wno-unused-parameter

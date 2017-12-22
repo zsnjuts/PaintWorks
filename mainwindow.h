@@ -8,6 +8,7 @@
 #include <QTextEdit>
 #include <QVector>
 #include <QFileDialog>
+#include <QColorDialog>
 
 namespace Ui {
 class MainWindow;
@@ -50,6 +51,8 @@ private slots:
 	void on_actionDelete_triggered();
 
 	void on_actionClear_triggered();
+
+	void on_actionPickColor_triggered();
 
 private:
 	Mode m;
