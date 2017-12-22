@@ -18,6 +18,17 @@ CircleControl::CircleControl(int width, int height):FigureControl(width,height)
 	curCircle = NULL;
 }
 
+bool CircleControl::setFocus(Figure *fg)
+{
+	for(Circle *circle:circles)
+		if(circle==fg)
+		{
+			curCircle = circle;
+			return true;
+		}
+	return false;
+}
+
 void CircleControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
@@ -41,6 +52,11 @@ void CircleControl::onMousePressEvent(QMouseEvent *event)
 			else if(curPoint.distanceTo(curCircle->getHandlePoint())<=5)
 			{
 				setCP = HANDLEPOINT;
+				pushForward(curCircle);
+				return;
+			}
+			else if(curCircle->isOn(curPoint))
+			{
 				pushForward(curCircle);
 				return;
 			}
@@ -102,6 +118,12 @@ void CircleControl::onFill()
 {
 	if(curCircle!=NULL)
 		curCircle->fillColor();
+}
+
+void CircleControl::onScale(double s)
+{
+	if(curCircle!=NULL)
+		curCircle->scale(s);
 }
 
 void CircleControl::onDelete()

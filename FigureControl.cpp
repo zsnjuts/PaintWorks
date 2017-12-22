@@ -28,6 +28,11 @@ void FigureControl::resize(int width, int height)
 	this->height = height;
 }
 
+bool FigureControl::setFocus(Figure *fg)
+{
+	cout << "not finish!" << endl;
+}
+
 void FigureControl::onMousePressEvent(QMouseEvent *event)
 {
 }
@@ -57,6 +62,10 @@ void FigureControl::onFill()
 }
 
 void FigureControl::onCut(const Point &leftDown, int width, int height)
+{
+}
+
+void FigureControl::onScale(double s)
 {
 }
 

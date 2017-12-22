@@ -24,6 +24,8 @@ public:
 	void rotate(double angle);
 	void scale(double s);
 
+	bool isOn(const Point &p); //若已填充则在圆内即可；若没有填充需在轮廓上
+
 	void draw(); //画轮廓点，若被填充，则也画填充点
 	void clear(); //删除轮廓点，若被填充，也删除填充点
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点

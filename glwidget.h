@@ -32,6 +32,9 @@ public:
 	virtual void onDelete(); //删除当前被选中的图形
 	virtual void onClear(); //清空画布
 
+signals:
+	void changeMode(Mode m); //更新绘图状态
+
 protected:
 	virtual void initializeGL();
 	virtual void resizeGL(int w, int h);
@@ -46,6 +49,8 @@ private:
 	CutWindow *cw; //裁剪窗口
 	vector<FigureControl*> figureControls;
 	vector<Figure*> allFigures; //本画布中的所有图形
+
+	Figure *setFocusByPoint(const Point &p); //根据点击的点来设置curCtrl和对应FigureControl的curFigure
 };
 
 #endif // GLWIDGET_H

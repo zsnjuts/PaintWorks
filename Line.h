@@ -28,8 +28,8 @@ public:
 	void rotate(double angle); //绕中点旋转
 	void scale(double s); //以中点为基准进行放缩
 
+	bool isOn(const Point &p); //isOn函数在SimpleFigure中
 	bool cut(const Point &leftDown, int width, int height); //根据矩形窗口裁剪，若不在窗口中则返回false
-	bool isOn(const Point &p); //矢量方法判断点p是否在本直线上
 
 	void markDraw(); //只负责绘制draw以外的标记，不绘制直线本身
 	void plainMarkDraw(); //不带center标记和handle标记

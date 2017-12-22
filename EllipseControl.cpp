@@ -16,6 +16,17 @@ EllipseControl::EllipseControl(int width, int height):FigureControl(width, heigh
 	curEllipse = NULL;
 }
 
+bool EllipseControl::setFocus(Figure *fg)
+{
+	for(MyEllipse *ellipse:ellipses)
+		if(ellipse==fg)
+		{
+			curEllipse = ellipse;
+			return true;
+		}
+	return false;
+}
+
 void EllipseControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
@@ -39,6 +50,11 @@ void EllipseControl::onMousePressEvent(QMouseEvent *event)
 			else if(curPoint.distanceTo(curEllipse->getHandlePoint())<=5)
 			{
 				setEP = HANDLEPOINT;
+				pushForward(curEllipse);
+				return;
+			}
+			else if(curEllipse->isOn(curPoint))
+			{
 				pushForward(curEllipse);
 				return;
 			}
@@ -91,6 +107,12 @@ void EllipseControl::onMarkDraw()
 {
 	if(curEllipse!=NULL)
 		curEllipse->markDraw();
+}
+
+void EllipseControl::onScale(double s)
+{
+	if(curEllipse!=NULL)
+		curEllipse->scale(s);
 }
 
 void EllipseControl::onDelete()

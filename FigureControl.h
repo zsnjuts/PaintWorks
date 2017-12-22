@@ -13,6 +13,7 @@ public:
 	FigureControl(int width, int height);
 	FigureControl(std::vector<Figure*> *figures, int width, int height);
 	void resize(int width, int height);
+	virtual bool setFocus(Figure *fg); //若fg在FigureControl内，则设置聚焦并返回true，否则返回false
 
 	virtual void onMousePressEvent(QMouseEvent *event);
 	virtual void onMouseMoveEvent(QMouseEvent *event); //鼠标按下时鼠标的移动
@@ -22,7 +23,9 @@ public:
 	virtual void onDraw(); //绘制所有图形（不带标记）
 	virtual void onMarkDraw(); //为当前图形添加标记
 	virtual void onFill();
+
 	virtual void onCut(const Point &leftDown, int width, int height);
+	virtual void onScale(double s);
 	virtual void onDelete();
 	virtual void onClear();
 

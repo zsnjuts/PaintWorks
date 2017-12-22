@@ -139,6 +139,11 @@ void Line::scale(double s)
 	calculateRelatedPoints();
 }
 
+bool Line::isOn(const Point &p)
+{
+	return SimpleFigure::isOn(p);
+}
+
 bool Line::cut(const Point &leftDown, int width, int height)
 {
 	const int xwmin = leftDown.getX(), xwmax = leftDown.getX()+width;
@@ -174,11 +179,6 @@ bool Line::cut(const Point &leftDown, int width, int height)
 				Point(x1+int(u2*dx+0.5), y1+int(u2*dy+0.5)));
 		return true;
 	}
-}
-
-bool Line::isOn(const Point &p)
-{
-	return (end.getX()-begin.getX())*(p.getY()-begin.getY()) == (p.getX()-begin.getX())*(end.getY()-begin.getY());
 }
 
 void Line::markDraw()

@@ -23,9 +23,16 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
+void MainWindow::on_changeMode(Mode m)
+{
+	setMode(m);
+}
+
 void MainWindow::on_action_New_triggered()
 {
-	QMdiSubWindow *w = ui->mdiArea->addSubWindow(new GLWidget(this, m));
+	GLWidget *gwt = new GLWidget(this, m);
+	connect(gwt,SIGNAL(changeMode(Mode)),this,SLOT(on_changeMode(Mode)));
+	QMdiSubWindow *w = ui->mdiArea->addSubWindow(gwt);
 	ui->mdiArea->setActiveSubWindow(w);
 	w->setWindowTitle(tr("画布%1").arg(ui->mdiArea->subWindowList().size()));
 	w->show();

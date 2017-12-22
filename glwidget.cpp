@@ -32,15 +32,13 @@ void GLWidget::setEditMode(Edit e)
 
 void GLWidget::onScalePlusFigures()
 {
-	for(Figure *fg:allFigures)
-		fg->scale(1.25);
+	figureControls[curCtrl]->onScale(1.25);
 	updateGL();
 }
 
 void GLWidget::onScaleMinusFigures()
 {
-	for(Figure *fg:allFigures)
-		fg->scale(0.8);
+	figureControls[curCtrl]->onScale(0.8);
 	updateGL();
 }
 
@@ -162,7 +160,10 @@ void GLWidget::mousePressEvent(QMouseEvent *event)
 	if(curEdit==CUT)
 		cw->onMousePressEvent(event);
 	else
+	{
+		setFocusByPoint(Point(event->x(), height()-event->y()));
 		figureControls[curCtrl]->onMousePressEvent(event);
+	}
 	updateGL();
 }
 
@@ -191,5 +192,22 @@ void GLWidget::keyPressEvent(QKeyEvent *event)
 	default: figureControls[curCtrl]->onKeyPressEvent(event);
 	}
 	updateGL();
+}
+
+Figure *GLWidget::setFocusByPoint(const Point &p)
+{
+	for(int i=allFigures.size()-1;i>=0;i--)
+		if(allFigures[i]->isOn(p))
+		{
+			for(int j=0;j<figureControls.size();j++)
+				if(figureControls[j]->setFocus(allFigures[i]))
+				{
+					curCtrl = j;
+					emit changeMode(Mode(curCtrl));
+					break;
+				}
+			return allFigures[i];
+		}
+	return NULL;
 }
 

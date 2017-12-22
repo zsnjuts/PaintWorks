@@ -12,6 +12,7 @@ public:
 	CircleControl();
 	CircleControl(std::vector<Figure*> *figures);
 	CircleControl(int width, int height);
+	bool setFocus(Figure *fg);
 
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);
@@ -20,6 +21,8 @@ public:
 	void onDraw();
 	void onMarkDraw();
 	void onFill();
+
+	void onScale(double s);
 	void onDelete();
 	void onClear();
 

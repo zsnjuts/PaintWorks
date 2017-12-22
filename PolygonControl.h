@@ -13,6 +13,7 @@ public:
 	PolygonControl();
 	PolygonControl(std::vector<Figure*> *figures);
 	PolygonControl(int width, int height);
+	bool setFocus(Figure *fg);
 
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);
@@ -22,7 +23,9 @@ public:
 	void onDraw();
 	void onMarkDraw();
 	void onFill();
-	void onCut(const Point &leftDown, int width, int height); //对所有多边形进行裁剪
+
+	void onCut(const Point &leftDown, int width, int height); //对当前多边形进行裁剪
+	void onScale(double s);
 	void onDelete();
 	void onClear();
 

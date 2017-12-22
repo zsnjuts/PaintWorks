@@ -26,6 +26,14 @@ void SimpleFigure::clear()
 	points.erase(points.begin(), points.end());
 }
 
+bool SimpleFigure::isOn(const Point &p)
+{
+	for(Point *pt:points)
+		if(pt->distanceTo(p)<3)
+			return true;
+	return false;
+}
+
 const vector<Point *> &SimpleFigure::getPoints() const
 {
 	return points;

@@ -15,12 +15,24 @@ PolygonControl::PolygonControl(int width, int height):FigureControl(width, heigh
 	setPV = -1; curIdx = -1;
 }
 
+bool PolygonControl::setFocus(Figure *fg)
+{
+	for(int i=0;i<polygons.size();i++)
+		if(polygons[i]==fg)
+		{
+			curIdx = i;
+			return true;
+		}
+	return false;
+}
+
 void PolygonControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
 	{
 		//选中折线起始点，成为多边形
-		if(!curLines.empty() && curLines.front()->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<=10)
+		Point curPoint(event->x(), height-event->y());
+		if(!curLines.empty() && curLines.front()->getBeginPoint().distanceTo(curPoint)<=10)
 		{
 			curLines.back()->setEndPoint(curLines.front()->getBeginPoint());
 			polygons.push_back(new MyPolygon(curLines));
@@ -39,7 +51,6 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
 		}
 		else if(curLines.empty() && !polygons.empty()) //选中当前多边形的标记点
 		{
-			Point curPoint(event->x(), height-event->y());
 			vector<Point> vtxs = polygons[curIdx]->getVertexes();
 			for(int i=0;i<vtxs.size();i++)
 				if(curPoint.distanceTo(vtxs[i])<=5)
@@ -57,6 +68,11 @@ void PolygonControl::onMousePressEvent(QMouseEvent *event)
 			else if(polygons[curIdx]->getHandlePoint().distanceTo(curPoint)<=5)
 			{
 				setPV = -3;
+				pushForward(polygons[curIdx]);
+				return;
+			}
+			else if(polygons[curIdx]->isOn(curPoint))
+			{
 				pushForward(polygons[curIdx]);
 				return;
 			}
@@ -143,6 +159,12 @@ void PolygonControl::onCut(const Point &leftDown, int width, int height)
 		deletePolygon(curIdx);
 		curIdx = -1;
 	}
+}
+
+void PolygonControl::onScale(double s)
+{
+	if(curIdx>=0)
+		polygons[curIdx]->scale(s);
 }
 
 void PolygonControl::onDelete()

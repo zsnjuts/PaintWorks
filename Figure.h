@@ -15,7 +15,7 @@ public:
 	virtual void rotate(double angle)=0; //旋转
 	virtual void scale(double s)=0; //缩放
 
-//	virtual bool isOn(const Point &p); //点p是否在本图形上
+	virtual bool isOn(const Point &p)=0; //点p是否在本图形上
 
 };
 

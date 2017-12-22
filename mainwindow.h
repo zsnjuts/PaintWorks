@@ -21,6 +21,9 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+public slots:
+	void on_changeMode(Mode m); //从GLWidget接收信号
+
 private slots:
 	void on_action_New_triggered();
 

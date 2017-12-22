@@ -20,33 +20,50 @@ LineControl::LineControl(std::vector<Figure *> *figures, int width, int height):
 	curLine = NULL;
 }
 
+bool LineControl::setFocus(Figure *fg)
+{
+	for(Line *line:lines)
+		if(line==fg)
+		{
+			curLine = line;
+			return true;
+		}
+	return false;
+}
+
 void LineControl::onMousePressEvent(QMouseEvent *event)
 {
 	if(event->button()==Qt::LeftButton)
 	{
 		if(curLine!=NULL)
 		{
-			if(curLine->getBeginPoint().distanceTo(Point(event->x(), height-event->y()))<=5)
+			Point curPoint(event->x(), height-event->y());
+			if(curLine->getBeginPoint().distanceTo(curPoint)<=5)
 			{
 				setLP = SETBEGIN;
 				pushForward(curLine);
 				return;
 			}
-			else if(curLine->getEndPoint().distanceTo(Point(event->x(), height-event->y()))<=5)
+			else if(curLine->getEndPoint().distanceTo(curPoint)<=5)
 			{
 				setLP = SETEND;
 				pushForward(curLine);
 				return;
 			}
-			else if(curLine->getCenterPoint().distanceTo(Point(event->x(), height-event->y()))<=5)
+			else if(curLine->getCenterPoint().distanceTo(curPoint)<=5)
 			{
 				setLP = SETCENTER;
 				pushForward(curLine);
 				return;
 			}
-			else if(curLine->getHandlePoint().distanceTo(Point(event->x(), height-event->y()))<=5)
+			else if(curLine->getHandlePoint().distanceTo(curPoint)<=5)
 			{
 				setLP = SETHANDLE;
+				pushForward(curLine);
+				return;
+			}
+			else if(curLine->isOn(curPoint))
+			{
 				pushForward(curLine);
 				return;
 			}
@@ -103,26 +120,32 @@ void LineControl::onMarkDraw()
 
 void LineControl::onCut(const Point &leftDown, int width, int height)
 {
-	if(lines.empty())
+	if(curLine==NULL)
 		return;
-	for(vector<Line*>::iterator iter=lines.begin();iter!=lines.end();)
+	if(curLine->cut(leftDown, width, height)==false)
 	{
-		if((*iter)->cut(leftDown, width, height)==false)
-		{
-			for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
-				if((*it)==(*iter))
-				{
-					allFigures->erase(it);
-					break;
-				}
-			iter = lines.erase(iter);
-			if(*iter==curLine)
-				curLine = NULL;
-			delete *iter;
-		}
-		else
-			iter++;
+		for(vector<Line*>::iterator it=lines.begin();it!=lines.end();it++)
+			if(curLine==*it)
+			{
+				lines.erase(it);
+				break;
+			}
+		for(vector<Figure*>::iterator it=allFigures->begin();it!=allFigures->end();it++)
+			if(curLine==*it)
+			{
+				allFigures->erase(it);
+				break;
+			}
+		delete curLine;
+		curLine = NULL;
 	}
+}
+
+void LineControl::onScale(double s)
+{
+	if(curLine==NULL)
+		return;
+	curLine->scale(s);
 }
 
 void LineControl::onDelete()

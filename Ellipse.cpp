@@ -109,6 +109,19 @@ void MyEllipse::scale(double s)
 	setAxes(rx*s, ry*s);
 }
 
+bool MyEllipse::isOn(const Point &p)
+{
+	if(SimpleFigure::isOn(p))
+		return true;
+	if(!fillPoints.empty())
+	{
+		for(Point *pt:fillPoints)
+			if(*pt==p)
+				return true;
+	}
+	return false;
+}
+
 void MyEllipse::calculatePoints()
 {
 	if (rx <= 0 || ry <= 0) //防止计算未初始化的椭圆

@@ -58,3 +58,5 @@ RESOURCES += \
     paintworks_resource.qrc
 
 RC_FILE += paintworks.rc
+
+QMAKE_CXXFLAGS += -Wno-sign-compare

@@ -11,6 +11,7 @@ public:
 	~SimpleFigure();
 	virtual void draw();
 	virtual void clear();
+	virtual bool isOn(const Point &p); //该点是否在轮廓上(调用所有点的距离函数来判断点p是否在本直线上)
 	const std::vector<Point*> &getPoints() const;
 
 protected:

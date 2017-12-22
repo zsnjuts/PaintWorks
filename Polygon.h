@@ -25,6 +25,7 @@ public:
 	void scale(double s); //缩放
 
 	bool cut(const Point &leftDown, int width, int height); //根据矩形窗口裁剪，若不在窗口中则返回false
+	bool isOn(const Point &p);
 
 	void draw(); //轮廓+填充
 	void clear(); //清空轮廓点+清空填充点

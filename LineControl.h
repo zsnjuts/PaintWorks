@@ -14,6 +14,7 @@ public:
 	LineControl(std::vector<Figure*> *figures);
 	LineControl(int width, int height);
 	LineControl(std::vector<Figure*> *figures, int width, int height);
+	bool setFocus(Figure *fg);
 
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);
@@ -21,7 +22,8 @@ public:
 
 	void onDraw();
 	void onMarkDraw(); //绘制当前聚焦的直线的额外标记
-	void onCut(const Point &leftDown, int width, int height); //对所有直线进行裁剪
+	void onCut(const Point &leftDown, int width, int height); //只对当前直线进行裁剪
+	void onScale(double s);
 	void onDelete();
 	void onClear();
 

@@ -12,6 +12,7 @@ public:
 	EllipseControl();
 	EllipseControl(std::vector<Figure*> *figures);
 	EllipseControl(int width, int height);
+	bool setFocus(Figure *fg);
 
 	void onMousePressEvent(QMouseEvent *event);
 	void onMouseMoveEvent(QMouseEvent *event);
@@ -19,6 +20,8 @@ public:
 
 	void onDraw();
 	void onMarkDraw();
+
+	void onScale(double s);
 	void onDelete();
 	void onClear();
 

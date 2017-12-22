@@ -172,6 +172,20 @@ bool MyPolygon::cut(const Point &leftDown, int width, int height)
 	}
 }
 
+bool MyPolygon::isOn(const Point &p)
+{
+	for(Line *line:lines)
+		if(line->isOn(p))
+			return true;
+	if(!fillPoints.empty())
+	{
+		for(Point *pt:fillPoints)
+			if(*pt==p)
+				return true;
+	}
+	return false;
+}
+
 void MyPolygon::draw()
 {
 	for(Line *line : lines)

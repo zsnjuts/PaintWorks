@@ -76,6 +76,15 @@ void Circle::scale(double s)
 	calculateHandle();
 }
 
+bool Circle::isOn(const Point &p)
+{
+	if(SimpleFigure::isOn(p))
+		return true;
+	if(!fillPoints.empty())
+		return center.distanceTo(p)<=radius;
+	return false;
+}
+
 void Circle::draw()
 {
 	SimpleFigure::draw();
