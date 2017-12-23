@@ -22,6 +22,7 @@ public:
 	void scale(double s);
 
 	bool isOn(const Point &p);
+	bool isOnPlain(const Point &p);
 
 	void draw();
 	void markDraw();

@@ -118,6 +118,16 @@ void Curve::scale(double s)
 
 bool Curve::isOn(const Point &p)
 {
+	if(isOnPlain(p) || p.distanceTo(center)<=5 || p.distanceTo(handle)<=5)
+		return true;
+	for(Point &v:vertices)
+		if(p.distanceTo(v)<=5)
+			return true;
+	return false;
+}
+
+bool Curve::isOnPlain(const Point &p)
+{
 	return SimpleFigure::isOn(p);
 }
 

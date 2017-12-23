@@ -25,6 +25,7 @@ public:
 	void scale(double s);
 
 	bool isOn(const Point &p);
+	bool isOnPlain(const Point &p);
 
 	void markDraw(); //绘制除draw以外的标记：矩形框+标记点
 

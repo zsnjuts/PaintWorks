@@ -111,6 +111,16 @@ void MyEllipse::scale(double s)
 
 bool MyEllipse::isOn(const Point &p)
 {
+	if(isOnPlain(p) || p.distanceTo(center)<=5 || p.distanceTo(handle)<=5)
+		return true;
+	for(Point mp:markPoints)
+		if(mp.distanceTo(p)<=5)
+			return true;
+	return false;
+}
+
+bool MyEllipse::isOnPlain(const Point &p)
+{
 	if(SimpleFigure::isOn(p))
 		return true;
 	if(!fillPoints.empty())

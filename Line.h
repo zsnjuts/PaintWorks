@@ -29,6 +29,7 @@ public:
 	void scale(double s); //以中点为基准进行放缩
 
 	bool isOn(const Point &p); //isOn函数在SimpleFigure中
+	bool isOnPlain(const Point &p); //不考虑center和handle
 	bool cut(const Point &leftDown, int width, int height); //根据矩形窗口裁剪，若不在窗口中则返回false
 
 	void markDraw(); //只负责绘制draw以外的标记，不绘制直线本身

@@ -199,7 +199,7 @@ void GLWidget::keyPressEvent(QKeyEvent *event)
 Figure *GLWidget::setFocusByPoint(const Point &p)
 {
 	for(int i=allFigures.size()-1;i>=0;i--)
-		if(allFigures[i]->isOn(p))
+		if((i==allFigures.size()-1)?(allFigures[i]->isOn(p)):(allFigures[i]->isOnPlain(p)))
 		{
 			for(int j=0;j<figureControls.size();j++)
 				if(figureControls[j]->setFocus(allFigures[i]))

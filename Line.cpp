@@ -141,6 +141,11 @@ void Line::scale(double s)
 
 bool Line::isOn(const Point &p)
 {
+	return SimpleFigure::isOn(p) || p.distanceTo(center)<=5 || p.distanceTo(handle)<=5;
+}
+
+bool Line::isOnPlain(const Point &p)
+{
 	return SimpleFigure::isOn(p);
 }
 

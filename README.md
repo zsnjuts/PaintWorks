@@ -79,11 +79,14 @@
     * 平移
     * 缩放
     * 旋转
+* 已实现选取
+  * isOn*函数检测该点是否在图形上
+  * isOn()检测该点是否在图形或标记点(markPoints,center,handle)上，isOnPlain()检测该点是否在图形本身上(不包括标记点)
 
 
 ## 可以改进的地方
 
-isOn函数应该带上center和handle点的检测
+
 
 ## tips
 

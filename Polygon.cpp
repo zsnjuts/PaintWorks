@@ -174,8 +174,13 @@ bool MyPolygon::cut(const Point &leftDown, int width, int height)
 
 bool MyPolygon::isOn(const Point &p)
 {
+	return isOnPlain(p) || p.distanceTo(center)<=5 || p.distanceTo(handle)<=5;
+}
+
+bool MyPolygon::isOnPlain(const Point &p)
+{
 	for(Line *line:lines)
-		if(line->isOn(p))
+		if(line->isOnPlain(p))
 			return true;
 	if(!fillPoints.empty())
 	{

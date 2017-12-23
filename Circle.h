@@ -25,6 +25,7 @@ public:
 	void scale(double s);
 
 	bool isOn(const Point &p); //若已填充则在圆内即可；若没有填充需在轮廓上
+	bool isOnPlain(const Point &p); //不包括center和handle
 
 	void draw(); //画轮廓点，若被填充，则也画填充点
 	void clear(); //删除轮廓点，若被填充，也删除填充点
