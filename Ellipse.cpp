@@ -176,6 +176,11 @@ void MyEllipse::calculatePoints()
 const int MyEllipse::h = 30; //初始化handle长度
 void MyEllipse::calculateHandle()
 {
+	if(rx<=0 || ry<=0)
+	{
+		handle.setPoint(center.getX(), center.getY()+h);
+		return;
+	}
 	double tmp = sqrt(rx*rx+ry*ry);
 	handle.setPoint(center.getX()+int(h*rx/tmp+0.5), center.getY()+int(h*ry/tmp+0.5));
 }

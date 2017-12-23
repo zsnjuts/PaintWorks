@@ -83,7 +83,7 @@
 
 ## 可以改进的地方
 
-椭圆刚生成的时候handle有问题
+isOn函数应该带上center和handle点的检测
 
 ## tips
 
@@ -96,3 +96,5 @@
 * ~~标签页关闭之后切换图形绘制模式会导致程序崩溃~~ 已使用dynamic_cast解决
 
   应该让QMdiSubWindow在关闭时delete掉GLWidget，可能需要重写QMdiSubWindow的` virtual void	closeEvent(QCloseEvent * closeEvent)` 函数，最好是将相关信号关联到Mainwindow的一个槽函数，省得再写QMdiSubWindow了。
+
+* ~~椭圆刚生成的时候handle有问题~~ 已解决
