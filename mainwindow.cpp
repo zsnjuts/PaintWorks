@@ -163,3 +163,8 @@ void MainWindow::on_actionPickColor_triggered()
 	Area::setColor(make_tuple(color.redF(), color.greenF(), color.blueF()));
 	SimpleFigure::setColor(make_tuple(color.redF(), color.greenF(), color.blueF()));
 }
+
+void MainWindow::on_action_Q_triggered()
+{
+	this->close();
+}

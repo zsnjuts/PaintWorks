@@ -56,6 +56,8 @@ private slots:
 
 	void on_actionCurve_triggered();
 
+	void on_action_Q_triggered();
+
 private:
 	Mode m;
 	Ui::MainWindow *ui;
