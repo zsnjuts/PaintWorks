@@ -1,5 +1,9 @@
 # PaintWorks
 
+![运行图](docs/screenshot.png)
+
+
+
 ## 已实现的功能
 
 * 直线绘制
